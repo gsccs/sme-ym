@@ -1,0 +1,246 @@
+/*----------------------------------------
+Name: global.css
+Developed by: James Li 
+Date Created: 2013-03-25
+Last Updated: 2013-03-26
+----------------------------------------*/
+@charset "utf-8";
+html{font-family:"微软雅黑", 'Microsoft YaHei',"Times New Roman",Georgia,Serif;text-align:center;}
+body{margin:0;font:12px "微软雅黑", 'Microsoft YaHei',Verdana, Arial, Helvetica, sans-serif; color:#42515A;word-break:break-all;}
+.fl{float:left;}
+.fr{float:right;}
+/***Login Page***/
+.login{
+	
+}
+.body_sz{
+	background: url('../images/bg.png') repeat-y center;
+	text-align:left;
+}
+
+/***Index Page***/
+#index_home{
+	width:1000px;
+	height:100%;
+	margin:0 auto;
+	text-align:center;
+}
+#index_home .index_main{
+	float:left;
+	width:1000px;
+	height:364px;
+	margin:0 auto;
+	padding-top:225px;
+	/**background:url('../images/home/sz_home.jpg') no-repeat;**/
+}
+#index_home .index_navigate{
+	margin:0 auto;
+	width:640px;
+	height:290px;/**135px;**/
+	text-align:center;
+	display:block;
+ 	vertical-align:middle;
+}
+#index_home .index_box {
+	/*非IE的主流浏览器识别的垂直居中的方法*/
+	display: table-cell;
+	vertical-align:middle;
+	/*设置水平居中*/
+	text-align:center;
+	/* 针对IE的Hack */
+	*display: block;
+	*font-size: 175px;/*约为高度的0.873，200*0.873 约为175*/
+	*font-family:Arial;/*防止非utf-8引起的hack失效问题，如gbk编码*/
+	width:140px;
+	height:130px;
+	border:none;
+	display:block;
+}
+
+#index_home .index_icity{
+	text-align:center;
+	vertical-align:middle;
+}
+#index_home .index_td{
+ vertical-align:middle;
+ width:121px;
+}
+#index_home .index_bottom{
+	width:100%;
+	height:60px;
+	border:none;
+	line-height:60px;
+	/**border:1px solid red;**/
+}
+#index_home .index_gd{
+	float:right;
+	display:block;
+	width:299px;
+	height:60px;
+	border:none;
+	line-height:60px;
+	background:url('../images/home/inspur.png') no-repeat center center;
+}
+#index_home .index_gd_home{
+	float:right;
+	display:block;
+	width:299px;
+	height:60px;
+	border:none;
+	line-height:60px;
+	background:url('../images/home/ecgap.png') no-repeat center center;
+}
+#index_home .index_zwfw_ico {
+	float:right;
+	display:block;
+	width:299px;
+	height:60px;
+	border:none;
+	line-height:60px;
+	margin-right: 20px;
+	background:url('../images/home/btn_dtzy.png') no-repeat center center;
+}
+#index_home .index_zwfw_ico:hover {
+	background:url('../images/home/btn_dtzyhover.png') no-repeat center center;
+}
+#index_home .index_sz{
+	float:right;
+	display:block;
+	width:299px;
+	height:60px;
+	border:none;
+	line-height:60px;
+	background:url('../images/home/inspur_sz.png') no-repeat center center;
+}
+#index_home .index_sz_home{
+	float:right;
+	display:block;
+	width:299px;
+	height:60px;
+	border:none;
+	line-height:60px;
+	background:url('../images/home/ecgap_sz.png') no-repeat center center;
+}
+#index_home .index_area{
+	display:block;
+}
+#index_home .index_wsbs{
+	display:none;
+	text-align:center;
+	vertical-align:middle;
+	width:200px;
+	height:110px;
+	padding-top:25px;
+	z-index:1000;
+	margin-top:-10px;
+	background:url('../images/home/sec_icon_bg.png') no-repeat;
+}
+
+#index_home .index_wsbs_long{
+	width:400px;
+	background:url('../images/home/sec_icon_bg_long.png') no-repeat;
+}
+
+#index_home .index_wsbs img{
+	z-index:-1000;
+}
+#index_home .index_center {
+	vertical-align:middle;
+	width:140px;
+	height:130px;
+	text-align:center;
+}
+#index_home .index_box img {
+	/*设置图片垂直居中*/
+	vertical-align:middle;
+}
+
+
+#index_home .index_foot{
+	float:left;
+	width:1000px;
+	height:90px;
+	margin:0 auto;
+	color:white;
+	border-top:1px solid white;
+	background:#28467a;
+}
+#index_home .index_copy{
+	margin-top:27px;
+	margin-left:30px;
+	margin-bottom:-2px;
+}
+#index_home .logo{
+	float:left;
+	width:30px;
+	margin-top:3px;
+	height:30px;
+	background:url('../images/home/sz_logo.png') no-repeat;
+}
+#index_home .logo_line{
+	float:left;
+	display:block;
+	width:0px;
+	height:40px;
+	margin-left:15px;
+	border:1px solid white;
+}
+#index_home .navigator{
+	float:right;
+	font-size:12px;
+	font-weight:bold;
+	color:#82F3FF;
+	width:300px;
+	margin-right:15px;
+}
+#index_home .navigator a{color:#82F3FF;margin-right:5px;text-decoration: none;}
+#index_home .navigator .bottom{width:100%;height:25px;font-weight:normal;}
+
+#index_home .a_home{
+	display:block;
+	width:120px;
+	height:46px;
+	margin-left:20px;
+	margin-top:10px;
+	background:url('../images/home/index_home1.png') no-repeat;
+}
+#index_home .a_home:hover{
+	display:block;
+	width:120px;
+	height:46px;
+	margin-left:20px;
+	margin-top:10px;
+	background:url('../images/home/index_home2.png') no-repeat;
+}
+#index_home .a_enterprise{
+	display:block;
+	width:120px;
+	height:46px;
+	margin-left:20px;
+	margin-top:10px;
+	background:url('../images/home/index_enterprise1.png') no-repeat;
+}
+#index_home .a_enterprise:hover{
+	display:block;
+	width:120px;
+	height:46px;
+	margin-left:20px;
+	margin-top:10px;
+	background:url('../images/home/index_enterprise2.png') no-repeat;
+}
+#index_home .a_personal{
+	display:block;
+	width:120px;
+	height:46px;
+	margin-left:20px;
+	margin-top:10px;
+	background:url('../images/home/index_personal1.png') no-repeat;
+}
+#index_home .a_personal:hover{
+	display:block;
+	width:120px;
+	height:46px;
+	margin-left:20px;
+	margin-top:10px;
+	background:url('../images/home/index_personal2.png') no-repeat;
+}

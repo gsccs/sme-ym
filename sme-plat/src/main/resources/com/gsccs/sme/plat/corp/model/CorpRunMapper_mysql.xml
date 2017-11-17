@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.corp.dao.CorpRunMapper" >
+  <resultMap id="BaseResultMap" type="com.gsccs.sme.api.domain.corp.CorpRun" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="corpid" property="corpid" jdbcType="BIGINT" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="employee" property="employee" jdbcType="INTEGER" />
+    <result column="sale" property="sale" jdbcType="REAL" />
+    <result column="assets" property="assets" jdbcType="REAL" />
+    <result column="profits" property="profits" jdbcType="REAL" />
+    <result column="tax" property="tax" jdbcType="REAL" />
+    <result column="debt" property="debt" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, corpid, year, employee, sale, assets, profits, tax, debt
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gsccs.sme.plat.corp.model.CorpRunExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sme_corp_run
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sme_corp_run
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sme_corp_run
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gsccs.sme.plat.corp.model.CorpRunExample" >
+    delete from sme_corp_run
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id"  parameterType="com.gsccs.sme.api.domain.corp.CorpRun" >
+    insert into sme_corp_run (id, corpid, year, 
+      employee, sale, assets, profits, 
+      tax, debt)
+    values (#{id,jdbcType=BIGINT}, #{corpid,jdbcType=BIGINT}, #{year,jdbcType=INTEGER}, 
+      #{employee,jdbcType=INTEGER}, #{sale,jdbcType=REAL}, #{assets,jdbcType=REAL}, #{profits,jdbcType=REAL}, 
+      #{tax,jdbcType=REAL}, #{debt,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gsccs.sme.api.domain.corp.CorpRun" >
+    insert into sme_corp_run
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="corpid != null" >
+        corpid,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="employee != null" >
+        employee,
+      </if>
+      <if test="sale != null" >
+        sale,
+      </if>
+      <if test="assets != null" >
+        assets,
+      </if>
+      <if test="profits != null" >
+        profits,
+      </if>
+      <if test="tax != null" >
+        tax,
+      </if>
+      <if test="debt != null" >
+        debt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="corpid != null" >
+        #{corpid,jdbcType=BIGINT},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="employee != null" >
+        #{employee,jdbcType=INTEGER},
+      </if>
+      <if test="sale != null" >
+        #{sale,jdbcType=REAL},
+      </if>
+      <if test="assets != null" >
+        #{assets,jdbcType=REAL},
+      </if>
+      <if test="profits != null" >
+        #{profits,jdbcType=REAL},
+      </if>
+      <if test="tax != null" >
+        #{tax,jdbcType=REAL},
+      </if>
+      <if test="debt != null" >
+        #{debt,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gsccs.sme.plat.corp.model.CorpRunExample" resultType="java.lang.Integer" >
+    select count(*) from sme_corp_run
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sme_corp_run
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.corpid != null" >
+        corpid = #{record.corpid,jdbcType=BIGINT},
+      </if>
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.employee != null" >
+        employee = #{record.employee,jdbcType=INTEGER},
+      </if>
+      <if test="record.sale != null" >
+        sale = #{record.sale,jdbcType=REAL},
+      </if>
+      <if test="record.assets != null" >
+        assets = #{record.assets,jdbcType=REAL},
+      </if>
+      <if test="record.profits != null" >
+        profits = #{record.profits,jdbcType=REAL},
+      </if>
+      <if test="record.tax != null" >
+        tax = #{record.tax,jdbcType=REAL},
+      </if>
+      <if test="record.debt != null" >
+        debt = #{record.debt,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sme_corp_run
+    set id = #{record.id,jdbcType=BIGINT},
+      corpid = #{record.corpid,jdbcType=BIGINT},
+      year = #{record.year,jdbcType=INTEGER},
+      employee = #{record.employee,jdbcType=INTEGER},
+      sale = #{record.sale,jdbcType=REAL},
+      assets = #{record.assets,jdbcType=REAL},
+      profits = #{record.profits,jdbcType=REAL},
+      tax = #{record.tax,jdbcType=REAL},
+      debt = #{record.debt,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.api.domain.corp.CorpRun" >
+    update sme_corp_run
+    <set >
+      <if test="corpid != null" >
+        corpid = #{corpid,jdbcType=BIGINT},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="employee != null" >
+        employee = #{employee,jdbcType=INTEGER},
+      </if>
+      <if test="sale != null" >
+        sale = #{sale,jdbcType=REAL},
+      </if>
+      <if test="assets != null" >
+        assets = #{assets,jdbcType=REAL},
+      </if>
+      <if test="profits != null" >
+        profits = #{profits,jdbcType=REAL},
+      </if>
+      <if test="tax != null" >
+        tax = #{tax,jdbcType=REAL},
+      </if>
+      <if test="debt != null" >
+        debt = #{debt,jdbcType=REAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gsccs.sme.api.domain.corp.CorpRun" >
+    update sme_corp_run
+    set corpid = #{corpid,jdbcType=BIGINT},
+      year = #{year,jdbcType=INTEGER},
+      employee = #{employee,jdbcType=INTEGER},
+      sale = #{sale,jdbcType=REAL},
+      assets = #{assets,jdbcType=REAL},
+      profits = #{profits,jdbcType=REAL},
+      tax = #{tax,jdbcType=REAL},
+      debt = #{debt,jdbcType=REAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

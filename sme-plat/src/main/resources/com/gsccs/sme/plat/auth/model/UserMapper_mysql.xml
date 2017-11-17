@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.auth.dao.UserMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.auth.model.User">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="orgid" property="orgid" jdbcType="BIGINT" />
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="salt" property="salt" jdbcType="VARCHAR" />
+		<result column="locked" property="locked" jdbcType="BIT" />
+		<!-- 用户类型 -->
+		<result column="usertype" property="usertype" jdbcType="VARCHAR" />
+		<result column="userclass" property="userclass" jdbcType="VARCHAR" />
+		<!-- 组织机构名称 -->
+		<result column="orgname" property="orgname" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<sql id="Base_Column_List">
+		id, orgid, account, password, title,phone,email,salt,
+		locked,usertype,userclass
+	</sql>
+	
+	<sql id="Join_Column_List">
+		orgname
+	</sql>
+
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.auth.model.UserExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from plat_sys_user
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+
+	<select id="selectPageByExample_" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.auth.model.UserExample">
+		SELECT distinct
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		SELECT a.id, 
+		case usertype
+		when 'C'
+		then (select title from sme_corp where id=a.orgid) 
+		when 'S'
+		then (select title from sme_svorg where id=a.orgid) 
+		when 'G'
+		then (select title from sme_svorg where id=a.orgid) 
+		end as orgname
+		FROM sme_db.plat_sys_user a
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+	
+	
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.auth.model.UserExample">
+		SELECT distinct
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		FROM
+		(SELECT a.*, 
+			case usertype
+			when 'C'
+			then (select title from sme_corp where id=a.orgid) 
+			when 'S'
+			then (select title from sme_svorg where id=a.orgid) 
+			when 'G'
+			then (select title from sme_svorg where id=a.orgid) 
+			end as orgname
+		FROM sme_db.plat_sys_user a
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from plat_sys_user
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		plat_sys_user
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.auth.model.UserExample">
+		delete from plat_sys_user
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+
+
+	<insert id="insert"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.gsccs.sme.plat.auth.model.User">
+		insert into plat_sys_user (id,orgid, account,password,title,phone,email, salt, locked,usertype,userclass)
+		values (
+		#{id,jdbcType=BIGINT},
+		#{orgid,jdbcType=BIGINT},
+		#{account,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR},
+		#{salt,jdbcType=VARCHAR},
+		#{locked,jdbcType=BIT},
+		#{usertype,jdbcType=VARCHAR},
+		#{userclass,jdbcType=VARCHAR})
+	</insert>
+
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.auth.model.UserExample"
+		resultType="java.lang.Integer">
+		select count(*) from plat_sys_user
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<update id="updateByExample" parameterType="map">
+		update plat_sys_user
+		set id = #{record.id,jdbcType=BIGINT},
+		orgid =
+		#{record.orgid,jdbcType=BIGINT},
+		account =
+		#{record.account,jdbcType=VARCHAR},
+		password =
+		#{record.password,jdbcType=VARCHAR},
+		title = #{record.title,jdbcType=VARCHAR},
+		phone = #{record.phone,jdbcType=VARCHAR},
+		email = #{record.email,jdbcType=VARCHAR},
+		salt = #{record.salt,jdbcType=VARCHAR},
+		usertype = #{record.usertype,jdbcType=VARCHAR},
+		userclass = #{record.userclass,jdbcType=VARCHAR},
+		locked = #{record.locked,jdbcType=BIT}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.auth.model.User">
+		update
+		plat_sys_user
+		set orgid = #{orgid,jdbcType=BIGINT},
+		account = #{account,jdbcType=VARCHAR},
+		password = #{password,jdbcType=VARCHAR},
+		title = #{title,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		salt = #{salt,jdbcType=VARCHAR},
+		usertype = #{usertype,jdbcType=VARCHAR},
+		userclass = #{userclass,jdbcType=VARCHAR},
+		locked = #{locked,jdbcType=BIT}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

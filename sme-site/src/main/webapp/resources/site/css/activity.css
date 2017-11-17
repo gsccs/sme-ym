@@ -1,0 +1,86 @@
+﻿
+/*活动列表页面*/
+.acti_left{width:705px; float:left; overflow:hidden; margin-top:20px; position:relative; margin: 15px auto 20px;
+  padding: 15px 18px 0;
+  background: #FFF;}
+.acti_left .title{margin:15px 0; border-bottom:6px solid #be1b20; color:#be1b20; font-size:14px; font-weight:bold; text-indent:2em;
+                line-height:2em; background:url('../images/activity-main.png') 0 0 no-repeat;}
+.acti_left .main{border:1px solid #d0d0d0; margin-bottom:10px; overflow:hidden; position:relative;}
+.acti_left .main .signup, .acti_left .main .evaluation, .acti_left .main .detail{width:99px; height:30px; position:absolute; top:0;
+           color:#fff; text-align:center; cursor:pointer;}
+.acti_left .main .signup{right:30px; background:url('../images/bm-b.jpg') no-repeat;}
+.acti_left .main .evaluation{right:30px; background:url('../images/pj.jpg') no-repeat;}
+.acti_left .main .evaluation a{display:block; height:30px;}
+.acti_left .main .detail{right:30px; background:url('../images/activity-main.png') 0 -35px no-repeat;}
+
+.acti_left .main .n_left{width:370px; padding:20px 20px 20px 25px; border-right:1px dotted #d0d0d0; float:left; overflow:hidden;}
+.acti_left .main .n_left .title{color:#be1b20; font-size:14px; list-style: disc outside; line-height:2em;}
+.acti_left .main .n_left .title a{color:#be1b20;}
+.acti_left .main .n_right{width:250px; padding:35px 10px 0; line-height:2em; float:left; overflow:hidden;}
+.acti_left .main .n_right dt{float:left; color:#0c77ca;}
+.acti_left .main .n_right dd{width:180px; float:left;}
+
+.acti_left .main .content{width:893px; padding:20px; line-height:2em; float:left; overflow:hidden;}
+.acti_left .main .content dt{float:left; color:#0c77ca;}
+.acti_left .main .content dd{width:820px; float:left;}
+
+.acti_left .acti_page { position: relative; }
+.acti_left .loading {width:32px; height:32px; background:url('../../images/loading-ajax.gif') no-repeat;
+                     position:absolute; top:19px; left:300px; display: none; }
+
+.filter{border:1px solid #ddd; overflow:hidden;}
+.filter_main{width:100%; padding:5px 0; line-height:1.5em; overflow:hidden;}
+.exp{border-bottom:1px dotted #ddd;}
+.filter_main dt{width:50px; text-align:right; margin:3px 20px 0 0; float:left; font-size:12px; font-weight:bold;}
+.filter_main dd{width:630px; float:left;}
+.filter_main dd.filter_sub{margin:3px 0 3px 113px; padding:2px 0 2px 2px; border:1px solid #ddd; }
+.filter_main dd a{padding:0 5px; margin:3px; display:block; float:left; font-size:12px;}
+.filter_main dd a.all{margin-right:9px;}
+.filter_main dd a:hover, .filter_main dd a.hover{background:#dd2828; color:#fff;}
+
+.acti_right{width:245px; float:right; overflow:hidden; margin-top:20px;}
+.acti_right .box{overflow:hidden;}
+.acti_right .box .title{height:2em; line-height:2em; text-indent:.4em; color:#fff; font-size:14px; font-weight:bold; background:#f09119;}
+.acti_right .box .title span{width:12px; height:9px; display:block; margin:10px 0 0 7px; background:url('../images/activity-main.png') 0 -25px no-repeat; float:left;}
+.acti_right .box .content{border:1px solid #d0d0d0; padding:10px 0;}
+.acti_right .box .content .main li{height:2.5em; line-height:2.5em; border-bottom:1px dashed #d0d0d0; padding-left:10px; list-style: disc inside; overflow:hidden; }
+
+.acti_right .box .content .top{}
+.acti_right .box .content .top div img{width:100px; height:80px;}
+
+.acti_right .publish{width:245px; height:40px; background:url('../images/activity-main.png') 0 -120px no-repeat; margin-bottom:15px; cursor:pointer; display:block;}
+
+/*活动详情页面*/
+.acti_detail{width:935px; float:left; overflow:hidden; margin-top:6px;}
+.acti_detail .title{text-align:center; font-weight:bold; font-size:16px; line-height:5em; }
+.acti_detail .top{border:1px solid #d0d0d0; background:#f9fbfc; padding:20px; position:relative;}
+.acti_detail .top dl{clear:both; line-height:2em; overflow:hidden;}
+.acti_detail .top dl dt{float:left; color:#0c77ca;}
+.acti_detail .top dl dt span{color:#0c77ca;}
+.acti_detail .top dl dd{float:left; width:700px;}
+.acti_detail .top .qrcode{width:100px; height:100px; position:absolute; top:20px; right:20px;}
+.acti_detail .top .qrcode img{width:100px; height:100px;}
+.acti_detail .top .qrcodetxt{width:100px; height:100px; position:absolute; top:118px; right:15px;color:Red}
+.acti_detail .top .signup{width:99px; height:30px; position:absolute; cursor:pointer; text-indent:0;
+                          top:150px;right:20px; background:url('../images/bm-b.jpg') no-repeat;}
+
+.acti_detail .content{border:1px solid #d0d0d0; background:#f9fbfc; padding:35px 20px 20px; margin-top:15px; line-height:2em; text-align:justify; text-indent:2em; position:relative;}
+.acti_detail .content .title{width:72px; height:23px; line-height:23px; background:url('../images/activity-main.png') 0 -95px no-repeat; color:#0c77ca;
+                             text-indent:0; font-weight:normal; position:absolute; top:-1px; left:-1px;}
+.acti_detail .content .acti_img{overflow:hidden;}
+.acti_detail .content .acti_img li{width:426px; height:426px; margin:10px; float:left;}
+.acti_detail .content .acti_img li .img_p{width:424px; height:424px;}
+.acti_detail .content .acti_img li p.img-box{width:424px;}
+.acti_detail .content .acti_img li .img_p img{ max-height:424px;}
+.acti_detail .content .contact{color:#0c77ca; text-align:right; margin-top:15px;}
+.acti_detail .evaluation{margin-top:15px;}
+.acti_detail .evaluation .title_x{width:69px; height:19px; line-height:19px; color:#fff; text-align:center;
+                                  background:url('../images/activity-main.png') 0 -55px no-repeat;}
+.acti_detail .evaluation #txtEvaluation{width:933px; height:100px; border:1px solid #d0d0d0; background:#f9fbfc;}
+.acti_detail .evaluation .code{width:935px; height:30px; line-height:30px;}
+.acti_detail .evaluation .code #txtCode{width:60px; float:left; margin-top:10px; border:1px solid #d0d0d0; background:#f9fbfc;}
+.acti_detail .evaluation .code #imgCode{width:56px; height:22px; float:left; margin: 8px 10px 0;}
+.acti_detail .evaluation .code .desc{float:left; margin-top:5px; line-height: 30px;}
+.acti_detail .evaluation #dvSubmit{width:72px; height:23px; line-height:23px; color:#000; text-align:center; cursor:pointer; margin-top:10px;
+                                   background:url('../images/activity-main.png') 0 -95px no-repeat;}
+

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<!-- FreeMarker 配置 -->
+	<bean id="freeMarkerConfigurer"
+		class="com.gsccs.sme.freemark.conf.TagConfigurer">
+		<property name="templateLoaderPath" value="${template.loader_path}" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="defaultEncoding">${template.encoding}</prop>
+				<prop key="url_escaping_charset">${url_escaping_charset}</prop>
+				<prop key="locale">${locale}</prop>
+				<prop key="template_update_delay">${template.update_delay}</prop>
+				<prop key="tag_syntax">auto_detect</prop>
+				<prop key="whitespace_stripping">true</prop>
+				<prop key="classic_compatible">true</prop>
+				<prop key="number_format">${template.number_format}</prop>
+				<prop key="boolean_format">${template.boolean_format}</prop>
+				<prop key="datetime_format">${template.datetime_format}</prop>
+				<prop key="date_format">${template.date_format}</prop>
+				<prop key="time_format">${template.time_format}</prop>
+				<prop key="object_wrapper">freemarker.ext.beans.BeansWrapper</prop>
+			</props>
+		</property>
+		<property name="freemarkerVariables">
+			<map>
+				<!-- SYS -->
+				<entry key="systemName" 		value="${system.name}" />
+				<entry key="systemVersion" 		value="${system.version}" />
+				<entry key="systemDescription" 	value="${system.description}" />
+				<entry key="systemShowPowered" 	value="${system.show_powered}" />
+				<entry key="base" 				value="#{servletContext.contextPath}" />
+				<entry key="locale" 			value="${locale}" />
+				
+				<entry key="sme_account" 				value-ref="accountTag" />
+				<entry key="sme_area_list" 				value-ref="areaListTag" />
+				<entry key="sme_sclass_list" 			value-ref="sclassListTag" />
+				
+				<entry key="sme_sitem_list" 			value-ref="sitemListTag" />
+				<entry key="sme_sitem_page" 			value-ref="sitemPageTag" />
+				<entry key="sme_sitemeval_page" 			value-ref="sitemEvalPageTag" />
+				
+				<entry key="sme_sneed_list" 			value-ref="sneedListTag" />
+				<entry key="sme_sneed_page" 			value-ref="sneedPageTag" />
+				
+				<entry key="sme_activity_list" 			value-ref="activityListTag" />
+				<entry key="sme_activity_page" 			value-ref="activityPageTag" />
+				
+				<entry key="sme_svorg" 					value-ref="svorgTag" />
+				<entry key="sme_svorg_list" 			value-ref="svorgListTag" />
+				<entry key="sme_svorg_page" 			value-ref="svorgPageTag" />
+				
+				<entry key="sme_park_list" 				value-ref="parkListTag" />
+				<entry key="sme_park" 					value-ref="parkTag" />
+				
+				<entry key="sme_industry_list" 			value-ref="industryListTag" />
+				<entry key="sme_corp_list" 				value-ref="corpListTag" />
+				<entry key="sme_corp_page" 				value-ref="corpPageTag" />
+				
+				<entry key="sme_expert_list" 			value-ref="expertListTag" />
+				<entry key="sme_expert_page" 			value-ref="expertPageTag" />
+				<entry key="sme_expert" 				value-ref="expertTag" />
+				
+				<entry key="sme_channel_list" 			value-ref="channelListTag" />
+				<entry key="sme_channel" 				value-ref="channelTag" />
+				<entry key="sme_info" 					value-ref="infoTag" />
+				<entry key="sme_info_list" 				value-ref="infoListTag" />
+				<entry key="sme_info_page" 				value-ref="infoPageTag" />
+				<entry key="sme_link_class" 			value-ref="linkClassListTag" />
+				<entry key="sme_link_list" 				value-ref="linkListTag" />
+				<entry key="sme_banner_list" 			value-ref="bannerListTag" />
+				
+				<entry key="sme_category_list" 			value-ref="categoryListTag" />
+				<entry key="sme_product_list" 			value-ref="productListTag" />
+				<entry key="sme_product_page" 			value-ref="productPageTag" />
+				
+				<entry key="sme_sorder_list" 			value-ref="sorderListTag" />
+				<entry key="sme_sorder_page" 			value-ref="sorderPageTag" />
+				
+				<entry key="sme_appealtopic_page" 			value-ref="appealTopicPageTag" />
+				<entry key="sme_appealtopic_list" 			value-ref="appealTopicListTag" />
+				<entry key="sme_appealitem_list" 			value-ref="appealItemListTag" />
+				
+				<entry key="sme_declaretopic_page" 			value-ref="declareTopicPageTag" />
+				<entry key="sme_declaretopic_list" 			value-ref="declareTopicListTag" />
+				
+				<entry key="sme_report_page" 			value-ref="reportPageTag" />
+				<entry key="sme_report_list" 			value-ref="reportListTag" />
+				
+				<entry key="sme_project_page" 			value-ref="projectPageTag" />
+				<!-- -->
+				<entry key="sme_consult_page" 			value-ref="consultPageTag" />
+				<entry key="sme_consult_list" 			value-ref="consultListTag" />
+				 
+			</map>
+		</property>
+	</bean>
+	
+</beans>
+
+

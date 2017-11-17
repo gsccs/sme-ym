@@ -1,0 +1,23 @@
+body{ margin:0; font-family:arial,"\5B8B\4F53";}
+img{border:0;}
+
+ul,li{list-style:none;margin:0;padding:0}
+.DB_tab25 {width:100%;height:110px;position:relative;overflow:hidden;cursor:pointer;}
+.DB_tab25 .DB_bgSet{position:relative;}
+.DB_tab25 .DB_bgSet li{position:absolute;width:100%;height:110px;display:none;}
+.DB_tab25 .DB_imgSet{position:absolute;width:988px;left:50%;margin-left:-500px;}
+.DB_tab25 .DB_imgSet .DB_1_1{position:absolute;left:75px;top:30px;}
+.DB_tab25 .DB_imgSet .DB_1_2{position:absolute;left:630px;top:30px}
+.DB_tab25 .DB_imgSet .DB_1_3{position:absolute;left:600px;top:180px}
+.DB_tab25 .DB_imgSet .DB_2_1{position:absolute;left:75px;top:30px;}
+.DB_tab25 .DB_imgSet .DB_2_2{position:absolute;left:530px;top:30px}
+.DB_tab25 .DB_imgSet .DB_2_3{position:absolute;left:730px;top:180px}
+.DB_tab25 .DB_imgSet .DB_3_1{position:absolute;left:150px;top:30px;}
+.DB_tab25 .DB_imgSet .DB_3_2{position:absolute;left:630px;top:30px}
+.DB_tab25 .DB_imgSet .DB_3_3{position:absolute;left:730px;top:180px}
+.DB_tab25 .DB_menuWrap{position:absolute;width:988px;left:50%;margin-left:-500px;}
+.DB_tab25 .DB_menuWrap .DB_menuSet{position:absolute;width:100%;top:96px;text-align:center;font-size:0; border-radius:20px;}
+.DB_tab25 .DB_menuWrap .DB_menuSet li{cursor:pointer;margin:0 3px;display:inline}
+.DB_tab25 .DB_prev{position:absolute;left:0px;top:35px;cursor:pointer;display:none}
+.DB_tab25 .DB_next{position:absolute;right:0px;top:35px;cursor:pointer;display:none}
+

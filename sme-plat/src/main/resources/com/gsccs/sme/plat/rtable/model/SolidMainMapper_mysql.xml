@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.rtable.dao.SolidMainMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.rtable.model.SolidMain">
+		<id column="mainId" property="mainid" jdbcType="VARCHAR" />
+		<result column="corpid" property="corpid" jdbcType="BIGINT" />
+		<result column="tbTime" property="tbtime" jdbcType="TIMESTAMP" />
+		<result column="shLeader" property="shleader" jdbcType="VARCHAR" />
+		<result column="tbName" property="tbname" jdbcType="VARCHAR" />
+
+		<result column="corptitle" property="corptitle" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		mainId, corpid, tbTime, shLeader, tbName
+	</sql>
+
+	<sql id="Join_Column_List">
+		corptitle
+	</sql>
+
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.rtable.model.SolidMainExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sme_rtable_solid_main
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.rtable.model.SolidMainExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (SELECT a.*,b.title as corptitle
+		FROM sme_rtable_solid_main as
+		a,sme_corp as b
+		WHERE a.corpid=b.id) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (SELECT a.*,b.title as corptitle
+		FROM sme_rtable_solid_main as
+		a,sme_corp as b
+		WHERE a.corpid=b.id) as aa
+		where mainId = #{mainid,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from sme_rtable_solid_main
+		where mainId = #{mainid,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.rtable.model.SolidMainExample">
+		delete from sme_rtable_solid_main
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gsccs.sme.plat.rtable.model.SolidMain">
+		insert into sme_rtable_solid_main (mainId, corpid, tbTime,
+		shLeader, tbName)
+		values (#{mainid,jdbcType=VARCHAR}, #{corpid,jdbcType=BIGINT},
+		#{tbtime,jdbcType=TIMESTAMP},
+		#{shleader,jdbcType=VARCHAR}, #{tbname,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.gsccs.sme.plat.rtable.model.SolidMain">
+		insert into sme_rtable_solid_main
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="mainid != null">
+				mainId,
+			</if>
+			<if test="corpid != null">
+				corpid,
+			</if>
+			<if test="tbtime != null">
+				tbTime,
+			</if>
+			<if test="shleader != null">
+				shLeader,
+			</if>
+			<if test="tbname != null">
+				tbName,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="mainid != null">
+				#{mainid,jdbcType=VARCHAR},
+			</if>
+			<if test="corpid != null">
+				#{corpid,jdbcType=BIGINT},
+			</if>
+			<if test="tbtime != null">
+				#{tbtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="shleader != null">
+				#{shleader,jdbcType=VARCHAR},
+			</if>
+			<if test="tbname != null">
+				#{tbname,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.rtable.model.SolidMainExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_rtable_solid_main
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update sme_rtable_solid_main
+		<set>
+			<if test="record.mainid != null">
+				mainId = #{record.mainid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.corpid != null">
+				corpid = #{record.corpid,jdbcType=BIGINT},
+			</if>
+			<if test="record.tbtime != null">
+				tbTime = #{record.tbtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.shleader != null">
+				shLeader = #{record.shleader,jdbcType=VARCHAR},
+			</if>
+			<if test="record.tbname != null">
+				tbName = #{record.tbname,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update sme_rtable_solid_main
+		set mainId = #{record.mainid,jdbcType=VARCHAR},
+		corpid = #{record.corpid,jdbcType=BIGINT},
+		tbTime = #{record.tbtime,jdbcType=TIMESTAMP},
+		shLeader = #{record.shleader,jdbcType=VARCHAR},
+		tbName = #{record.tbname,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.rtable.model.SolidMain">
+		update sme_rtable_solid_main
+		<set>
+			<if test="corpid != null">
+				corpid = #{corpid,jdbcType=BIGINT},
+			</if>
+			<if test="tbtime != null">
+				tbTime = #{tbtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="shleader != null">
+				shLeader = #{shleader,jdbcType=VARCHAR},
+			</if>
+			<if test="tbname != null">
+				tbName = #{tbname,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where mainId = #{mainid,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.rtable.model.SolidMain">
+		update sme_rtable_solid_main
+		set corpid = #{corpid,jdbcType=BIGINT},
+		tbTime = #{tbtime,jdbcType=TIMESTAMP},
+		shLeader = #{shleader,jdbcType=VARCHAR},
+		tbName = #{tbname,jdbcType=VARCHAR}
+		where mainId = #{mainid,jdbcType=VARCHAR}
+	</update>
+</mapper>

@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.svg.dao.SvorgTMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.svg.model.SvorgT">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="domain" property="domain" jdbcType="VARCHAR" />
+		<result column="nature" property="nature" jdbcType="VARCHAR" />
+		<result column="legaler" property="legaler" jdbcType="VARCHAR" />
+		<result column="linker" property="linker" jdbcType="VARCHAR" />
+		<result column="linktel" property="linktel" jdbcType="VARCHAR" />
+		<result column="sremark" property="sremark" jdbcType="VARCHAR" />
+		<result column="scode" property="scode" jdbcType="VARCHAR" />
+		<result column="subscode" property="subscode" jdbcType="VARCHAR" />
+		<result column="orgcode" property="orgcode" jdbcType="VARCHAR" />
+		<result column="regcode" property="regcode" jdbcType="VARCHAR" />
+		<result column="regtype" property="regtype" jdbcType="VARCHAR" />
+		<result column="hycode" property="hycode" jdbcType="VARCHAR" />
+		<result column="stake" property="stake" jdbcType="VARCHAR" />
+		<result column="regasset" property="regasset" jdbcType="REAL" />
+		<result column="pcode" property="pcode" jdbcType="VARCHAR" />
+		<result column="ccode" property="ccode" jdbcType="VARCHAR" />
+		<result column="acode" property="acode" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="profqualif" property="profqualif" jdbcType="VARCHAR" />
+		<result column="equcond" property="equcond" jdbcType="VARCHAR" />
+		<result column="personnel" property="personnel" jdbcType="VARCHAR" />
+		<result column="orgcodeimg" property="orgcodeimg" jdbcType="VARCHAR" />
+		<result column="regcodeimg" property="regcodeimg" jdbcType="VARCHAR" />
+		<result column="logo" property="logo" jdbcType="VARCHAR" />
+		<result column="svgtype" property="svgtype" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		
+		<!--  -->
+		<result column="naturestr" property="naturestr" jdbcType="VARCHAR" />
+		<result column="stakestr" property="stakestr" jdbcType="VARCHAR" />
+		<result column="industrystr" property="industrystr" jdbcType="VARCHAR" />
+		<result column="sclassstr" property="sclassstr" jdbcType="VARCHAR" />
+		
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.gsccs.sme.plat.svg.model.SvorgT"
+		extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, title, phone, email, domain, nature, legaler, linker, linktel,
+		sremark, scode,
+		subscode, orgcode, regcode, regtype, hycode, stake, regasset, pcode, ccode,
+		acode,
+		address, profqualif, equcond, personnel, orgcodeimg, regcodeimg, logo,svgtype,
+		status
+	</sql>
+	<sql id="Blob_Column_List">
+		content
+	</sql>
+	
+	<sql id="Join_Column_List">
+		industrystr,naturestr,sclassstr,stakestr
+	</sql>
+
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.SvorgTExample">
+		select distinct
+		
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (
+			select a.*,b.title as industrystr,c.title as naturestr,d.title as sclassstr,e.title as stakestr
+			from sme_svorg a
+			left join sme_industry b on a.hycode = b.id
+			left join plat_dict_item c on a.nature = c.id
+			left join sme_sclass d on a.scode = d.id
+			left join plat_dict_item e on a.stake = e.id
+		) as aa
+		
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (
+			select a.*,b.title as industrystr,c.title as naturestr,d.title as sclassstr,e.title as stakestr
+			from sme_svorg a
+			left join sme_industry b on a.hycode = b.id
+			left join plat_dict_item c on a.nature = c.id
+			left join sme_sclass d on a.scode = d.id
+			left join plat_dict_item e on a.stake = e.id
+		) as aa
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sme_svorg
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.svg.model.SvorgTExample">
+		delete from sme_svorg
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.gsccs.sme.plat.svg.model.SvorgT">
+		insert into sme_svorg (id, title, phone,
+		email, domain, nature,
+		legaler, linker, linktel,
+		sremark, scode, subscode,
+		orgcode, regcode, regtype,
+		hycode, stake, regasset,
+		pcode, ccode, acode,
+		address, profqualif, equcond,
+		personnel, orgcodeimg, regcodeimg,
+		logo, status,svgtype, content
+		)
+		values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR}, #{domain,jdbcType=VARCHAR}, #{nature,jdbcType=VARCHAR},
+		#{legaler,jdbcType=VARCHAR}, #{linker,jdbcType=VARCHAR},
+		#{linktel,jdbcType=VARCHAR},
+		#{sremark,jdbcType=VARCHAR}, #{scode,jdbcType=VARCHAR}, #{subscode,jdbcType=VARCHAR},
+		#{orgcode,jdbcType=VARCHAR}, #{regcode,jdbcType=VARCHAR},
+		#{regtype,jdbcType=VARCHAR},
+		#{hycode,jdbcType=VARCHAR}, #{stake,jdbcType=VARCHAR}, #{regasset,jdbcType=REAL},
+		#{pcode,jdbcType=VARCHAR}, #{ccode,jdbcType=VARCHAR},
+		#{acode,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR}, #{profqualif,jdbcType=VARCHAR}, #{equcond,jdbcType=VARCHAR},
+		#{personnel,jdbcType=VARCHAR}, #{orgcodeimg,jdbcType=VARCHAR},
+		#{regcodeimg,jdbcType=VARCHAR},
+		#{logo,jdbcType=VARCHAR}, #{svgtype,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+		#{content,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.svg.model.SvorgTExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_svorg
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update sme_svorg
+		set id = #{record.id,jdbcType=BIGINT},
+		title = #{record.title,jdbcType=VARCHAR},
+		phone = #{record.phone,jdbcType=VARCHAR},
+		email = #{record.email,jdbcType=VARCHAR},
+		domain = #{record.domain,jdbcType=VARCHAR},
+		nature = #{record.nature,jdbcType=VARCHAR},
+		legaler = #{record.legaler,jdbcType=VARCHAR},
+		linker = #{record.linker,jdbcType=VARCHAR},
+		linktel = #{record.linktel,jdbcType=VARCHAR},
+		sremark = #{record.sremark,jdbcType=VARCHAR},
+		scode = #{record.scode,jdbcType=VARCHAR},
+		subscode = #{record.subscode,jdbcType=VARCHAR},
+		orgcode = #{record.orgcode,jdbcType=VARCHAR},
+		regcode = #{record.regcode,jdbcType=VARCHAR},
+		regtype = #{record.regtype,jdbcType=VARCHAR},
+		hycode = #{record.hycode,jdbcType=VARCHAR},
+		stake = #{record.stake,jdbcType=VARCHAR},
+		regasset = #{record.regasset,jdbcType=REAL},
+		pcode = #{record.pcode,jdbcType=VARCHAR},
+		ccode = #{record.ccode,jdbcType=VARCHAR},
+		acode = #{record.acode,jdbcType=VARCHAR},
+		address = #{record.address,jdbcType=VARCHAR},
+		profqualif = #{record.profqualif,jdbcType=VARCHAR},
+		equcond = #{record.equcond,jdbcType=VARCHAR},
+		personnel = #{record.personnel,jdbcType=VARCHAR},
+		orgcodeimg = #{record.orgcodeimg,jdbcType=VARCHAR},
+		regcodeimg = #{record.regcodeimg,jdbcType=VARCHAR},
+		logo = #{record.logo,jdbcType=VARCHAR},
+		svgtype = #{record.svgtype,jdbcType=VARCHAR},
+		status = #{record.status,jdbcType=VARCHAR},
+		content = #{record.content,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.svg.model.SvorgT">
+		update sme_svorg
+		<set>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="domain != null">
+				domain = #{domain,jdbcType=VARCHAR},
+			</if>
+			<if test="nature != null">
+				nature = #{nature,jdbcType=VARCHAR},
+			</if>
+			<if test="legaler != null">
+				legaler = #{legaler,jdbcType=VARCHAR},
+			</if>
+			<if test="linker != null">
+				linker = #{linker,jdbcType=VARCHAR},
+			</if>
+			<if test="linktel != null">
+				linktel = #{linktel,jdbcType=VARCHAR},
+			</if>
+			<if test="sremark != null">
+				sremark = #{sremark,jdbcType=VARCHAR},
+			</if>
+			<if test="scode != null">
+				scode = #{scode,jdbcType=VARCHAR},
+			</if>
+			<if test="subscode != null">
+				subscode = #{subscode,jdbcType=VARCHAR},
+			</if>
+			<if test="orgcode != null">
+				orgcode = #{orgcode,jdbcType=VARCHAR},
+			</if>
+			<if test="regcode != null">
+				regcode = #{regcode,jdbcType=VARCHAR},
+			</if>
+			<if test="regtype != null">
+				regtype = #{regtype,jdbcType=VARCHAR},
+			</if>
+			<if test="hycode != null">
+				hycode = #{hycode,jdbcType=VARCHAR},
+			</if>
+			<if test="stake != null">
+				stake = #{stake,jdbcType=VARCHAR},
+			</if>
+			<if test="regasset != null">
+				regasset = #{regasset,jdbcType=REAL},
+			</if>
+			<if test="pcode != null">
+				pcode = #{pcode,jdbcType=VARCHAR},
+			</if>
+			<if test="ccode != null">
+				ccode = #{ccode,jdbcType=VARCHAR},
+			</if>
+			<if test="acode != null">
+				acode = #{acode,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="profqualif != null">
+				profqualif = #{profqualif,jdbcType=VARCHAR},
+			</if>
+			<if test="equcond != null">
+				equcond = #{equcond,jdbcType=VARCHAR},
+			</if>
+			<if test="personnel != null">
+				personnel = #{personnel,jdbcType=VARCHAR},
+			</if>
+			<if test="orgcodeimg != null">
+				orgcodeimg = #{orgcodeimg,jdbcType=VARCHAR},
+			</if>
+			<if test="regcodeimg != null">
+				regcodeimg = #{regcodeimg,jdbcType=VARCHAR},
+			</if>
+			<if test="logo != null">
+				logo = #{logo,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gsccs.sme.plat.svg.model.SvorgT">
+		update sme_svorg
+		set title = #{title,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		domain = #{domain,jdbcType=VARCHAR},
+		nature = #{nature,jdbcType=VARCHAR},
+		legaler = #{legaler,jdbcType=VARCHAR},
+		linker = #{linker,jdbcType=VARCHAR},
+		linktel = #{linktel,jdbcType=VARCHAR},
+		sremark = #{sremark,jdbcType=VARCHAR},
+		scode = #{scode,jdbcType=VARCHAR},
+		subscode = #{subscode,jdbcType=VARCHAR},
+		orgcode = #{orgcode,jdbcType=VARCHAR},
+		regcode = #{regcode,jdbcType=VARCHAR},
+		regtype = #{regtype,jdbcType=VARCHAR},
+		hycode = #{hycode,jdbcType=VARCHAR},
+		stake = #{stake,jdbcType=VARCHAR},
+		regasset = #{regasset,jdbcType=REAL},
+		pcode = #{pcode,jdbcType=VARCHAR},
+		ccode = #{ccode,jdbcType=VARCHAR},
+		acode = #{acode,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		profqualif = #{profqualif,jdbcType=VARCHAR},
+		equcond = #{equcond,jdbcType=VARCHAR},
+		personnel = #{personnel,jdbcType=VARCHAR},
+		orgcodeimg = #{orgcodeimg,jdbcType=VARCHAR},
+		regcodeimg = #{regcodeimg,jdbcType=VARCHAR},
+		logo = #{logo,jdbcType=VARCHAR},
+		svgtype = #{svgtype,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		content = #{content,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.svg.model.SvorgT">
+		update sme_svorg
+		set title = #{title,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		domain = #{domain,jdbcType=VARCHAR},
+		nature = #{nature,jdbcType=VARCHAR},
+		legaler = #{legaler,jdbcType=VARCHAR},
+		linker = #{linker,jdbcType=VARCHAR},
+		linktel = #{linktel,jdbcType=VARCHAR},
+		sremark = #{sremark,jdbcType=VARCHAR},
+		scode = #{scode,jdbcType=VARCHAR},
+		subscode = #{subscode,jdbcType=VARCHAR},
+		orgcode = #{orgcode,jdbcType=VARCHAR},
+		regcode = #{regcode,jdbcType=VARCHAR},
+		regtype = #{regtype,jdbcType=VARCHAR},
+		hycode = #{hycode,jdbcType=VARCHAR},
+		stake = #{stake,jdbcType=VARCHAR},
+		regasset = #{regasset,jdbcType=REAL},
+		pcode = #{pcode,jdbcType=VARCHAR},
+		ccode = #{ccode,jdbcType=VARCHAR},
+		acode = #{acode,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		profqualif = #{profqualif,jdbcType=VARCHAR},
+		equcond = #{equcond,jdbcType=VARCHAR},
+		personnel = #{personnel,jdbcType=VARCHAR},
+		orgcodeimg = #{orgcodeimg,jdbcType=VARCHAR},
+		regcodeimg = #{regcodeimg,jdbcType=VARCHAR},
+		logo = #{logo,jdbcType=VARCHAR},
+		svgtype = #{svgtype,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<select id="querySvgByItem" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.SvorgTExample">
+		select distinct
+		<include refid="Base_Column_List" />
+		from sme_svorg 
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by istop
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+	
+</mapper>

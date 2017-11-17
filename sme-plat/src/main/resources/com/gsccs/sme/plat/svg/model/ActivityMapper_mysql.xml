@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.svg.dao.ActivityTMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.svg.model.ActivityT">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="svgid" property="svgid" jdbcType="BIGINT" />
+		<result column="scode" property="scode" jdbcType="BIGINT" />
+		<result column="subscode" property="subscode" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="img" property="img" jdbcType="VARCHAR" />
+		<result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+		<result column="clicknum" property="clicknum" jdbcType="INTEGER" />
+		<result column="linker" property="linker" jdbcType="VARCHAR" />
+		<result column="linktel" property="linktel" jdbcType="VARCHAR" />
+		<result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+		<result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="isrelease" property="isrelease" jdbcType="VARCHAR" />
+		<result column="usernum" property="usernum" jdbcType="INTEGER" />
+		<result column="orgnum" property="orgnum" jdbcType="VARCHAR" />
+		<result column="pcode" property="pcode" jdbcType="VARCHAR" />
+		<result column="ccode" property="ccode" jdbcType="VARCHAR" />
+		<result column="acode" property="acode" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="undertake" property="undertake" jdbcType="BIGINT" />
+		
+		<!--  -->
+		<result column="sclassstr" property="sclassstr" jdbcType="VARCHAR" />
+		<result column="svgtitle" property="svgtitle" jdbcType="VARCHAR" />
+		<result column="svglogo" property="svglogo" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.gsccs.sme.plat.svg.model.ActivityT"
+		extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, svgid, scode, subscode, title, img, addtime, clicknum, linker, linktel,
+		starttime,
+		endtime, remark, status,isrelease, usernum, orgnum, pcode, ccode, acode, address,
+		undertake
+	</sql>
+	
+	<sql id="Blob_Column_List">
+		content
+	</sql>
+	
+	<sql id="Join_Column_List">
+		sclassstr,svgtitle,svglogo
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="com.gsccs.sme.plat.svg.model.ActivityTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from sme_activity
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.ActivityTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (
+			select a.*,b.title as sclassstr,c.title as svgtitle,c.logo as svglogo
+			from sme_activity a,sme_sclass b,sme_svorg c
+			where a.scode = b.id
+			and a.svgid = c.id
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+	
+	<select id="selectPageEnroll" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sme_activity a , sme_actenroll b
+		where a.id=b.actid
+		and b.userid=${userid}
+		order by a.addtime desc
+		limit ${skip},${pageSize}
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from (
+			select a.*,b.title as sclassstr,c.title as svgtitle,c.logo as svglogo
+			from sme_activity a,sme_sclass b,sme_svorg c
+			where a.scode = b.id
+			and a.svgid = c.id
+		) as aa
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sme_activity
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.svg.model.ActivityTExample">
+		delete from sme_activity
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gsccs.sme.plat.svg.model.ActivityT">
+		insert into sme_activity (id, svgid, scode,
+		subscode, title, img,
+		addtime, clicknum, linker,
+		linktel, starttime, endtime,
+		remark, status,isrelease, usernum,
+		orgnum, pcode, ccode,
+		acode, address, undertake,
+		content)
+		values (#{id,jdbcType=BIGINT}, #{svgid,jdbcType=BIGINT},
+		#{scode,jdbcType=BIGINT},
+		#{subscode,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR},
+		#{addtime,jdbcType=TIMESTAMP}, #{clicknum,jdbcType=INTEGER},
+		#{linker,jdbcType=VARCHAR},
+		#{linktel,jdbcType=VARCHAR}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP},
+		#{remark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+		#{isrelease,jdbcType=VARCHAR},
+		#{usernum,jdbcType=INTEGER},
+		#{orgnum,jdbcType=VARCHAR}, #{pcode,jdbcType=VARCHAR}, #{ccode,jdbcType=VARCHAR},
+		#{acode,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+		#{undertake,jdbcType=BIGINT},
+		#{content,jdbcType=LONGVARCHAR})
+	</insert>
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.svg.model.ActivityTExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_activity
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	
+	<select id="countEnrollAct" resultType="java.lang.Integer"
+		parameterType="map">
+		select count(*)
+		from sme_activity a ,sme_actenroll b
+		where a.id=b.actid
+		and b.userid=${userid}
+		order by a.addtime desc
+	</select>
+
+	<update id="updateByExample" parameterType="map">
+		update sme_activity
+		set id = #{record.id,jdbcType=BIGINT},
+		svgid = #{record.svgid,jdbcType=BIGINT},
+		scode = #{record.scode,jdbcType=BIGINT},
+		subscode = #{record.subscode,jdbcType=BIGINT},
+		title = #{record.title,jdbcType=VARCHAR},
+		img = #{record.img,jdbcType=VARCHAR},
+		addtime = #{record.addtime,jdbcType=TIMESTAMP},
+		clicknum = #{record.clicknum,jdbcType=INTEGER},
+		linker = #{record.linker,jdbcType=VARCHAR},
+		linktel = #{record.linktel,jdbcType=VARCHAR},
+		starttime = #{record.starttime,jdbcType=TIMESTAMP},
+		endtime = #{record.endtime,jdbcType=TIMESTAMP},
+		remark = #{record.remark,jdbcType=VARCHAR},
+		status = #{record.status,jdbcType=VARCHAR},
+		isrelease=#{record.isrelease,jdbcType=VARCHAR},
+		usernum = #{record.usernum,jdbcType=INTEGER},
+		orgnum = #{record.orgnum,jdbcType=VARCHAR},
+		pcode = #{record.pcode,jdbcType=VARCHAR},
+		ccode = #{record.ccode,jdbcType=VARCHAR},
+		acode = #{record.acode,jdbcType=VARCHAR},
+		address = #{record.address,jdbcType=VARCHAR},
+		undertake = #{record.undertake,jdbcType=BIGINT}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	
+	
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gsccs.sme.plat.svg.model.ActivityT">
+		update sme_activity
+		set svgid = #{svgid,jdbcType=BIGINT},
+		scode = #{scode,jdbcType=BIGINT},
+		subscode = #{subscode,jdbcType=BIGINT},
+		title = #{title,jdbcType=VARCHAR},
+		img = #{img,jdbcType=VARCHAR},
+		addtime = #{addtime,jdbcType=TIMESTAMP},
+		clicknum = #{clicknum,jdbcType=INTEGER},
+		linker = #{linker,jdbcType=VARCHAR},
+		linktel = #{linktel,jdbcType=VARCHAR},
+		starttime = #{starttime,jdbcType=TIMESTAMP},
+		endtime = #{endtime,jdbcType=TIMESTAMP},
+		remark = #{remark,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		isrelease = #{isrelease,jdbcType=VARCHAR},
+		usernum = #{usernum,jdbcType=INTEGER},
+		orgnum = #{orgnum,jdbcType=VARCHAR},
+		pcode = #{pcode,jdbcType=VARCHAR},
+		ccode = #{ccode,jdbcType=VARCHAR},
+		acode = #{acode,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		undertake = #{undertake,jdbcType=BIGINT},
+		content = #{content,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.svg.model.ActivityT">
+		update sme_activity
+		set svgid = #{svgid,jdbcType=BIGINT},
+		scode = #{scode,jdbcType=BIGINT},
+		subscode = #{subscode,jdbcType=BIGINT},
+		title = #{title,jdbcType=VARCHAR},
+		img = #{img,jdbcType=VARCHAR},
+		addtime = #{addtime,jdbcType=TIMESTAMP},
+		clicknum = #{clicknum,jdbcType=INTEGER},
+		linker = #{linker,jdbcType=VARCHAR},
+		linktel = #{linktel,jdbcType=VARCHAR},
+		starttime = #{starttime,jdbcType=TIMESTAMP},
+		endtime = #{endtime,jdbcType=TIMESTAMP},
+		remark = #{remark,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		isrelease = #{isrelease,jdbcType=VARCHAR}, 
+		usernum = #{usernum,jdbcType=INTEGER},
+		orgnum = #{orgnum,jdbcType=VARCHAR},
+		pcode = #{pcode,jdbcType=VARCHAR},
+		ccode = #{ccode,jdbcType=VARCHAR},
+		acode = #{acode,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		undertake = #{undertake,jdbcType=BIGINT},
+		content = #{content,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

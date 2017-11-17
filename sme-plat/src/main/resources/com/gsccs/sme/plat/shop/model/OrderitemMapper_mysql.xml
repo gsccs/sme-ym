@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gsccs.sme.plat.shop.dao.OrderitemMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.shop.model.OrderitemT">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="orderid" jdbcType="VARCHAR" property="orderid" />
+		<result column="productid" jdbcType="BIGINT" property="productid" />
+		<result column="goodsid" jdbcType="BIGINT" property="goodsid" />
+		<result column="num" jdbcType="INTEGER" property="num" />
+		<result column="price" jdbcType="DECIMAL" property="price" />
+		<result column="totalfee" jdbcType="DECIMAL" property="totalfee" />
+		<result column="buyerid" jdbcType="VARCHAR" property="buyerid" />
+		<result column="sellerid" jdbcType="VARCHAR" property="sellerid" />
+		<result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
+		<result column="goodstitle" jdbcType="VARCHAR" property="goodstitle" />
+		<result column="goodsurl" jdbcType="VARCHAR" property="goodsurl" />
+		<result column="specstr" jdbcType="VARCHAR" property="specstr" />
+		<result column="status" jdbcType="VARCHAR" property="status" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, orderid, productid, goodsid, num, price, totalfee, buyerid, sellerid,
+		addtime,
+		goodstitle, goodsurl, specstr, status
+	</sql>
+	
+	<select id="selectByExample" parameterType="com.gsccs.sme.plat.shop.model.OrderitemExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from shop_order_item
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from shop_order_item
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from shop_order_item
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.shop.model.OrderitemExample">
+		delete from shop_order_item
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gsccs.sme.plat.shop.model.OrderitemT">
+		insert into shop_order_item (id, orderid, productid,
+		goodsid, num, price,
+		totalfee, buyerid, sellerid,
+		addtime, goodstitle, goodsurl,
+		specstr, status)
+		values (#{id,jdbcType=VARCHAR}, #{orderid,jdbcType=VARCHAR},
+		#{productid,jdbcType=BIGINT},
+		#{goodsid,jdbcType=BIGINT}, #{num,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL},
+		#{totalfee,jdbcType=DECIMAL}, #{buyerid,jdbcType=VARCHAR},
+		#{sellerid,jdbcType=VARCHAR},
+		#{addtime,jdbcType=TIMESTAMP}, #{goodstitle,jdbcType=VARCHAR}, #{goodsurl,jdbcType=VARCHAR},
+		#{specstr,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
+	</insert>
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.shop.model.OrderitemExample"
+		resultType="java.lang.Integer">
+		select count(*) from shop_order_item
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<update id="updateByExample" parameterType="map">
+		update shop_order_item
+		set id = #{record.id,jdbcType=VARCHAR},
+		orderid = #{record.orderid,jdbcType=VARCHAR},
+		productid = #{record.productid,jdbcType=BIGINT},
+		goodsid = #{record.goodsid,jdbcType=BIGINT},
+		num = #{record.num,jdbcType=INTEGER},
+		price = #{record.price,jdbcType=DECIMAL},
+		totalfee = #{record.totalfee,jdbcType=DECIMAL},
+		buyerid = #{record.buyerid,jdbcType=VARCHAR},
+		sellerid = #{record.sellerid,jdbcType=VARCHAR},
+		addtime = #{record.addtime,jdbcType=TIMESTAMP},
+		goodstitle = #{record.goodstitle,jdbcType=VARCHAR},
+		goodsurl = #{record.goodsurl,jdbcType=VARCHAR},
+		specstr = #{record.specstr,jdbcType=VARCHAR},
+		status = #{record.status,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.shop.model.OrderitemT">
+		update shop_order_item
+		set orderid = #{orderid,jdbcType=VARCHAR},
+		productid = #{productid,jdbcType=BIGINT},
+		goodsid = #{goodsid,jdbcType=BIGINT},
+		num = #{num,jdbcType=INTEGER},
+		price = #{price,jdbcType=DECIMAL},
+		totalfee = #{totalfee,jdbcType=DECIMAL},
+		buyerid = #{buyerid,jdbcType=VARCHAR},
+		sellerid = #{sellerid,jdbcType=VARCHAR},
+		addtime = #{addtime,jdbcType=TIMESTAMP},
+		goodstitle = #{goodstitle,jdbcType=VARCHAR},
+		goodsurl = #{goodsurl,jdbcType=VARCHAR},
+		specstr = #{specstr,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

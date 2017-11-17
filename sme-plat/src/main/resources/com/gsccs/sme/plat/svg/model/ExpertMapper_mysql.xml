@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.svg.dao.ExpertTMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.svg.model.ExpertT">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="logo" property="logo" jdbcType="VARCHAR" />
+		<result column="degree" property="degree" jdbcType="VARCHAR" />
+		<result column="classid" property="classid" jdbcType="VARCHAR" />
+		<result column="technical" property="technical" jdbcType="VARCHAR" />
+		<result column="proflife" property="proflife" jdbcType="INTEGER" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="telnum" property="telnum" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="age" property="age" jdbcType="INTEGER" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="duties" property="duties" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="VARCHAR" />
+		<result column="sucase" property="sucase" jdbcType="VARCHAR" />
+		<result column="resume" property="resume" jdbcType="VARCHAR" />
+		<result column="honor" property="honor" jdbcType="VARCHAR" />
+		<result column="salenum" property="salenum" jdbcType="INTEGER" />
+		<result column="clicknum" property="clicknum" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, title, logo, degree, classid, technical, proflife,  phone, telnum,
+		email, age, sex, duties, state, sucase,
+		resume,honor,salenum, clicknum
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.ExpertTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sme_expert
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.ExpertTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sme_expert
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sme_expert
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sme_expert
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.svg.model.ExpertTExample">
+		delete from sme_expert
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.gsccs.sme.plat.svg.model.ExpertT">
+		insert into sme_expert (id, title, logo,
+		degree, classid, technical,
+		proflife, 
+		phone, telnum, email,
+		age, sex, duties, state,
+		sucase, resume,honor,
+		salenum, clicknum)
+		values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR},
+		#{logo,jdbcType=VARCHAR},
+		#{degree,jdbcType=VARCHAR}, #{classid,jdbcType=VARCHAR}, #{technical,jdbcType=VARCHAR},
+		#{proflife,jdbcType=INTEGER}, 
+		#{phone,jdbcType=VARCHAR}, #{telnum,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+		#{age,jdbcType=INTEGER}, #{sex,jdbcType=VARCHAR},
+		#{duties,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR},
+		#{sucase,jdbcType=VARCHAR},
+		#{resume,jdbcType=VARCHAR},
+		#{honor,jdbcType=VARCHAR},
+		#{salenum,jdbcType=INTEGER}, #{clicknum,jdbcType=INTEGER})
+	</insert>
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.svg.model.ExpertTExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_expert
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<update id="updateByExample" parameterType="map">
+		update sme_expert
+		set id = #{record.id,jdbcType=BIGINT},
+		title = #{record.title,jdbcType=VARCHAR},
+		logo = #{record.logo,jdbcType=VARCHAR},
+		degree = #{record.degree,jdbcType=VARCHAR},
+		classid = #{record.classid,jdbcType=VARCHAR},
+		technical = #{record.technical,jdbcType=VARCHAR},
+		proflife = #{record.proflife,jdbcType=INTEGER},
+		phone = #{record.phone,jdbcType=VARCHAR},
+		telnum = #{record.telnum,jdbcType=VARCHAR},
+		email = #{record.email,jdbcType=VARCHAR},
+		age = #{record.age,jdbcType=INTEGER},
+		sex = #{record.sex,jdbcType=VARCHAR},
+		duties = #{record.duties,jdbcType=VARCHAR},
+		state = #{record.state,jdbcType=VARCHAR},
+		sucase = #{record.sucase,jdbcType=VARCHAR},
+		resume = #{record.resume,jdbcType=VARCHAR},
+		honor = #{record.honor,jdbcType=VARCHAR},
+		salenum = #{record.salenum,jdbcType=INTEGER},
+		clicknum = #{record.clicknum,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.svg.model.ExpertT">
+		update sme_expert
+		set title = #{title,jdbcType=VARCHAR},
+		logo = #{logo,jdbcType=VARCHAR},
+		degree = #{degree,jdbcType=VARCHAR},
+		classid = #{classid,jdbcType=VARCHAR},
+		technical = #{technical,jdbcType=VARCHAR},
+		proflife = #{proflife,jdbcType=INTEGER},
+		phone = #{phone,jdbcType=VARCHAR},
+		telnum = #{telnum,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		age = #{age,jdbcType=INTEGER},
+		sex = #{sex,jdbcType=VARCHAR},
+		duties = #{duties,jdbcType=VARCHAR},
+		state = #{state,jdbcType=VARCHAR},
+		sucase = #{sucase,jdbcType=VARCHAR},
+		resume = #{resume,jdbcType=VARCHAR},
+		honor = #{honor,jdbcType=VARCHAR},
+		salenum = #{salenum,jdbcType=INTEGER},
+		clicknum = #{clicknum,jdbcType=INTEGER}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

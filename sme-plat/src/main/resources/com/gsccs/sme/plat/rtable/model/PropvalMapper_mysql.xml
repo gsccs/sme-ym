@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.rtable.dao.PropvalTMapper" >
+  <resultMap id="BaseResultMap" type="com.gsccs.sme.plat.rtable.model.PropvalT" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="propid" property="propid" jdbcType="VARCHAR" />
+    <result column="corpid" property="corpid" jdbcType="VARCHAR" />
+    <result column="reportid" property="reportid" jdbcType="VARCHAR" />
+    <result column="itemid" property="itemid" jdbcType="VARCHAR" />
+    <result column="propval" property="propval" jdbcType="DECIMAL" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    
+    <!--  -->
+    <result column="propcode"  property="propcode" jdbcType="VARCHAR" />
+    <result column="proptitle" property="proptitle" jdbcType="VARCHAR" />
+    <result column="showtype" property="showtype" jdbcType="VARCHAR" />
+    <result column="dictcode" property="dictcode" jdbcType="VARCHAR" />
+    <result column="dictval" property="dictval" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, propid, corpid, reportid,itemid, propval, addtime, remark
+  </sql>
+  <sql id="Join_Column_List" >
+    propcode,proptitle,showtype,dictcode,dictval
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gsccs.sme.plat.rtable.model.PropvalTExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from report_prop_val
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+   <select id="selectCorpProductProps" resultMap="BaseResultMap" parameterType="map" >
+	    select distinct
+	    <include refid="Base_Column_List" />
+	    ,
+	    <include refid="Join_Column_List" />
+	    from (
+	    	select a.code as propcode,a.title as proptitle,a.showtype,a.dictcode,c.title as dictval,
+	    	a.reportid,b.id,a.id as propid,b.propval,b.corpid,b.addtime,b.remark
+			from report_prop a 
+			left join report_prop_val b on a.id = b.propid and b.corpid=#{corpid,jdbcType=VARCHAR}
+			left join plat_dict_item c on b.propval =c.id and a.dictcode is not null
+	    ) as aa
+	    where aa.reportid = #{reportid,jdbcType=VARCHAR}
+    </select>
+  
+  
+  	<select id="selectCorpProps" resultMap="BaseResultMap" parameterType="map" >
+	    select distinct
+	    <include refid="Base_Column_List" />
+	    ,
+	    <include refid="Join_Column_List" />
+	    from (
+	    	select a.propcode,a.title as proptitle,a.showtype,a.dictcode,c.title as dictval,
+	    	a.reportid,b.id,a.id as propid,b.propval,b.corpid,b.addtime,b.remark
+			from report_prop a 
+			left join report_prop_val b on a.id = b.propid and b.corpid=#{corpid,jdbcType=VARCHAR}
+			left join plat_dict_item c on b.propval =c.id and a.dictcode is not null
+	    ) as aa
+    </select>
+  
+  
+   <select id="selectPageByExample" resultMap="BaseResultMap" parameterType="com.gsccs.sme.plat.rtable.model.PropvalTExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Join_Column_List" />
+    from (
+    	select a.*,b.code,b.title as proptitle,b.showtype,b.dictcode,c.title as dictval
+    	from report_prop_val a 
+    	left join report_prop b on a.propid = b.id 
+    	left join plat_dict_item c on a.propval =c.id
+    		and b.dictcode is not null
+    	) as aa
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    limit ${skip},${pageSize}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Join_Column_List" />
+   from (
+    	select a.*,b.code,b.title as proptitle 
+    	from report_prop_val a 
+    	left join report_prop b
+    	on a.propid = b.id ) as aa
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from report_prop_val
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gsccs.sme.plat.rtable.model.PropvalTExample" >
+    delete from report_prop_val
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gsccs.sme.plat.rtable.model.PropvalT" >
+    insert into report_prop_val (id, propid, corpid, 
+      reportid,itemid, propval, addtime, 
+      remark)
+    values (#{id,jdbcType=VARCHAR}, #{propid,jdbcType=VARCHAR}, #{corpid,jdbcType=VARCHAR}, 
+      #{reportid,jdbcType=VARCHAR},#{itemid,jdbcType=VARCHAR},
+       #{propval,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gsccs.sme.plat.rtable.model.PropvalT" >
+    insert into report_prop_val
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="propid != null" >
+        propid,
+      </if>
+      <if test="corpid != null" >
+        corpid,
+      </if>
+      <if test="reportid != null" >
+        reportid,
+      </if>
+      <if test="propval != null" >
+        propval,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="propid != null" >
+        #{propid,jdbcType=VARCHAR},
+      </if>
+      <if test="corpid != null" >
+        #{corpid,jdbcType=VARCHAR},
+      </if>
+      <if test="reportid != null" >
+        #{reportid,jdbcType=VARCHAR},
+      </if>
+      <if test="propval != null" >
+        #{propval,jdbcType=DECIMAL},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gsccs.sme.plat.rtable.model.PropvalTExample" resultType="java.lang.Integer" >
+    select count(*) from report_prop_val
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update report_prop_val
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.propid != null" >
+        propid = #{record.propid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpid != null" >
+        corpid = #{record.corpid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportid != null" >
+        reportid = #{record.reportid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.propval != null" >
+        propval = #{record.propval,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addtime != null" >
+        addtime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update report_prop_val
+    set id = #{record.id,jdbcType=VARCHAR},
+      propid = #{record.propid,jdbcType=VARCHAR},
+      corpid = #{record.corpid,jdbcType=VARCHAR},
+      reportid = #{record.reportid,jdbcType=VARCHAR},
+      propval = #{record.propval,jdbcType=DECIMAL},
+      addtime = #{record.addtime,jdbcType=TIMESTAMP},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.rtable.model.PropvalT" >
+    update report_prop_val
+    <set >
+      <if test="propid != null" >
+        propid = #{propid,jdbcType=VARCHAR},
+      </if>
+      <if test="corpid != null" >
+        corpid = #{corpid,jdbcType=VARCHAR},
+      </if>
+      <if test="reportid != null" >
+        reportid = #{reportid,jdbcType=VARCHAR},
+      </if>
+      <if test="itemid != null" >
+        itemid = #{itemid,jdbcType=VARCHAR},
+      </if>
+      <if test="propval != null" >
+        propval = #{propval,jdbcType=DECIMAL},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.rtable.model.PropvalT" >
+    update report_prop_val
+    set propid = #{propid,jdbcType=VARCHAR},
+      corpid = #{corpid,jdbcType=VARCHAR},
+      reportid = #{reportid,jdbcType=VARCHAR},
+      propval = #{propval,jdbcType=DECIMAL},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

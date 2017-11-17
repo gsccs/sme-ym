@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+.rock {
+    position: relative;
+}
+
+.rock .rock-big li{
+    position: absolute;
+    top:0;
+    left:0;
+}
+
+.rock .rock-position {
+    display: none;
+}
+
+.rock .rock-position-left {
+    position: absolute;
+    left:8px;
+    top:50%;
+    margin-top:-23px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.rock .rock-position-right {
+    position: absolute;
+    right:8px;
+    top:50%;
+    margin-top:-23px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.rock .rock-num {
+    position: absolute;
+    bottom: 12px;
+    left:50%;
+    text-align: center;
+    z-index: 9999;
+}
+
+.rock .rock-num li {
+    float: left;
+}
+
+.rock .rock-num li span{
+    display: block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.rock .rock-num li.active span{
+    background-color: #D62A1D;
+}

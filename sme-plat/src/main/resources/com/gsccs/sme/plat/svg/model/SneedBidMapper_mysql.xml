@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gsccs.sme.plat.svg.dao.SneedBidMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.api.domain.SneedBid">
+
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="svgid" jdbcType="BIGINT" property="svgid" />
+		<result column="linktel" jdbcType="VARCHAR" property="linktel" />
+		<result column="linker" jdbcType="VARCHAR" property="linker" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="evalnum" jdbcType="INTEGER" property="evalnum" />
+		<result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
+		<result column="lasttime" jdbcType="TIMESTAMP" property="lasttime" />
+		<result column="istoned" jdbcType="VARCHAR" property="istoned" />
+		<result column="status" jdbcType="VARCHAR" property="status" />
+		<result column="sneedid" jdbcType="BIGINT" property="sneedid" />
+
+		<!-- -->
+		<result column="svgtitle" jdbcType="VARCHAR" property="svgtitle" />
+		<result column="corptitle" jdbcType="VARCHAR" property="corptitle" />
+		<result column="sneedtitle" jdbcType="VARCHAR" property="sneedtitle" />
+
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, svgid, linktel, linker, remark, evalnum, addtime, lasttime, istoned,status,
+		sneedid
+	</sql>
+	<sql id="Join_Column_List">
+		svgtitle,corptitle,sneedtitle
+	</sql>
+
+
+	<select id="selectByExample" parameterType="com.gsccs.sme.plat.svg.model.SneedBidExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sme_sneed_bid
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="selectPageByExample" parameterType="com.gsccs.sme.plat.svg.model.SneedBidExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (
+		select a.*,b.title as svgtitle,c.title as corptitle,d.title as sneedtitle
+		from sme_sneed_bid a,
+		sme_svorg b,
+		sme_corp c,
+		sme_sneed d
+		where a.svgid = b.id
+		and a.sneedid = d.id
+		and d.corpid = c.id
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sme_sneed_bid
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sme_sneed_bid
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.svg.model.SneedBidExample">
+		delete from sme_sneed_bid
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gsccs.sme.api.domain.SneedBid">
+		insert into sme_sneed_bid (id, svgid, linktel,
+		linker, remark, evalnum,
+		addtime, lasttime, istoned,status,
+		sneedid)
+		values (#{id,jdbcType=BIGINT}, #{svgid,jdbcType=BIGINT},
+		#{linktel,jdbcType=VARCHAR},
+		#{linker,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{evalnum,jdbcType=INTEGER},
+		#{addtime,jdbcType=TIMESTAMP}, #{lasttime,jdbcType=TIMESTAMP},
+		#{istoned,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR},
+		#{sneedid,jdbcType=BIGINT})
+	</insert>
+	
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.svg.model.SneedBidExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_sneed_bid
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update sme_sneed_bid
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=BIGINT},
+			</if>
+			<if test="record.svgid != null">
+				svgid = #{record.svgid,jdbcType=BIGINT},
+			</if>
+			<if test="record.linktel != null">
+				linktel = #{record.linktel,jdbcType=VARCHAR},
+			</if>
+			<if test="record.linker != null">
+				linker = #{record.linker,jdbcType=VARCHAR},
+			</if>
+			<if test="record.remark != null">
+				remark = #{record.remark,jdbcType=VARCHAR},
+			</if>
+			<if test="record.evalnum != null">
+				evalnum = #{record.evalnum,jdbcType=INTEGER},
+			</if>
+			<if test="record.addtime != null">
+				addtime = #{record.addtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.lasttime != null">
+				lasttime = #{record.lasttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.istoned != null">
+				istoned = #{record.istoned,jdbcType=VARCHAR},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=VARCHAR},
+			</if>
+			<if test="record.sneedid != null">
+				sneedid = #{record.sneedid,jdbcType=BIGINT},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Sun Apr 17 
+			11:46:32 CST 2016. -->
+		update sme_sneed_bid
+		set id = #{record.id,jdbcType=BIGINT},
+		svgid = #{record.svgid,jdbcType=BIGINT},
+		linktel = #{record.linktel,jdbcType=VARCHAR},
+		linker = #{record.linker,jdbcType=VARCHAR},
+		remark = #{record.remark,jdbcType=VARCHAR},
+		evalnum = #{record.evalnum,jdbcType=INTEGER},
+		addtime = #{record.addtime,jdbcType=TIMESTAMP},
+		lasttime = #{record.lasttime,jdbcType=TIMESTAMP},
+		istoned = #{record.istoned,jdbcType=VARCHAR},
+		status = #{record.status,jdbcType=VARCHAR},
+		sneedid = #{record.sneedid,jdbcType=BIGINT}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.api.domain.SneedBid">
+		update sme_sneed_bid
+		<set>
+			<if test="svgid != null">
+				svgid = #{svgid,jdbcType=BIGINT},
+			</if>
+			<if test="linktel != null">
+				linktel = #{linktel,jdbcType=VARCHAR},
+			</if>
+			<if test="linker != null">
+				linker = #{linker,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="evalnum != null">
+				evalnum = #{evalnum,jdbcType=INTEGER},
+			</if>
+			<if test="addtime != null">
+				addtime = #{addtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lasttime != null">
+				lasttime = #{lasttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="istoned != null">
+				istoned = #{istoned,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="sneedid != null">
+				sneedid = #{sneedid,jdbcType=BIGINT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.api.domain.SneedBid">
+		update sme_sneed_bid
+		set svgid = #{svgid,jdbcType=BIGINT},
+		linktel = #{linktel,jdbcType=VARCHAR},
+		linker = #{linker,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		evalnum = #{evalnum,jdbcType=INTEGER},
+		addtime = #{addtime,jdbcType=TIMESTAMP},
+		lasttime = #{lasttime,jdbcType=TIMESTAMP},
+		istoned = #{istoned,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		sneedid = #{sneedid,jdbcType=BIGINT}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

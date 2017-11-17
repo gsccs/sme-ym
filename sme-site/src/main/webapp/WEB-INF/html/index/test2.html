@@ -1,0 +1,614 @@
+<html xmlns="http://www.w3.org/1999/xhtml" class="hb-loaded"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>玉门市中小企业公共服务平台</title>
+<link rel="shortcut icon" href="#favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="/resources/site/css/base.css">
+<script type="text/javascript" src="/resources/site/js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="/resources/site/js/Common.js"></script>
+<script type="text/javascript" src="/resources/site/js/HomeAndFavorite.js"></script>
+
+<!--
+<link type="text/css" rel="stylesheet" href="/resources/site/css/css.css" />
+-->
+
+</head>
+<body huaban_collector_injected="true">
+
+	
+<!-- main -->
+<style type="text/css">
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style: none;
+}
+
+/*=========mF_liuzg ========*/
+.mychgPic {
+	width: 545px;
+	height: 385px;
+	border: 1px solid #999;
+}
+
+.mF_liuzg {
+	position: relative;
+	width: 545px;
+	height: 385px;
+	overflow: hidden;
+	font: 12px/1.5 Verdana, Geneva;
+	background: #fff;
+}
+
+.mF_liuzg .loading {
+	position: absolute;
+	z-index: 9999;
+	width: 100%;
+	height: 100%;
+	color: #666;
+	text-align: center;
+	padding-top: 90px;
+} /*载入画面*/
+.mF_liuzg .pic li {
+	width: 545px;
+	position: relative;
+	overflow: hidden;
+	*margin-top: -2px;
+}
+
+.mF_liuzg .pic li p {
+	width: 545px;
+	position: absolute;
+}
+
+.mF_liuzg .pic li p a {
+	display: block;
+} /*图片和焦点图框架一样大小*/
+.mF_liuzg .pic li p img {
+	width: 545px;
+	height: 385px;
+}
+
+.mF_liuzg .txt li {
+	position: absolute;
+	z-index: 2;
+	bottom: 0;
+	width: 545px;
+	height: 36px;
+	line-height: 34px;
+	overflow: hidden;
+	display: none;
+}
+
+.mF_liuzg .txt li a {
+	display: block;
+	color: #fff;
+	padding: 2px 0 0 16px;
+	font-size: 14px;
+	font-weight: bold;
+	text-decoration: none;
+} /*标题样式*/
+.mF_liuzg .txt-bg {
+	position: absolute;
+	bottom: 0;
+	z-index: 1;
+	width: 545px;
+	height: 36px;
+	overflow: hidden;
+	background: #000;
+	filter: alpha(opacity = 50);
+	opacity: 0.5;
+} /*标题背景*/
+.mF_liuzg .num {
+	position: absolute;
+	z-index: 3;
+	bottom: 8px;
+	right: 8px;
+	color: #333;
+} /*按钮样式*/
+.mF_liuzg .num li {
+	float: left;
+	width: 22px;
+	height: 18px;
+	position: relative;
+	border: 1px solid #FFF;
+	line-height: 18px;
+	text-align: center;
+	margin-right: 3px;
+	cursor: pointer;
+	background: #000;
+	filter: alpha(opacity = 90);
+	opacity: 0.9;
+	color: #FFF;
+}
+
+.mF_liuzg .num li.current,.mF_liuzg .num li.hover {
+	background: #A61814;
+	color: #fff;
+	font-weight: bold;
+}
+
+.rz_cp_box dl{
+	padding-left: 20px;
+}
+.rz_cp_box dl dt{
+	float: left;
+}
+.rz_cp_box dl dd{
+	float: left;
+}
+
+
+.q1 {
+  font-size: 15px;
+  font-weight: bold;
+  min-height: 20px;
+  margin-bottom: 8px;
+}
+
+.qw {
+  min-height: 25px;
+  font-size: 14px;
+}
+
+.qww {
+  width: 20px;
+  min-height: 20px;
+  background: #247fe8;
+  float: left;
+  text-align: center;
+  color: #FFF;
+}
+
+.qwt {
+  min-height: 20px;
+  float: left;
+  line-height: 20px;
+  padding-left: 10px;
+  margin-bottom: 5px;
+}
+
+.qd {
+  min-height: 25px;
+  font-size: 14px;
+  width: 620px;
+}
+
+.qdd {
+  width: 20px;
+  min-height: 20px;
+  background: #38de24;
+  float: left;
+  text-align: center;
+  color: #FFF;
+}
+
+.qda {
+  min-height: 20px;
+  float: left;
+  line-height: 20px;
+  padding-left: 10px;
+  width: 280px;
+}
+
+
+.bz_data table {
+  border-collapse: collapse;
+  font-size: 12px;
+  text-align: center;
+}
+.bz_data th {
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #ddd;
+  background: #f3f3f3;
+  color: #555;
+}
+
+.bz_data td {
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #ddd;
+  padding: 0 5px;
+}
+
+.xzfw{
+    width:95px;
+	height:106px;
+	float:left;
+	padding:0px 10px 10px 0px;
+
+}
+</style>
+
+
+
+
+
+	<div class="warp">
+		<!--内容部分 start-->
+		<div style="background-color: #FFFFFF; text-align: left; vertical-align: top;">
+			
+
+			<!--内容 start-->
+			<div style="padding: 0px 12px; text-align: left; vertical-align: top;">
+				
+				<div class="clear"></div>
+
+				
+
+				<!--新闻二 start-->
+				<div style="padding-bottom: 8px;">
+					<!--服务动态 start-->
+					<div style="width: 630px; float: left;">
+						<div class="bg_title02">
+							<div style="float: right;">
+								<a href="#" class="a_more">更多&gt;&gt;</a>
+							</div>
+							<div class="title02_1">服务动态</div>
+							<div class="clear"></div>
+						</div>
+
+						<div class="bz_data" style="text-align: left; vertical-align: top; line-height: 35px; font-size: 16px; height: 30px; margin: 5px 0px; ">
+							<table width="100%" border="0" cellpadding="0" cellspacing="0">
+								<tbody><tr>
+								      <th style="width:40%;">需求标题</th>
+								      <th style="width:30%;">企业名称</th>
+								      <th style="width:15%;">发布时间</th>
+								      <th style="width:15%;">当前状态</th>
+								   </tr>
+							</tbody></table>
+						</div>
+						
+						<!--  -->
+						<div id="demohq" class="bz_data" style="text-align: left; vertical-align: top; line-height: 35px; font-size: 16px; height: 250px;overflow:hidden; margin: 5px 0px; ">
+							<div id="demohq1">
+							<table width="100%" border="0" cellpadding="0" cellspacing="0">
+									<tbody><tr>
+										<td style="width:40%;"><a href="" target="_blank">工业和信息化固定资产投资项目节能评估和审查（1万吨标煤以下）</a></td>
+										<td style="width:30%;">甘肃盛世电力设备有限责任公司玉门分公司</td>
+										<td style="width:15%;">2016-03-21</td>
+										<td style="width:15%;" class="red">
+												<font color="green">已办理</font>
+										</td>
+									</tr>
+									<tr>
+										<td style="width:40%;"><a href="" target="_blank">工业和信息化固定资产投资项目节能评估和审查（1万吨标煤以下）</a></td>
+										<td style="width:30%;">甘肃宇丰新能源有限公司</td>
+										<td style="width:15%;">2016-04-15</td>
+										<td style="width:15%;" class="red">
+												<font color="green">已办理</font>
+										</td>
+									</tr>
+									<tr>
+										<td style="width:40%;"><a href="" target="_blank">工业和信息化固定资产投资项目节能评估和审查（1万吨标煤以下）</a></td>
+										<td style="width:30%;">玉门市丰农科技开发有限公司</td>
+										<td style="width:15%;">2016-04-27</td>
+										<td style="width:15%;" class="red">
+										</td>
+									</tr>
+									<tr>
+										<td style="width:40%;"><a href="" target="_blank">工业和信息化固定资产投资项目节能评估和审查（1万吨标煤以下）</a></td>
+										<td style="width:30%;">甘肃表青惠农农业有限公司</td>
+										<td style="width:15%;">2016-05-15</td>
+										<td style="width:15%;" class="red">
+												受理中
+										</td>
+									</tr>
+									<tr>
+										<td style="width:40%;"><a href="" target="_blank">工业和信息化固定资产投资项目节能评估和审查（1万吨标煤以下）</a></td>
+										<td style="width:30%;">甘肃鲁盛风光储能电库有限公司</td>
+										<td style="width:15%;">2016-05-16</td>
+										<td style="width:15%;" class="red">
+												<font color="green">已办理</font>
+										</td>
+									</tr>
+									<tr>
+										<td style="width:40%;"><a href="" target="_blank">工业和信息化固定资产投资项目节能评估和审查（1万吨标煤以下）</a></td>
+										<td style="width:30%;">甘肃亚盛国际贸易有限公司玉门分公司</td>
+										<td style="width:15%;">2016-05-16</td>
+										<td style="width:15%;" class="red">
+												<font color="green">已办理</font>
+										</td>
+									</tr>
+									<tr>
+										<td style="width:40%;"><a href="" target="_blank">工业和信息化固定资产投资项目节能评估和审查（1万吨标煤以下）</a></td>
+										<td style="width:30%;">玉门市聚兴惠民农民专业合作社</td>
+										<td style="width:15%;">2016-05-16</td>
+										<td style="width:15%;" class="red">
+												受理中
+										</td>
+									</tr>
+						    </tbody></table>
+						    </div>
+						    <div id="demohq2"></div>
+						</div>
+					</div>
+					<!--服务动态 start-->
+					<!--融资服务 start-->
+					<div style="width: 330px; float: right;">
+						<div class="bg_title02">
+							<a href="#"><div id="rzzxId" class="tab_rzfw title02_3">融资咨询</div></a> 
+							<a href="#"><div id="rzzcId" class="tab_rzfw title02_3">融资政策</div></a> 
+							<a href="#"><div id="rzcpId" class="tab_rzfw title02_2">融资产品</div></a>
+							<div class="title02_1">融资服务</div>
+							<div class="clear"></div>
+						</div>
+
+						<div id="rzcpPanelId" style="text-align: left; vertical-align: top; line-height: 35px; font-size: 16px; height: 280px; background-color: #f9f9f9; margin: 5px 0px; padding: 10px;">
+							<div class="rz_cp_box">
+								<div> <a href="/appeal-142.html">・&nbsp;创业促就业小额担保贷款…</a></div>
+								<dl>
+									<dt>融资机构:</dt>
+									<dl><a href="/appeal-142.html">就业局</a></dl>
+								</dl>
+								<div class="clear"></div>
+								<div> <a href="/appeal-143.html">・&nbsp;小微企业“助保贷”业务…</a></div>
+								<dl>
+									<dt>融资机构:</dt>
+									<dl><a href="/appeal-143.html">工信局</a></dl>
+								</dl>
+								<div class="clear"></div>
+							</div>
+						</div>
+
+						<div id="rzzcPanelId" style="text-align: left; vertical-align: top; line-height: 35px; font-size: 16px; height: 280px; background-color: #f9f9f9; margin: 5px 0px; padding: 10px; display: none;">
+							<ul>
+								<li>
+									<a href="/info-359.html" title="陈炎人调研财政税收工作" target="_blank">・&nbsp;陈炎人调研财政税收工作…</a>
+								</li>
+								<li>
+									<a href="/info-358.html" title="陈炎人在建化工业园区、老市区调研" target="_blank">・&nbsp;陈炎人在建化工业园区、老市区调…</a>
+								</li>
+								<li>
+									<a href="/info-315.html" title="玉门市企业融资工作效果明显" target="_blank">・&nbsp;玉门市企业融资工作效果明显…</a>
+								</li>
+								<li>
+									<a href="/info-317.html" title="玉门市狠抓工业项目推动工业经济稳步增长" target="_blank">・&nbsp;玉门市狠抓工业项目推动工业经济…</a>
+								</li>
+								<li>
+									<a href="/info-341.html" title="省长林铎来玉门调研指导工作" target="_blank">・&nbsp;省长林铎来玉门调研指导工作…</a>
+								</li>
+								<li>
+									<a href="/info-316.html" title="玉门市采取“6+2”融资举措合力破解中小企业融资难题" target="_blank">・&nbsp;玉门市采取“6+2”融资举措合…</a>
+								</li>
+								<li>
+									<a href="/info-340.html" title="欧阳坚率全省重大项目观摩组来我市观摩考察" target="_blank">・&nbsp;欧阳坚率全省重大项目观摩组来我…</a>
+								</li>
+								<li>
+									<a href="/info-308.html" title="玉门市与省疏管局共话友谊共谋发展" target="_blank">・&nbsp;玉门市与省疏管局共话友谊共谋发…</a>
+								</li>
+							</ul>
+						</div>
+
+						<div id="rzzxPanelId" style="text-align: left; vertical-align: top; font-size: 14px; height: 280px; background-color: #f9f9f9; margin: 5px 0px; padding: 10px; display: none;">
+							<div style="min-height:60px; margin:0px auto; margin-top:10px; overflow:hidden;">
+					        	<div class="q1"><a href="/consult-101.html">如何申请认定甘肃省著名商标</a></div>
+					            <div class="qw"><div class="qww">问</div><div class="qwt">(一)该商标为本省自然人、法人和其他组织</div></div>
+					            <!--
+					            <div class="qd"><div class="qdd">答</div><div class="qda">(一)该商标为本省自然人、法人和其他组织所拥有的有效注册商标，</div></div>
+					            -->
+					        </div>
+							<div style="min-height:60px; margin:0px auto; margin-top:10px; overflow:hidden;">
+					        	<div class="q1"><a href="/consult-102.html">省属民办非企业单位变更登记</a></div>
+					            <div class="qw"><div class="qww">问</div><div class="qwt">(一)该商标为本省自然人、法人和其他组织</div></div>
+					            <!--
+					            <div class="qd"><div class="qdd">答</div><div class="qda">(一)该商标为本省自然人、法人和其他组织所拥有的有效注册商标，</div></div>
+					            -->
+					        </div>
+							<div style="min-height:60px; margin:0px auto; margin-top:10px; overflow:hidden;">
+					        	<div class="q1"><a href="/consult-103.html">因素分配主要指哪些因素</a></div>
+					            <div class="qw"><div class="qww">问</div><div class="qwt">(一)该商标为本省自然人、法人和其他组织</div></div>
+					            <!--
+					            <div class="qd"><div class="qdd">答</div><div class="qda">(一)该商标为本省自然人、法人和其他组织所拥有的有效注册商标，</div></div>
+					            -->
+					        </div>
+						</div>
+
+					</div>
+					<!--融资服务 end-->
+
+					<div class="clear"></div>
+				</div>
+				<!--新闻二 end-->
+
+				<!--友情链接 start-->
+				<div style="padding-bottom: 12px;">
+					<div style="height: 40px; line-height: 40px; background-color: #f9f9f9; border-top: 4px solid #1782ed; border-bottom: 1px solid #cecece;">
+							<div class="tab_link link_font3" id="3673893e-d11b-41bb-a3b2-006927972575">行业协会网站</div>
+							<div class="tab_link link_font2" id="278d273a-a486-4128-831f-3d8a2c7ff54f"> 市局相关单位</div>
+						<div class="link_font1">友情链接</div>
+						<div class="clear"></div>
+					</div>
+					<div class="link_panel w_bot_1x" id="link_3673893e-d11b-41bb-a3b2-006927972575" style="background-color: #f9f9f9; padding: 10px 10px 15px 0px; line-height: 30px; display: none;">
+						<div class="link_01">
+							<a href="http://www.cpcia.org.cn/" target="_blank">•&nbsp;中国石油和石化工程研究会</a>
+						</div>
+						<div class="link_01">
+							<a href="www.crra.com.cn/" target="_blank">•&nbsp;中国物资再生协会</a>
+						</div>
+						<div class="link_01">
+							<a href="www.chinadesign.cn" target="_blank">•&nbsp;中国工业设计协会</a>
+						</div>
+						<div class="link_01">
+							<a href="www.cnaca.net.cn" target="_blank">•&nbsp;中国工艺美术协会</a>
+						</div>
+						<div class="link_01">
+							<a href="" target="_blank">•&nbsp;中国非金属矿工业协会</a>
+						</div>
+						<div class="link_01">
+							<a href="" target="_blank">•&nbsp;中国酿酒工业协会</a>
+						</div>
+						<div class="link_01">
+							<a href="www.cnljxh.com" target="_blank">•&nbsp;中国炼焦行业协会</a>
+						</div>
+						<div class="link_01">
+							<a href="www.cerds.org" target="_blank">•&nbsp;中国企业改革与发展研究会</a>
+						</div>
+						<div class="link_01">
+							<a href="www.carcu.org" target="_blank">•&nbsp;中国资源综合利用协会</a>
+						</div>
+						<div class="link_01">
+							<a href="www.caws.org.cn" target="_blank">•&nbsp;中国仓储协会</a>
+						</div>
+						<div class="link_01">
+							<a href="www.casmi.gov.cn" target="_blank">•&nbsp;中国机械工业审计学会</a>
+						</div>
+						<div class="link_01">
+							<a href="www.cccdu.org" target="_blank">•&nbsp;中国煤炭城市发展联合促进会</a>
+						</div>
+						<div class="link_01">
+							<a href="www.mei.gov.cn" target="_blank">•&nbsp;中国机械工业联合会</a>
+						</div>
+						<div class="link_01">
+							<a href="http://ptj.xmgcedu.cn:8080/" target="_blank">•&nbsp;葡萄与葡萄酒产业</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.gams96871.com/" target="_blank">•&nbsp;装备制造产业</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.gssjccy.com/" target="_blank">•&nbsp;建材产业</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.gsce.net/" target="_blank">•&nbsp;化工产业</a>
+						</div>
+						<div class="link_01">
+							<a href="http://plat.gshsyy.cn/" target="_blank">•&nbsp;中医药产业</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.west0930.com/" target="_blank">•&nbsp;清真食品及民族特需用品产业</a>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="link_panel w_bot_1x" id="link_278d273a-a486-4128-831f-3d8a2c7ff54f" style="background-color: #f9f9f9; padding: 10px 10px 15px 0px; line-height: 30px;">
+						<div class="link_01">
+							<a href="http://www.yumen.gov.cn/" target="_blank">•&nbsp;玉门政务网</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.ymlzw.com/" target="_blank">•&nbsp;玉门廉政网</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.ymdj.gov.cn/" target="_blank">•&nbsp;玉门党建网</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.gsymw.com/" target="_blank">•&nbsp;甘肃玉门网</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.ymsmzj.cn/" target="_blank">•&nbsp;玉门市民政局</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.ymzj12365.cn/" target="_blank">•&nbsp;玉门市质监局</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.ymcjz.com/" target="_blank">•&nbsp;玉门市赤金镇</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.gsdlr.gov.cn/jqyms/" target="_blank">•&nbsp;玉门市国土局</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.ymsgxj.gov.cn/" target="_blank">•&nbsp;玉门工业和信息化局</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.gsymxhjj.com/" target="_blank">•&nbsp;玉门循环经济网</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.ym.jqkj.gov.cn/" target="_blank">•&nbsp;玉门市科学技术局</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.ymnyw.com.cn/" target="_blank">•&nbsp;玉门农业信息网</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.eqym.cn/" target="_blank">•&nbsp;玉门地震信息网</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.ymhhzww.com/" target="_blank">•&nbsp;玉门花海政务网</a>
+						</div>
+						<div class="link_01">
+							<a href="http://nfb.yumen.gov.cn/" target="_blank">•&nbsp;玉门市农业开发和扶贫办公室</a>
+						</div>
+						<div class="link_01">
+							<a href="http://www.ymsrkw.gov.cn/" target="_blank">•&nbsp;玉门市计生委</a>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<!--友情链接 end-->
+			</div>
+			<!--内容 end-->
+		</div>
+		<!--内容部分 end-->
+	</div>
+
+<script>
+var speedhq=60;
+function Marqueehq(){
+	if(demohq.scrollTop==demohq1.offsetHeight){
+		demohq.scrollTop=0;
+	}else{
+		demohq.scrollTop++;
+	}
+}
+var MyMarhq=setInterval(Marqueehq,speedhq)
+demohq.onmouseover=function() {clearInterval(MyMarhq)}
+demohq.onmouseout=function() {MyMarhq=setInterval(Marqueehq,speedhq)}
+</script>    
+	<!-- footer -->
+<div class="clear"></div>
+<!--页脚 start-->
+<div style="height: 314px;">
+	<div style="width:100%; height:314px; background-image:url(/resources/site/images/bg_bottom.jpg); background-repeat:repeat-x;">
+	  <div style="width:1000px; margin:0 auto;">
+	    <!--链接图片 start-->
+	    <!---->
+	    <div style="height:77px; padding:25px 0px 0px 18px;">
+		   <div class="tb_lj"><a href="http://www.miit.gov.cn/" target="blank"><img src="/resources/site/images/link_01.jpg" border="0"></a></div>
+		   <div class="tb_lj"><a href="http://www.sdpc.gov.cn/" target="blank"><img src="/resources/site/images/link_02.jpg" border="0"></a></div>
+		   <div class="tb_lj"><a href="http://www.gansu.gov.cn/" target="blank"><img src="/resources/site/images/link_03.jpg" border="0"></a></div>
+		   <div class="tb_lj"><a href="http://www.gsec.gov.cn/" target="blank"><img src="/resources/site/images/link_04.jpg" border="0"></a></div>
+		   <div class="tb_lj"><a href="http://www.gsdrc.gov.cn/" target="blank"><img src="/resources/site/images/link_05.jpg" border="0"></a></div>
+		</div>
+		
+		<!--链接图片 end-->
+		<div style="text-align:center; line-height:30px;"> 
+		   <!--点击数 start-->
+		   <div style="text-align:center; line-height:30px; padding-top:50px; font-weight:bold; font-size:12px; color:#FFFFFF;">今日访问量：270&nbsp;&nbsp;&nbsp;&nbsp;昨日访问量：1160&nbsp;&nbsp;&nbsp;&nbsp;总访问量：731969</div>
+		   <!--点击数 start-->
+		   <!--页脚信息 start-->
+		   <div style="text-align:center; padding-top:20px; line-height:20px; font-size:12px; color:#b2d5f8;">
+		   主管单位：玉门市工业和信息化局  建设单位：玉门市工业和信息化局
+	         <br>
+	         版权所有：玉门市中小企业公共服务平台 
+	         <br>
+	      Copyright (C) 2015-2016  www.smeym.org  证书编码：甘ICP备13005515号-1	   </div>
+		   <!--页脚信息 start-->
+		</div>
+	  </div>
+	</div>
+</div>
+<!--页脚 end-->
+
+<!--右侧浮动 start-->
+	<div style="text-align: left; vertical-align: top; position: fixed; top: 280px; right: 20px; width: 100px;">
+		<div style="width: 80px; padding: 10px; background-color: #FFFFFF; vertical-align: top; text-align: left; border: 1px solid #CCCCCC;">
+			<img src="/resources/site/images/pic_wx.jpg" width="80" height="150" border="0"> 
+			<a href="javascript:void(0);" target="_blank" onclick="RedirectLogin()">
+				<img src="/resources/site/images/button_01.jpg" width="80" height="41" border="0">
+			</a> 
+			<a href="javascript:void(0);" target="_blank" onclick="RedirectRegist()">
+				<img src="/resources/site/images/button_03.jpg" width="80" height="37" border="0">
+			</a> 
+			<a href="/consultf.html" target="_blank">
+				<img src="/resources/site/images/button_04.jpg" width="80" height="40" border="0">
+			</a>
+		</div>
+	</div>
+	<!--右侧浮动 end-->
+	<input type="hidden" id="hdnWebUrl" value="http://www.smeym.org/">
+	<!--<input type="hidden" id="hdnWebUrl" value="http://localhost/" />-->
+	<input type="hidden" id="hdnSpUrl" value="http://sp.smeym.org/">
+	<input type="hidden" id="hdnSmeUrl" value="http://sme.smeym.org/">
+	<input type="hidden" id="hdnAccountUrl" value="http://account.smeym.org/"> 
+	<input type="hidden" id="hdnDomain" value="smeym.org">    
+
+</body></html>

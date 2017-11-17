@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.rtable.dao.WaterMainMapper" >
+  <resultMap id="BaseResultMap" type="com.gsccs.sme.plat.rtable.model.WaterMain" >
+    <id column="mainId" property="mainid" jdbcType="VARCHAR" />
+    <result column="corpid" property="corpid" jdbcType="BIGINT" />
+    <result column="txAddress" property="txaddress" jdbcType="VARCHAR" />
+    <result column="yzNum" property="yznum" jdbcType="VARCHAR" />
+    <result column="linker" property="linker" jdbcType="VARCHAR" />
+    <result column="linktel" property="linktel" jdbcType="VARCHAR" />
+    <result column="czNum" property="cznum" jdbcType="VARCHAR" />
+    <result column="jyNum" property="jynum" jdbcType="VARCHAR" />
+    <result column="tjdate" property="tjdate" jdbcType="TIMESTAMP" />
+    
+    <result column="corptitle" property="corptitle" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    mainId, corpid, txAddress, yzNum, linker, linktel, czNum, jyNum, tjdate
+  </sql>
+  
+  <sql id="Join_Column_List">
+		corptitle
+	</sql>
+	
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gsccs.sme.plat.rtable.model.WaterMainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sme_rtable_water_main
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+    <select id="selectPageByExample" resultMap="BaseResultMap" parameterType="com.gsccs.sme.plat.rtable.model.WaterMainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />,
+	<include refid="Join_Column_List" />
+	from (SELECT a.*,b.title as corptitle
+	FROM sme_rtable_water_main as a,sme_corp as b
+	WHERE a.corpid=b.id) as aa
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    limit ${skip},${pageSize}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />,
+		
+		<include refid="Join_Column_List" />
+     from (SELECT a.*,b.title as corptitle
+		FROM sme_rtable_water_main as a,sme_corp as b
+		WHERE a.corpid=b.id) as aa
+    where mainId = #{mainid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sme_rtable_water_main
+    where mainId = #{mainid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gsccs.sme.plat.rtable.model.WaterMainExample" >
+    delete from sme_rtable_water_main
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gsccs.sme.plat.rtable.model.WaterMain" >
+    insert into sme_rtable_water_main (mainId, corpid, txAddress, 
+      yzNum, linker, linktel, 
+      czNum, jyNum, tjdate
+      )
+    values (#{mainid,jdbcType=VARCHAR}, #{corpid,jdbcType=BIGINT}, #{txaddress,jdbcType=VARCHAR}, 
+      #{yznum,jdbcType=VARCHAR}, #{linker,jdbcType=VARCHAR}, #{linktel,jdbcType=VARCHAR}, 
+      #{cznum,jdbcType=VARCHAR}, #{jynum,jdbcType=VARCHAR}, #{tjdate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gsccs.sme.plat.rtable.model.WaterMain" >
+    insert into sme_rtable_water_main
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mainid != null" >
+        mainId,
+      </if>
+      <if test="corpid != null" >
+        corpid,
+      </if>
+      <if test="txaddress != null" >
+        txAddress,
+      </if>
+      <if test="yznum != null" >
+        yzNum,
+      </if>
+      <if test="linker != null" >
+        linker,
+      </if>
+      <if test="linktel != null" >
+        linktel,
+      </if>
+      <if test="cznum != null" >
+        czNum,
+      </if>
+      <if test="jynum != null" >
+        jyNum,
+      </if>
+      <if test="tjdate != null" >
+        tjdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mainid != null" >
+        #{mainid,jdbcType=VARCHAR},
+      </if>
+      <if test="corpid != null" >
+        #{corpid,jdbcType=BIGINT},
+      </if>
+      <if test="txaddress != null" >
+        #{txaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="yznum != null" >
+        #{yznum,jdbcType=VARCHAR},
+      </if>
+      <if test="linker != null" >
+        #{linker,jdbcType=VARCHAR},
+      </if>
+      <if test="linktel != null" >
+        #{linktel,jdbcType=VARCHAR},
+      </if>
+      <if test="cznum != null" >
+        #{cznum,jdbcType=VARCHAR},
+      </if>
+      <if test="jynum != null" >
+        #{jynum,jdbcType=VARCHAR},
+      </if>
+      <if test="tjdate != null" >
+        #{tjdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gsccs.sme.plat.rtable.model.WaterMainExample" resultType="java.lang.Integer" >
+    select count(*) from sme_rtable_water_main
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sme_rtable_water_main
+    <set >
+      <if test="record.mainid != null" >
+        mainId = #{record.mainid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpid != null" >
+        corpid = #{record.corpid,jdbcType=BIGINT},
+      </if>
+      <if test="record.txaddress != null" >
+        txAddress = #{record.txaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yznum != null" >
+        yzNum = #{record.yznum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linker != null" >
+        linker = #{record.linker,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linktel != null" >
+        linktel = #{record.linktel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cznum != null" >
+        czNum = #{record.cznum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jynum != null" >
+        jyNum = #{record.jynum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tjdate != null" >
+        tjdate = #{record.tjdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sme_rtable_water_main
+    set mainId = #{record.mainid,jdbcType=VARCHAR},
+      corpid = #{record.corpid,jdbcType=BIGINT},
+      txAddress = #{record.txaddress,jdbcType=VARCHAR},
+      yzNum = #{record.yznum,jdbcType=VARCHAR},
+      linker = #{record.linker,jdbcType=VARCHAR},
+      linktel = #{record.linktel,jdbcType=VARCHAR},
+      czNum = #{record.cznum,jdbcType=VARCHAR},
+      jyNum = #{record.jynum,jdbcType=VARCHAR},
+      tjdate = #{record.tjdate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.rtable.model.WaterMain" >
+    update sme_rtable_water_main
+    <set >
+      <if test="corpid != null" >
+        corpid = #{corpid,jdbcType=BIGINT},
+      </if>
+      <if test="txaddress != null" >
+        txAddress = #{txaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="yznum != null" >
+        yzNum = #{yznum,jdbcType=VARCHAR},
+      </if>
+      <if test="linker != null" >
+        linker = #{linker,jdbcType=VARCHAR},
+      </if>
+      <if test="linktel != null" >
+        linktel = #{linktel,jdbcType=VARCHAR},
+      </if>
+      <if test="cznum != null" >
+        czNum = #{cznum,jdbcType=VARCHAR},
+      </if>
+      <if test="jynum != null" >
+        jyNum = #{jynum,jdbcType=VARCHAR},
+      </if>
+      <if test="tjdate != null" >
+        tjdate = #{tjdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where mainId = #{mainid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.rtable.model.WaterMain" >
+    update sme_rtable_water_main
+    set corpid = #{corpid,jdbcType=BIGINT},
+      txAddress = #{txaddress,jdbcType=VARCHAR},
+      yzNum = #{yznum,jdbcType=VARCHAR},
+      linker = #{linker,jdbcType=VARCHAR},
+      linktel = #{linktel,jdbcType=VARCHAR},
+      czNum = #{cznum,jdbcType=VARCHAR},
+      jyNum = #{jynum,jdbcType=VARCHAR},
+      tjdate = #{tjdate,jdbcType=TIMESTAMP}
+    where mainId = #{mainid,jdbcType=VARCHAR}
+  </update>
+</mapper>

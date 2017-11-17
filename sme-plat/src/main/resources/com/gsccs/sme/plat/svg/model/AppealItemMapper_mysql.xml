@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.svg.dao.AppealItemTMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.svg.model.AppealItemT">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="topicid" property="topicid" jdbcType="BIGINT" />
+		<result column="corpid" property="corpid" jdbcType="BIGINT" />
+		<result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+		<result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="result" property="result" jdbcType="VARCHAR" />
+		<result column="resultstr" property="resultstr" jdbcType="VARCHAR" />
+		<result column="pushnum" property="pushnum" jdbcType="INTEGER" />
+		<result column="score" property="score" jdbcType="INTEGER" />
+		<result column="evalstr" property="evalstr" jdbcType="VARCHAR" />
+		<!--  -->
+		<result column="usertitle" property="usertitle" jdbcType="VARCHAR" />
+		<result column="svgtitle" property="svgtitle" jdbcType="VARCHAR" />
+		<result column="corptitle" property="corptitle" jdbcType="VARCHAR" />
+		<result column="topictitle" property="topictitle" jdbcType="VARCHAR" />
+		<result column="daynum" property="daynum" jdbcType="INTEGER" />
+	</resultMap>
+	
+	
+	<resultMap id="StatistResultMap" type="com.gsccs.sme.api.domain.StatistGovNum">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="atopicnum" property="atopicnum" jdbcType="INTEGER" />
+		<result column="aitemnum" property="aitemnum" jdbcType="INTEGER" />
+		<result column="dtopicnum" property="dtopicnum" jdbcType="INTEGER" />
+		<result column="ditemnum" property="ditemnum" jdbcType="INTEGER" />
+		<result column="reportnum" property="reportnum" jdbcType="INTEGER" />
+		<result column="infonum" property="infonum" jdbcType="INTEGER" />
+	</resultMap>	
+	
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, topicid, corpid, addtime,endtime, content, status,result,resultstr,score,evalstr,pushnum
+	</sql>
+	<sql id="Join_Column_List">
+		topictitle, daynum,corptitle,svgtitle,svgid
+	</sql>
+	
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.AppealItemTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		FROM (select a.*, b.svgid as svgid,b.title as topictitle, b.daynum as daynum,  
+			c.title as corptitle,d.title as svgtitle
+			from sme_appeal_item a,
+			sme_appeal_topic b,
+			sme_corp c,
+			sme_svorg d
+			where a.topicid = b.id
+			and a.corpid = c.id
+			and b.svgid = d.id
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		FROM (select a.*, b.svgid as svgid, b.title as topictitle, b.daynum as daynum,  
+		c.title as corptitle,d.title as svgtitle
+			from sme_appeal_item a,
+			sme_appeal_topic b,
+			sme_corp c,
+			sme_svorg d
+			where a.topicid = b.id
+			and a.corpid = c.id
+			and b.svgid = d.id
+		) as aa
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		sme_appeal_item
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.svg.model.AppealItemTExample">
+		delete from sme_appeal_item
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	
+	<!--  -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.gsccs.sme.plat.svg.model.AppealItemT">
+		insert into sme_appeal_item (id, topicid, corpid,
+		addtime, content,endtime,result,resultstr, score,evalstr,status,pushnum
+		)
+		values (#{id,jdbcType=BIGINT},
+		#{topicid,jdbcType=BIGINT},
+		#{corpid,jdbcType=BIGINT},
+		#{addtime,jdbcType=TIMESTAMP}, 
+		#{content,jdbcType=VARCHAR},
+		#{endtime,jdbcType=TIMESTAMP}, 
+		#{result,jdbcType=VARCHAR},
+		#{resultstr,jdbcType=VARCHAR},
+		#{score,jdbcType=INTEGER},
+		#{evalstr,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR},
+		#{pushnum,jdbcType=INTEGER}
+		)
+	</insert>
+	
+	
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.svg.model.AppealItemTExample"
+		resultType="java.lang.Integer">
+		select count(*)  
+		FROM (select a.*, b.svgid as svgid, b.title as topictitle, b.daynum as daynum,  
+		c.title as corptitle,d.title as svgtitle
+			from sme_appeal_item a,
+			sme_appeal_topic b,
+			sme_corp c,
+			sme_svorg d
+			where a.topicid = b.id
+			and a.corpid = c.id
+			and b.svgid = d.id
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	
+	<update id="updateByExample" parameterType="map">
+		update sme_appeal_item
+		set id = #{record.id,jdbcType=BIGINT},
+		topicid =
+		#{record.topicid,jdbcType=BIGINT},
+		corpid =
+		#{record.corpid,jdbcType=BIGINT},
+		addtime =
+		#{record.addtime,jdbcType=TIMESTAMP},
+		content =
+		#{record.content,jdbcType=VARCHAR},
+		status =
+		#{record.status,jdbcType=VARCHAR},
+		endtime =
+		#{record.endtime,jdbcType=TIMESTAMP},
+		result =
+		#{record.result,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.svg.model.AppealItemT">
+		update sme_appeal_item
+		<set>
+			<if test="topicid != null">
+				topicid = #{topicid,jdbcType=BIGINT},
+			</if>
+			<if test="corpid != null">
+				corpid = #{corpid,jdbcType=BIGINT},
+			</if>
+			<if test="addtime != null">
+				addtime = #{addtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="endtime != null">
+				endtime = #{endtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="result != null">
+				result = #{result,jdbcType=VARCHAR},
+			</if>
+			<if test="resultstr != null">
+				resultstr = #{resultstr,jdbcType=VARCHAR},
+			</if>
+			<if test="pushnum != null">
+				pushnum = #{pushnum,jdbcType=INTEGER},
+			</if>
+			<if test="score != null">
+				score = #{score,jdbcType=INTEGER},
+			</if>
+			<if test="evalstr != null">
+				evalstr = #{evalstr,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.svg.model.AppealItemT">
+		update sme_appeal_item
+		set topicid = #{topicid,jdbcType=BIGINT},
+		corpid = #{corpid,jdbcType=BIGINT},
+		addtime = #{addtime,jdbcType=TIMESTAMP},
+		content = #{content,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		endtime = #{endtime,jdbcType=TIMESTAMP},
+		result = #{result,jdbcType=VARCHAR},
+		resultstr = #{resultstr,jdbcType=VARCHAR},
+		pushnum = #{pushnum,jdbcType=INTEGER},
+		score = #{score,jdbcType=INTEGER},
+		evalstr = #{evalstr,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	
+	<select id="selectStatBySvg" resultMap="StatistResultMap">
+		select a.id ,a.title,aa.aitemnum,bb.infonum,cc.atopicnum,dd.reportnum,ee.dtopicnum,ff.ditemnum
+		from sme_svorg a
+			left join (
+				select c.id,c.topicid ,b.id as bid,b.svgid as svgid,count(svgid) as aitemnum from sme_appeal_topic b,sme_appeal_item c 
+				group by svgid
+				having c.topicid=b.id
+			) as aa on a.id = aa.svgid
+			left join (
+				select a.*,count(svgid) as infonum from site_content a
+				group by svgid
+			) as bb on a.id = bb.svgid
+			left join (
+				select a.*,count(svgid) as atopicnum from sme_appeal_topic a
+				group by svgid
+			) as cc on a.id = cc.svgid
+			left join (
+				select a.*,count(svgid) as reportnum from sme_report a
+				group by svgid
+			) as dd on a.id = dd.svgid
+			left join (
+				select a.*,count(svgid) as dtopicnum from sme_declare_topic a
+				group by svgid
+			) as ee on a.id = ee.svgid
+			left join (
+				select b.id,b.topicid ,a.id as aid,a.svgid as svgid,count(svgid) as ditemnum from sme_declare_topic a,sme_declare_item b 
+				group by svgid
+				having b.topicid=a.id
+			) as ff on a.id = ff.svgid
+		where a.svgtype='G'
+		group by a.id
+		order by a.id
+	</select>
+	
+</mapper>

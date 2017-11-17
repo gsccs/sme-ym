@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.site.dao.ChanelTMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.site.model.ChanelT">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="parid" property="parid" jdbcType="BIGINT" />
+		<result column="parids" property="parids" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="logo" property="logo" jdbcType="VARCHAR" />
+		<result column="templet" property="templet" jdbcType="VARCHAR" />
+		<result column="site" property="site" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="clicknum" property="clicknum" jdbcType="INTEGER" />
+		<result column="pagemark" property="pagemark" jdbcType="VARCHAR" />
+		<result column="indexnum" property="indexnum" jdbcType="INTEGER" />
+		<result column="meta_title" property="metaTitle" jdbcType="VARCHAR" />
+		<result column="meta_keywords" property="metaKeywords"
+			jdbcType="VARCHAR" />
+		<result column="meta_descr" property="metaDescr" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="ResultMapWithBLOBs" type="com.gsccs.sme.plat.site.model.ChanelT"
+		extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, parid, parids, title, logo, templet, site, url, status,
+		clicknum, pagemark,
+		indexnum, meta_title, meta_keywords, meta_descr
+	</sql>
+	
+	<sql id="Blob_Column_List">
+		content
+	</sql>
+	
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.site.model.ChanelTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from site_channel
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from site_channel
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from site_channel
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.site.model.ChanelTExample">
+		delete from site_channel
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	
+	<insert id="insert" parameterType="com.gsccs.sme.plat.site.model.ChanelT">
+		insert into site_channel (id, parid, parids,
+		title, logo,
+		templet, site, url,
+		status, clicknum, pagemark,
+		indexnum, content, meta_title, meta_keywords,
+		meta_descr)
+		values (#{id,jdbcType=BIGINT}, #{parid,jdbcType=BIGINT},
+		#{parids,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR},  #{logo,jdbcType=VARCHAR},
+		#{templet,jdbcType=VARCHAR}, #{site,jdbcType=VARCHAR},
+		#{url,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR}, #{clicknum,jdbcType=INTEGER}, #{pagemark,jdbcType=VARCHAR},
+		#{indexnum,jdbcType=INTEGER}, 
+		#{content,jdbcType=LONGVARCHAR},
+		#{metaTitle,jdbcType=VARCHAR},
+		#{metaKeywords,jdbcType=VARCHAR},
+		#{metaDescr,jdbcType=VARCHAR})
+	</insert>
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.site.model.ChanelTExample"
+		resultType="java.lang.Integer">
+		select count(*) from site_channel
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.site.model.ChanelT" >
+    update site_channel
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="parid != null" >
+        parid = #{parid,jdbcType=BIGINT}
+      </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="templet != null" >
+        templet = #{templet,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="clicknum != null" >
+        clicknum = #{clicknum,jdbcType=INTEGER},
+      </if>
+      <if test="clicknum != null" >
+        clicknum = #{clicknum,jdbcType=INTEGER},
+      </if>
+      <if test="pagemark != null" >
+        pagemark = #{pagemark,jdbcType=VARCHAR},
+      </if>
+      <if test="indexnum != null" >
+        indexnum = #{indexnum,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gsccs.sme.plat.site.model.ChanelT">
+		update site_channel
+		set parid = #{parid,jdbcType=BIGINT},
+		parids = #{parids,jdbcType=VARCHAR},
+		title = #{title,jdbcType=VARCHAR},
+		logo = #{logo,jdbcType=VARCHAR},
+		templet = #{templet,jdbcType=VARCHAR},
+		site = #{site,jdbcType=VARCHAR},
+		url = #{url,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		clicknum = #{clicknum,jdbcType=INTEGER},
+		pagemark = #{pagemark,jdbcType=VARCHAR},
+		indexnum = #{indexnum,jdbcType=INTEGER},
+		content = #{content,jdbcType=VARCHAR},
+		meta_title = #{metaTitle,jdbcType=VARCHAR},
+		meta_keywords = #{metaKeywords,jdbcType=VARCHAR},
+		meta_descr = #{metaDescr,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

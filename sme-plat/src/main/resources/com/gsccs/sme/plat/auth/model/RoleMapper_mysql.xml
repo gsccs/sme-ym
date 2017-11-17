@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.auth.dao.RoleMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.auth.model.Role">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="rolecode" property="rolecode" jdbcType="VARCHAR" />
+		<result column="roletype" property="roletype" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="resource_ids" property="resourceIds" jdbcType="VARCHAR" />
+		<result column="available" property="available" jdbcType="BIT" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, rolecode,roletype, description, resource_ids, available
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.auth.model.RoleExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from plat_sys_role
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from plat_sys_role
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<!-- 根据角色编码查询 -->
+	<select id="selectByCode" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from plat_sys_role
+		where rolecode = #{rolecode,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		plat_sys_role
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.auth.model.RoleExample">
+		delete from plat_sys_role
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gsccs.sme.plat.auth.model.Role">
+		insert into plat_sys_role (id,
+		rolecode, roletype,description,
+		resource_ids, available)
+		values
+		(#{id,jdbcType=BIGINT}, #{rolecode,jdbcType=VARCHAR},
+		#{roletype,jdbcType=VARCHAR},
+		#{description,jdbcType=VARCHAR},
+		#{resourceIds,jdbcType=VARCHAR},
+		#{available,jdbcType=BIT})
+	</insert>
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.auth.model.RoleExample"
+		resultType="java.lang.Integer">
+		select count(*) from plat_sys_role
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<update id="updateByExample" parameterType="map">
+		update plat_sys_role
+		set id = #{record.id,jdbcType=BIGINT},
+		rolecode =
+		#{record.rolecode,jdbcType=VARCHAR},
+		roletype =
+		#{record.roletype,jdbcType=VARCHAR},
+		description =
+		#{record.description,jdbcType=VARCHAR},
+		resource_ids =
+		#{record.resourceIds,jdbcType=VARCHAR},
+		available =
+		#{record.available,jdbcType=BIT}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.auth.model.Role">
+		update
+		plat_sys_role
+		set rolecode = #{rolecode,jdbcType=VARCHAR},
+		roletype = #{roletype,jdbcType=VARCHAR},
+		description = #{description,jdbcType=VARCHAR},
+		resource_ids = #{resourceIds,jdbcType=VARCHAR},
+		available = #{available,jdbcType=BIT}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

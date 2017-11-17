@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.svg.dao.SneedMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.api.domain.Sneed">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="corpid" property="corpid" jdbcType="BIGINT" />
+		<result column="scode" property="scode" jdbcType="BIGINT" />
+		<result column="subscode" property="subscode" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="img" property="img" jdbcType="VARCHAR" />
+		<result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+		<result column="clicknum" property="clicknum" jdbcType="INTEGER" />
+		<result column="linker" property="linker" jdbcType="VARCHAR" />
+		<result column="linktel" property="linktel" jdbcType="VARCHAR" />
+		<result column="barcode" property="barcode" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
+		<result column="salenum" property="salenum" jdbcType="INTEGER" />
+		<result column="evalnum" property="evalnum" jdbcType="INTEGER" />
+		<result column="lasttime" property="lasttime" jdbcType="TIMESTAMP" />
+		<result column="isrelease" property="isrelease" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<!--  -->
+		<result column="corptitle" property="corptitle" jdbcType="VARCHAR" />
+		<result column="corplogo" property="corplogo" jdbcType="VARCHAR" />
+		<result column="sclassstr" property="sclassstr" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.gsccs.sme.api.domain.Sneed"
+		extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, corpid, scode, subscode, title, img, addtime, clicknum,
+		linker,linktel,
+		barcode, remark,
+		price, salenum, evalnum, lasttime, isrelease, status
+	</sql>
+	<sql id="Join_Column_List">
+		corptitle,corplogo,sclassstr
+	</sql>
+	<sql id="Blob_Column_List">
+		content
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="com.gsccs.sme.plat.svg.model.SneedExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from sme_sneed
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.SneedExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		FROM (
+			select a.*,b.title as corptitle,b.logo as corplogo,c.title as sclassstr
+			from sme_sneed a, sme_corp b , sme_sclass c
+			where a.corpid = b.id
+			and a.scode = c.id
+		) as  aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		FROM (
+			select a.*,b.title as corptitle,b.logo as corplogo,c.title as sclassstr
+			from sme_sneed a, sme_corp b , sme_sclass c
+			where a.corpid = b.id
+			and a.scode = c.id
+		) as  aa
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		sme_sneed
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.svg.model.SneedExample">
+		delete from sme_sneed
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+
+	<!--  -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.gsccs.sme.api.domain.Sneed">
+		insert into sme_sneed (id,
+		corpid, scode,
+		subscode, title,
+		img,
+		addtime, clicknum, linker,linktel,
+		barcode,
+		remark, price,
+		salenum, evalnum,
+		lasttime,
+		isrelease, status,
+		content
+		)
+		values
+		(#{id,jdbcType=VARCHAR},
+		#{corpid,jdbcType=VARCHAR},
+		#{scode,jdbcType=VARCHAR},
+		#{subscode,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR},
+		#{img,jdbcType=VARCHAR},
+		#{addtime,jdbcType=TIMESTAMP},
+		#{clicknum,jdbcType=INTEGER},
+		#{linker,jdbcType=VARCHAR},
+		#{linktel,jdbcType=VARCHAR},
+		#{barcode,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{price,jdbcType=DECIMAL},
+		#{salenum,jdbcType=INTEGER},
+		#{evalnum,jdbcType=INTEGER},
+		#{lasttime,jdbcType=TIMESTAMP},
+		#{isrelease,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR},
+		#{content,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.svg.model.SneedExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_sneed
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gsccs.sme.api.domain.Sneed">
+		update
+		sme_sneed
+		set corpid = #{corpid,jdbcType=VARCHAR},
+		scode =
+		#{scode,jdbcType=VARCHAR},
+		subscode =
+		#{subscode,jdbcType=VARCHAR},
+		title =
+		#{title,jdbcType=VARCHAR},
+		img =
+		#{img,jdbcType=VARCHAR},
+		addtime =
+		#{addtime,jdbcType=TIMESTAMP},
+		clicknum = #{clicknum,jdbcType=INTEGER},
+		linker =#{linker,jdbcType=VARCHAR},
+		linktel =#{linktel,jdbcType=VARCHAR},
+		barcode = #{barcode,jdbcType=VARCHAR},
+		remark =
+		#{remark,jdbcType=VARCHAR},
+		price = #{price,jdbcType=DECIMAL},
+		salenum =
+		#{salenum,jdbcType=INTEGER},
+		evalnum =
+		#{evalnum,jdbcType=INTEGER},
+		lasttime = #{lasttime,jdbcType=TIMESTAMP},
+		isrelease =
+		#{isrelease,jdbcType=VARCHAR},
+		status =
+		#{status,jdbcType=VARCHAR},
+		content = #{content,jdbcType=LONGVARCHAR}
+		where id =
+		#{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.api.domain.Sneed">
+		update sme_sneed
+		set corpid = #{corpid,jdbcType=VARCHAR},
+		scode =
+		#{scode,jdbcType=VARCHAR},
+		subscode =
+		#{subscode,jdbcType=VARCHAR},
+		title =
+		#{title,jdbcType=VARCHAR},
+		img =
+		#{img,jdbcType=VARCHAR},
+		addtime =
+		#{addtime,jdbcType=TIMESTAMP},
+		clicknum = #{clicknum,jdbcType=INTEGER},
+		linker =#{linker,jdbcType=VARCHAR},
+		linktel =#{linktel,jdbcType=VARCHAR},
+		barcode = #{barcode,jdbcType=VARCHAR},
+		remark =
+		#{remark,jdbcType=VARCHAR},
+		price = #{price,jdbcType=DECIMAL},
+		salenum =
+		#{salenum,jdbcType=INTEGER},
+		evalnum =
+		#{evalnum,jdbcType=INTEGER},
+		lasttime = #{lasttime,jdbcType=TIMESTAMP},
+		isrelease =
+		#{isrelease,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		content = #{content,jdbcType=LONGVARCHAR}
+		where id
+		= #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

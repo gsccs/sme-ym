@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:application name="sme-provider" />
+	<!-- --> 
+	<dubbo:registry address="zookeeper://117.156.25.9:7002" />
+ 	
+	<!-- 
+	<dubbo:registry address="zookeeper://123.57.14.165:2181" />
+	--> 
+	<!-- 用户接口 -->
+	<bean id="accountAPI" class="com.gsccs.sme.api.service.AccountServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.AccountServiceI"
+		ref="accountAPI" />
+
+	<!-- 服务机构接口 -->
+	<bean id="svorgAPI" class="com.gsccs.sme.api.service.SvorgServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.SvorgServiceI"
+		ref="svorgAPI" />
+
+	<!-- 企业接口 -->
+	<bean id="corpAPI" class="com.gsccs.sme.api.service.CorpServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.CorpServiceI"
+		ref="corpAPI" />
+
+	<!-- 专家接口 -->
+	<bean id="expertAPI" class="com.gsccs.sme.api.service.ExpertServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.ExpertServiceI"
+		ref="expertAPI" />
+
+	<!-- 服务项目接口 -->
+	<bean id="sitemAPI" class="com.gsccs.sme.api.service.SitemServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.SitemServiceI"
+		ref="sitemAPI" />
+	<!-- 服务需求接口 -->
+	<bean id="sneedAPI" class="com.gsccs.sme.api.service.SneedServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.SneedServiceI"
+		ref="sneedAPI" />
+
+	<!-- 服务活动接口 -->
+	<bean id="activityAPI" class="com.gsccs.sme.api.service.ActivityServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.ActivityServiceI"
+		ref="activityAPI" />
+
+	<!-- 项目申报服务接口 -->
+	<bean id="declareAPI" class="com.gsccs.sme.api.service.DeclareServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.DeclareServiceI"
+		ref="declareAPI" />
+	
+	<!-- 行政诉求服务接口 -->
+	<bean id="appealAPI" class="com.gsccs.sme.api.service.AppealServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.AppealServiceI"
+		ref="appealAPI" />
+	
+	<!-- 产品接口 -->
+	<bean id="productAPI" class="com.gsccs.sme.api.service.ProductServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.ProductServiceI"
+		ref="productAPI" />
+		
+	<!-- 信息接口 -->
+	<bean id="infoAPI" class="com.gsccs.sme.api.service.InfoServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.InfoServiceI"
+		ref="infoAPI" />
+		
+	<!-- 信息接口 -->
+	<bean id="bannerAPI" class="com.gsccs.sme.api.service.BannerServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.BannerServiceI"
+		ref="bannerAPI" />
+
+	<!-- 授权服务接口 -->
+	<bean id="permissionAPI" class="com.gsccs.sme.api.service.PermissionServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.PermissionServiceI"
+		ref="permissionAPI" />
+
+	<!-- 配置服务接口 -->
+	<bean id="configAPI" class="com.gsccs.sme.api.service.ConfigServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.ConfigServiceI"
+		ref="configAPI" />
+
+	<!-- 类目服务接口 -->
+	<bean id="sclassAPI" class="com.gsccs.sme.api.service.SclassServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.SclassServiceI"
+		ref="sclassAPI" />
+
+	<!-- 行业分类服务接口 -->
+	<bean id="industryAPI" class="com.gsccs.sme.api.service.IndustryServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.IndustryServiceI"
+		ref="industryAPI" />
+
+	<!-- 品牌服务接口 -->
+	<bean id="areaAPI" class="com.gsccs.sme.api.service.AreaServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.AreaServiceI"
+		ref="areaAPI" />
+
+	<!-- 服务订单服务接口 -->
+	<bean id="sorderAPI" class="com.gsccs.sme.api.service.SorderServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.SorderServiceI"
+		ref="sorderAPI" />
+
+	<!-- 评价服务接口 -->
+	<bean id="evalAPI" class="com.gsccs.sme.api.service.EvalServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.EvalServiceI"
+		ref="evalAPI" />
+	
+	<!-- 产品订单服务接口 -->
+	<bean id="porderAPI" class="com.gsccs.sme.api.service.PorderServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.PorderServiceI"
+		ref="porderAPI" />
+	
+	<!--系统字典服务接口 -->
+	<bean id="dictAPI" class="com.gsccs.sme.api.service.DictServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.DictServiceI"
+		ref="dictAPI" />
+	
+	<!--服务咨询服务接口 -->
+	<bean id="consultAPI" class="com.gsccs.sme.api.service.ConsultServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.ConsultServiceI"
+		ref="consultAPI" />
+		
+	<!--友情链接服务接口 -->
+	<bean id="linkAPI" class="com.gsccs.sme.api.service.LinkServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.LinkServiceI"
+		ref="linkAPI" />
+	
+	<!--信息栏目服务接口 -->
+	<bean id="channelAPI" class="com.gsccs.sme.api.service.ChannelServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.ChannelServiceI"
+		ref="channelAPI" />
+	
+	<!--产品分类服务接口 -->
+	<bean id="categoryAPI" class="com.gsccs.sme.api.service.CategoryServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.CategoryServiceI"
+		ref="categoryAPI" />
+		
+	<!--数据上报服务接口 -->
+	<bean id="reportAPI" class="com.gsccs.sme.api.service.ReportServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.ReportServiceI"
+		ref="reportAPI" />
+		
+		
+	<!--项目服务接口 -->
+	<bean id="projectAPI" class="com.gsccs.sme.api.service.ProjectServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.ProjectServiceI"
+		ref="projectAPI" />
+	
+	<!--园区服务接口 -->
+	<bean id="parkAPI" class="com.gsccs.sme.api.service.ParkServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.ParkServiceI"
+		ref="parkAPI" />
+		
+	<!--平台消息接口 -->
+	<bean id="msgAPI" class="com.gsccs.sme.api.service.MsgServiceAPI" />
+	<dubbo:service interface="com.gsccs.sme.api.service.MsgServiceI"
+		ref="msgAPI" />
+	
+</beans>

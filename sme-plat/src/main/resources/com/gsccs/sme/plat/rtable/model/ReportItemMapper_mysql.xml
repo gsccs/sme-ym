@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.rtable.dao.ReportItemMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.api.domain.report.ReportItem">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="reportid" property="reportid" jdbcType="VARCHAR" />
+		<result column="submitdate" property="submitdate" jdbcType="TIMESTAMP" />
+		<result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+		<result column="corpid" property="corpid" jdbcType="BIGINT" />
+		<result column="userid" property="userid" jdbcType="BIGINT" />
+		<result column="isattach" property="isattach" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<!-- corptitle -->
+		<result column="corptitle" jdbcType="VARCHAR" property="corptitle" />
+		<result column="reporttitle" jdbcType="VARCHAR" property="reporttitle" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, reportid, submitdate, addtime, corpid, userid,
+		isattach, remark,
+		status
+	</sql>
+
+	<sql id="Corp_Column_List">
+		corptitle
+	</sql>
+	
+	<sql id="Report_Column_List">
+		reporttitle
+	</sql>
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.rtable.model.ReportItemExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Corp_Column_List" />
+		,
+		<include refid="Report_Column_List" />
+		from (
+			select a.*,b.title as corptitle,c.title as reporttitle
+			from sme_report_item a,
+			sme_corp b,
+			sme_report c
+			where a.corpid = b.id
+			and a.reportid = c.id
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Corp_Column_List" />
+		from (
+		select a.*,b.title as corptitle 
+		from sme_report_item a,sme_corp b
+		where a.corpid = b.id
+		) as aa
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from sme_report_item
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.rtable.model.ReportItemExample">
+		delete from sme_report_item
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	
+	<insert id="insert" parameterType="com.gsccs.sme.api.domain.report.ReportItem">
+		insert into sme_report_item (id, reportid, submitdate,
+		addtime, corpid,
+		userid,
+		isattach, remark, status
+		)
+		values (#{id,jdbcType=VARCHAR},
+		#{reportid,jdbcType=VARCHAR},
+		#{submitdate,jdbcType=TIMESTAMP},
+		#{addtime,jdbcType=TIMESTAMP}, #{corpid,jdbcType=BIGINT},
+		#{userid,jdbcType=BIGINT},
+		#{isattach,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.rtable.model.ReportItemExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_report_item
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<update id="updateByExample" parameterType="map">
+		update sme_report_item
+		set id = #{record.id,jdbcType=VARCHAR},
+		reportid
+		= #{record.reportid,jdbcType=VARCHAR},
+		submitdate =
+		#{record.submitdate,jdbcType=TIMESTAMP},
+		addtime =
+		#{record.addtime,jdbcType=TIMESTAMP},
+		corpid =
+		#{record.corpid,jdbcType=BIGINT},
+		userid =
+		#{record.userid,jdbcType=BIGINT},
+		isattach =
+		#{record.isattach,jdbcType=VARCHAR},
+		remark =
+		#{record.remark,jdbcType=VARCHAR},
+		status =
+		#{record.status,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.api.domain.report.ReportItem">
+		update sme_report_item
+		<set>
+			<if test="reportid != null">
+				reportid = #{reportid,jdbcType=VARCHAR},
+			</if>
+			<if test="submitdate != null">
+				submitdate = #{submitdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addtime != null">
+				addtime = #{addtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="corpid != null">
+				corpid = #{corpid,jdbcType=BIGINT},
+			</if>
+			<if test="userid != null">
+				userid = #{userid,jdbcType=BIGINT},
+			</if>
+			<if test="isattach != null">
+				isattach = #{isattach,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.api.domain.report.ReportItem">
+		update sme_report_item
+		set reportid = #{reportid,jdbcType=VARCHAR},
+		submitdate = #{submitdate,jdbcType=TIMESTAMP},
+		addtime =
+		#{addtime,jdbcType=TIMESTAMP},
+		corpid = #{corpid,jdbcType=BIGINT},
+		userid = #{userid,jdbcType=BIGINT},
+		isattach =
+		#{isattach,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

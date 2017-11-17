@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.task.dao.CapitalReplyMapper" >
+  <resultMap id="BaseResultMap" type="com.gsccs.sme.api.domain.CapitalReply" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="applid" property="applid" jdbcType="BIGINT" />
+    <result column="svgid" property="svgid" jdbcType="BIGINT" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="linker" property="linker" jdbcType="VARCHAR" />
+    <result column="linktel" property="linktel" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="isstoned" property="isstoned" jdbcType="VARCHAR" />
+    
+    <!--  -->
+    <result column="svgtitle" property="svgtitle" jdbcType="VARCHAR" />
+    <result column="corpid" property="corpid" jdbcType="VARCHAR" />
+    <result column="corptitle" property="corptitle" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, applid, svgid, addtime, linker, linktel, status, content, isstoned
+  </sql>
+  
+  <sql id="Svg_Column_List" >
+    svgtitle
+  </sql>
+  
+  <sql id="Corp_Column_List" >
+    corpid,corptitle
+  </sql>
+  
+  
+  <select id="selectApplByExample" resultMap="BaseResultMap" parameterType="com.gsccs.sme.plat.task.model.CapitalReplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Svg_Column_List" />
+    from (
+    	select a.*,b.title as svgtitle
+    	from sme_capital_reply a,sme_svorg b
+    	where a.svgid = b.id
+    ) as aa
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    limit ${skip},${pageSize}
+  </select>
+  
+  <select id="selectAllByExample" resultMap="BaseResultMap" parameterType="com.gsccs.sme.plat.task.model.CapitalReplyExample" >
+    select distinct
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Svg_Column_List" />
+    ,
+    <include refid="Corp_Column_List" />
+    from (
+    	select a.*,b.corpid,c.title as corptitle,d.title as svgtitle
+    	from sme_capital_reply a,sme_capital_appl b,sme_corp c,sme_svorg d
+    	where a.applid = b.id
+    	and b.corpid = c.id
+    	and a.svgid = d.id
+    ) as aa
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+     order by addtime desc
+     limit ${skip},${pageSize}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sme_capital_reply
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sme_capital_reply
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gsccs.sme.plat.task.model.CapitalReplyExample" >
+    delete from sme_capital_reply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" 
+  	parameterType="com.gsccs.sme.api.domain.CapitalReply" >
+    insert into sme_capital_reply (id, applid, svgid, 
+      addtime, linker, linktel, 
+      status, content, isstoned
+      )
+    values (#{id,jdbcType=BIGINT}, #{applid,jdbcType=BIGINT}, #{svgid,jdbcType=BIGINT}, 
+      #{addtime,jdbcType=TIMESTAMP}, #{linker,jdbcType=VARCHAR}, #{linktel,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{isstoned,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gsccs.sme.api.domain.CapitalReply" >
+    insert into sme_capital_reply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="applid != null" >
+        applid,
+      </if>
+      <if test="svgid != null" >
+        svgid,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+      <if test="linker != null" >
+        linker,
+      </if>
+      <if test="linktel != null" >
+        linktel,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="isstoned != null" >
+        isstoned,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="applid != null" >
+        #{applid,jdbcType=BIGINT},
+      </if>
+      <if test="svgid != null" >
+        #{svgid,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="linker != null" >
+        #{linker,jdbcType=VARCHAR},
+      </if>
+      <if test="linktel != null" >
+        #{linktel,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="isstoned != null" >
+        #{isstoned,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gsccs.sme.plat.task.model.CapitalReplyExample" resultType="java.lang.Integer" >
+    select count(*) from sme_capital_reply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sme_capital_reply
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.applid != null" >
+        applid = #{record.applid,jdbcType=BIGINT},
+      </if>
+      <if test="record.svgid != null" >
+        svgid = #{record.svgid,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addtime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.linker != null" >
+        linker = #{record.linker,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linktel != null" >
+        linktel = #{record.linktel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isstoned != null" >
+        isstoned = #{record.isstoned,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sme_capital_reply
+    set id = #{record.id,jdbcType=BIGINT},
+      applid = #{record.applid,jdbcType=BIGINT},
+      svgid = #{record.svgid,jdbcType=BIGINT},
+      addtime = #{record.addtime,jdbcType=TIMESTAMP},
+      linker = #{record.linker,jdbcType=VARCHAR},
+      linktel = #{record.linktel,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      isstoned = #{record.isstoned,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.api.domain.CapitalReply" >
+    update sme_capital_reply
+    <set >
+      <if test="applid != null" >
+        applid = #{applid,jdbcType=BIGINT},
+      </if>
+      <if test="svgid != null" >
+        svgid = #{svgid,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="linker != null" >
+        linker = #{linker,jdbcType=VARCHAR},
+      </if>
+      <if test="linktel != null" >
+        linktel = #{linktel,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="isstoned != null" >
+        isstoned = #{isstoned,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gsccs.sme.api.domain.CapitalReply" >
+    update sme_capital_reply
+    set applid = #{applid,jdbcType=BIGINT},
+      svgid = #{svgid,jdbcType=BIGINT},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      linker = #{linker,jdbcType=VARCHAR},
+      linktel = #{linktel,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      isstoned = #{isstoned,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

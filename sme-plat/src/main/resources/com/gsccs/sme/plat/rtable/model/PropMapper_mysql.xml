@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.rtable.dao.PropTMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.rtable.model.PropT">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="showtype" property="showtype" jdbcType="VARCHAR" />
+		<result column="datatype" property="datatype" jdbcType="VARCHAR" />
+		<result column="dictcode" property="dictcode" jdbcType="VARCHAR" />
+		<result column="unit" property="unit" jdbcType="VARCHAR" />
+		<result column="svgids" property="svgids" jdbcType="VARCHAR" />
+		<result column="reportid" property="reportid" jdbcType="VARCHAR" />
+		<result column="indexnum" property="indexnum" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, code,title, showtype, datatype, dictcode, reportid,unit,svgids,indexnum,status
+	</sql>
+	
+	<sql id="Join_Column_List">
+		reporttitle
+	</sql>
+	
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.rtable.model.PropTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from report_prop
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from report_prop
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		report_prop
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.rtable.model.PropTExample">
+		delete from report_prop
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gsccs.sme.plat.rtable.model.PropT">
+		insert into report_prop
+		(id, code,title, showtype,
+		datatype, dictcode, reportid,unit,svgids
+		status)
+		values
+		(#{id,jdbcType=VARCHAR}, 
+		#{code,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR},
+		#{showtype,jdbcType=VARCHAR},
+		#{datatype,jdbcType=VARCHAR},
+		#{dictcode,jdbcType=VARCHAR}, 
+		#{reportid,jdbcType=VARCHAR},
+		#{unit,jdbcType=VARCHAR},
+		#{svgids,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR})
+	</insert>
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.rtable.model.PropTExample"
+		resultType="java.lang.Integer">
+		select count(*) from report_prop
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.rtable.model.PropT">
+		update report_prop
+		set 
+		code = #{code,jdbcType=VARCHAR},
+		title = #{title,jdbcType=VARCHAR},
+		showtype = #{showtype,jdbcType=VARCHAR},
+		datatype =
+		#{datatype,jdbcType=VARCHAR},
+		dictcode = #{dictcode,jdbcType=VARCHAR},
+		reportid = #{reportid,jdbcType=VARCHAR},
+		unit = #{unit,jdbcType=VARCHAR},
+		svgids = #{svgids,jdbcType=VARCHAR},
+		indexnum = #{indexnum,jdbcType=INTEGER},
+		status =
+		#{status,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.rtable.model.PropT" >
+    update report_prop
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="showtype != null" >
+        showtype = #{showtype,jdbcType=VARCHAR},
+      </if>
+      <if test="dictcode != null" >
+      	dictcode = #{dictcode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+      	status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="svgids != null" >
+      	svgids = #{svgids,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

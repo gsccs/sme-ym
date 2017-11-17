@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:application name="sme-site" />
+
+	<dubbo:registry address="zookeeper://117.156.25.9:7002" />
+
+	<!-- 服务项接口 -->
+	<dubbo:reference id="sitemAPI"
+		interface="com.gsccs.sme.api.service.SitemServiceI" />
+
+	<!-- 服务分类接口 -->
+	<dubbo:reference id="sclassAPI"
+		interface="com.gsccs.sme.api.service.SclassServiceI" />
+
+	<!-- 服务需求接口 -->
+	<dubbo:reference id="sneedAPI"
+		interface="com.gsccs.sme.api.service.SneedServiceI" />
+
+	<!-- 项目申报接口 -->
+	<dubbo:reference id="declareAPI"
+		interface="com.gsccs.sme.api.service.DeclareServiceI" />
+
+	<!-- 服务活动接口 -->
+	<dubbo:reference id="activityAPI"
+		interface="com.gsccs.sme.api.service.ActivityServiceI" />
+
+	<!-- 服务机构接口 -->
+	<dubbo:reference id="svorgAPI"
+		interface="com.gsccs.sme.api.service.SvorgServiceI" />
+
+	<!-- 企业接口 -->
+	<dubbo:reference id="corpAPI"
+		interface="com.gsccs.sme.api.service.CorpServiceI" />
+
+	<!-- 服务专家接口 -->
+	<dubbo:reference id="expertAPI"
+		interface="com.gsccs.sme.api.service.ExpertServiceI" />
+	<!-- 用户接口 -->
+	<dubbo:reference id="userAPI"
+		interface="com.gsccs.sme.api.service.UserServiceI" />
+
+	<!-- 行业分类接口 -->
+	<dubbo:reference id="industryAPI"
+		interface="com.gsccs.sme.api.service.IndustryServiceI" />
+
+	<!-- 信息接口 -->
+	<dubbo:reference id="infoAPI"
+		interface="com.gsccs.sme.api.service.InfoServiceI" />
+
+	<!-- 应用授权接口 -->
+	<dubbo:reference id="permissionAPI"
+		interface="com.gsccs.sme.api.service.PermissionServiceI" />
+
+	<!-- 配置服务接口 -->
+	<dubbo:reference id="configAPI"
+		interface="com.gsccs.sme.api.service.ConfigServiceI" />
+
+	<!-- 咨询服务接口  -->
+	<dubbo:reference id="consultAPI" 
+		interface="com.gsccs.sme.api.service.ConsultServiceI" />
+	
+	
+	<!-- 订单服务接口 -->
+	<dubbo:reference interface="com.gsccs.sme.api.service.PorderServiceI"
+		id="porderAPI" />
+	
+	<!-- 评价服务接口 -->
+	<dubbo:reference interface="com.gsccs.sme.api.service.EvalServiceI"
+		id="evalAPI" />
+
+	<!-- 产品服务接口 -->
+	<dubbo:reference interface="com.gsccs.sme.api.service.ProductServiceI"
+		id="productAPI" />
+
+
+	<!-- 地域服务接口 -->
+	<dubbo:reference interface="com.gsccs.sme.api.service.AreaServiceI"
+		id="areaAPI" />
+
+	<!--系统字典服务接口 -->
+	<dubbo:reference interface="com.gsccs.sme.api.service.DictServiceI"
+		id="dictAPI" />
+
+	<!-- 订单服务接口 -->
+	<dubbo:reference interface="com.gsccs.sme.api.service.SorderServiceI"
+		id="sorderAPI" />
+	<!--友情链接服务接口 -->
+	<dubbo:reference interface="com.gsccs.sme.api.service.LinkServiceI"
+		id="linkAPI" />
+		
+		
+		<!--友情链接服务接口 -->
+	<dubbo:reference interface="com.gsccs.sme.api.service.ProjectServiceI"
+		id="projectAPI" />
+</beans>

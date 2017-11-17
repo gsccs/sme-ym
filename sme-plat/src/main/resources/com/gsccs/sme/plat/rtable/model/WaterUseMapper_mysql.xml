@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.rtable.dao.WaterUseMapper" >
+  <resultMap id="BaseResultMap" type="com.gsccs.sme.plat.rtable.model.WaterUse" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="mainId" property="mainid" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="VARCHAR" />
+    <result column="a" property="a" jdbcType="VARCHAR" />
+    <result column="b" property="b" jdbcType="VARCHAR" />
+    <result column="c" property="c" jdbcType="VARCHAR" />
+    <result column="d" property="d" jdbcType="VARCHAR" />
+    <result column="e" property="e" jdbcType="VARCHAR" />
+    <result column="f" property="f" jdbcType="VARCHAR" />
+    <result column="g" property="g" jdbcType="VARCHAR" />
+    <result column="h" property="h" jdbcType="VARCHAR" />
+    <result column="i" property="i" jdbcType="VARCHAR" />
+    <result column="j" property="j" jdbcType="VARCHAR" />
+    <result column="k" property="k" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, mainId, date, a, b, c, d, e, f, g, h, i, j, k
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gsccs.sme.plat.rtable.model.WaterUseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sme_rtable_water_use
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+    <select id="selectPageByExample" resultMap="BaseResultMap" parameterType="com.gsccs.sme.plat.rtable.model.WaterUseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sme_rtable_water_use
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    limit ${skip},${pageSize}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sme_rtable_water_use
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sme_rtable_water_use
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gsccs.sme.plat.rtable.model.WaterUseExample" >
+    delete from sme_rtable_water_use
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gsccs.sme.plat.rtable.model.WaterUse" >
+    insert into sme_rtable_water_use (id, mainId, date, 
+      a, b, c, d, 
+      e, f, g, h, 
+      i, j, k)
+    values (#{id,jdbcType=INTEGER}, #{mainid,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR}, 
+      #{a,jdbcType=VARCHAR}, #{b,jdbcType=VARCHAR}, #{c,jdbcType=VARCHAR}, #{d,jdbcType=VARCHAR}, 
+      #{e,jdbcType=VARCHAR}, #{f,jdbcType=VARCHAR}, #{g,jdbcType=VARCHAR}, #{h,jdbcType=VARCHAR}, 
+      #{i,jdbcType=VARCHAR}, #{j,jdbcType=VARCHAR}, #{k,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gsccs.sme.plat.rtable.model.WaterUse" >
+    insert into sme_rtable_water_use
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mainid != null" >
+        mainId,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="a != null" >
+        a,
+      </if>
+      <if test="b != null" >
+        b,
+      </if>
+      <if test="c != null" >
+        c,
+      </if>
+      <if test="d != null" >
+        d,
+      </if>
+      <if test="e != null" >
+        e,
+      </if>
+      <if test="f != null" >
+        f,
+      </if>
+      <if test="g != null" >
+        g,
+      </if>
+      <if test="h != null" >
+        h,
+      </if>
+      <if test="i != null" >
+        i,
+      </if>
+      <if test="j != null" >
+        j,
+      </if>
+      <if test="k != null" >
+        k,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mainid != null" >
+        #{mainid,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="a != null" >
+        #{a,jdbcType=VARCHAR},
+      </if>
+      <if test="b != null" >
+        #{b,jdbcType=VARCHAR},
+      </if>
+      <if test="c != null" >
+        #{c,jdbcType=VARCHAR},
+      </if>
+      <if test="d != null" >
+        #{d,jdbcType=VARCHAR},
+      </if>
+      <if test="e != null" >
+        #{e,jdbcType=VARCHAR},
+      </if>
+      <if test="f != null" >
+        #{f,jdbcType=VARCHAR},
+      </if>
+      <if test="g != null" >
+        #{g,jdbcType=VARCHAR},
+      </if>
+      <if test="h != null" >
+        #{h,jdbcType=VARCHAR},
+      </if>
+      <if test="i != null" >
+        #{i,jdbcType=VARCHAR},
+      </if>
+      <if test="j != null" >
+        #{j,jdbcType=VARCHAR},
+      </if>
+      <if test="k != null" >
+        #{k,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gsccs.sme.plat.rtable.model.WaterUseExample" resultType="java.lang.Integer" >
+    select count(*) from sme_rtable_water_use
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sme_rtable_water_use
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.mainid != null" >
+        mainId = #{record.mainid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=VARCHAR},
+      </if>
+      <if test="record.a != null" >
+        a = #{record.a,jdbcType=VARCHAR},
+      </if>
+      <if test="record.b != null" >
+        b = #{record.b,jdbcType=VARCHAR},
+      </if>
+      <if test="record.c != null" >
+        c = #{record.c,jdbcType=VARCHAR},
+      </if>
+      <if test="record.d != null" >
+        d = #{record.d,jdbcType=VARCHAR},
+      </if>
+      <if test="record.e != null" >
+        e = #{record.e,jdbcType=VARCHAR},
+      </if>
+      <if test="record.f != null" >
+        f = #{record.f,jdbcType=VARCHAR},
+      </if>
+      <if test="record.g != null" >
+        g = #{record.g,jdbcType=VARCHAR},
+      </if>
+      <if test="record.h != null" >
+        h = #{record.h,jdbcType=VARCHAR},
+      </if>
+      <if test="record.i != null" >
+        i = #{record.i,jdbcType=VARCHAR},
+      </if>
+      <if test="record.j != null" >
+        j = #{record.j,jdbcType=VARCHAR},
+      </if>
+      <if test="record.k != null" >
+        k = #{record.k,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sme_rtable_water_use
+    set id = #{record.id,jdbcType=INTEGER},
+      mainId = #{record.mainid,jdbcType=VARCHAR},
+      date = #{record.date,jdbcType=VARCHAR},
+      a = #{record.a,jdbcType=VARCHAR},
+      b = #{record.b,jdbcType=VARCHAR},
+      c = #{record.c,jdbcType=VARCHAR},
+      d = #{record.d,jdbcType=VARCHAR},
+      e = #{record.e,jdbcType=VARCHAR},
+      f = #{record.f,jdbcType=VARCHAR},
+      g = #{record.g,jdbcType=VARCHAR},
+      h = #{record.h,jdbcType=VARCHAR},
+      i = #{record.i,jdbcType=VARCHAR},
+      j = #{record.j,jdbcType=VARCHAR},
+      k = #{record.k,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.rtable.model.WaterUse" >
+    update sme_rtable_water_use
+    <set >
+      <if test="mainid != null" >
+        mainId = #{mainid,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="a != null" >
+        a = #{a,jdbcType=VARCHAR},
+      </if>
+      <if test="b != null" >
+        b = #{b,jdbcType=VARCHAR},
+      </if>
+      <if test="c != null" >
+        c = #{c,jdbcType=VARCHAR},
+      </if>
+      <if test="d != null" >
+        d = #{d,jdbcType=VARCHAR},
+      </if>
+      <if test="e != null" >
+        e = #{e,jdbcType=VARCHAR},
+      </if>
+      <if test="f != null" >
+        f = #{f,jdbcType=VARCHAR},
+      </if>
+      <if test="g != null" >
+        g = #{g,jdbcType=VARCHAR},
+      </if>
+      <if test="h != null" >
+        h = #{h,jdbcType=VARCHAR},
+      </if>
+      <if test="i != null" >
+        i = #{i,jdbcType=VARCHAR},
+      </if>
+      <if test="j != null" >
+        j = #{j,jdbcType=VARCHAR},
+      </if>
+      <if test="k != null" >
+        k = #{k,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.rtable.model.WaterUse" >
+    update sme_rtable_water_use
+    set mainId = #{mainid,jdbcType=VARCHAR},
+      date = #{date,jdbcType=VARCHAR},
+      a = #{a,jdbcType=VARCHAR},
+      b = #{b,jdbcType=VARCHAR},
+      c = #{c,jdbcType=VARCHAR},
+      d = #{d,jdbcType=VARCHAR},
+      e = #{e,jdbcType=VARCHAR},
+      f = #{f,jdbcType=VARCHAR},
+      g = #{g,jdbcType=VARCHAR},
+      h = #{h,jdbcType=VARCHAR},
+      i = #{i,jdbcType=VARCHAR},
+      j = #{j,jdbcType=VARCHAR},
+      k = #{k,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

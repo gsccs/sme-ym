@@ -1,0 +1,31 @@
+﻿
+.main_w { font-size: 14px; }
+
+.news_l .list_tab{width:899px; margin:0 auto; border-bottom:1px solid #dd2828; overflow:hidden; margin-top:20px;}
+.news_l .list_tab .tt_title{background:#dd2828; color:#fff; width:110px; height:35px; line-height:35px; text-align:center;}
+
+.news_l { width: 735px; float: left; overflow: hidden; margin: 20px 0; background: #fff; }
+.news_l .l_list { padding: 15px 20px 20px; }
+.news_l .l_list li { height: 35px; border-bottom: 1px dashed #dbdbdb; margin-top: 15px; }
+.news_w .l_list li a { color: #646464; }
+.main_w .l_list li a:hover { color: #dd2828; text-decoration: none; }
+.news_l .l_list li .time { float: right; }
+
+.news_r { width: 245px; float: right; overflow: hidden; margin-top: 20px; background: #fff; }
+.news_r .box { overflow: hidden; }
+.news_r .box .title { height: 3em; line-height: 3em; text-indent: .4em; color: #fff; font-size: 14px; font-weight: bold; background: #f09119; }
+.news_r .box .title span { width: 12px; height: 9px; display: block; margin: 10px 0 0 7px; background: url('../../images/activity/activity-main.png') 0 -25px no-repeat; float: left; }
+.news_r .box .content { border: 1px solid #d0d0d0; padding: 10px 0 15px; }
+.news_r .box .content .main li { height: 2.5em; line-height: 2.5em; border-bottom: 1px dashed #d0d0d0; padding-left: 10px; list-style: disc inside; overflow: hidden; }
+
+.news_l .con_title { text-align: center; font-weight: bold; color: #2e64be; font-size: 14px; letter-spacing: 1px; width: 895px; margin: 0 auto; height: 30px; border-bottom: 1px dashed #dfdfdf; }
+.news_l .new_title { font-size: 16px; font-weight: bold; color: #275fbe; text-align: center; letter-spacing: 2px; padding: 30px 0px 10px 0px; }
+.news_l .from_time { text-align: center; }
+.news_l .downline { height: 0px; width: 895px; margin: 0 auto; border-bottom: 1px dashed #dedede; margin-top: 10px; }
+.news_l .con_con { font-size: 14px; color: #494949; line-height: 40px; width: 695px; margin: 20px auto; }
+.news_l .con_con img{max-width: 690px}
+.news_l .con_fj { margin-bottom: 20px; }
+.news_l .con_fj .fj_center .fj_center_con { padding-left: 50px; padding-top: 20px; }
+.news_l .con_fj .fj_center .fj_center_con .fj_center_con_title { float: left; color: #2d65ba; letter-spacing: 20px; }
+.news_l .con_fj .fj_center .fj_center_con .fj_center_con_con { float: left; margin-left: 0px; }
+.news_l .con_fj .fj_center .fj_center_con .fj_center_con_con a { display: block; background: url(../../images/xm_details_fj_ico.jpg) no-repeat; padding-left: 20px; color: #555555; margin-bottom: 10px; line-height: 15px; }

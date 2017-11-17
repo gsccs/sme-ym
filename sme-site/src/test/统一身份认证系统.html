@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<title>统一身份认证系统</title>
+<script language="JavaScript" src="./统一身份认证系统_files/jquery.js" type="text/javascript"></script>
+<link href="./统一身份认证系统_files/login_base_style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="logo">
+	<a href="http://www.smeym.org/index.html" title="玉门市中小企业服务平台">
+		<img src="./统一身份认证系统_files/login_logo.png" alt="玉门市中小企业服务平台">
+	</a>
+</div>
+<div class="l-main">
+	<h6>统一身份认证系统</h6>
+    <div class="l-box clearfix">
+    	<div class="head-pic dis-in-b f-l"><img src="./统一身份认证系统_files/login_user_pic.png"></div>
+        <div class="login-box dis-in-b f-r">
+        	<form id="fm1" action="./统一身份认证系统_files/统一身份认证系统.html" method="post">
+			
+			<input type="hidden" name="lt" value="LT-739-jYJ5ktyCKCHHgaUbaJqNcJgsSVmdCm-smeym.org">
+			<input type="hidden" name="execution" value="e4s1">
+			<input type="hidden" name="_eventId" value="submit">
+				
+			<h1 class="wronginfo"><p id="msg" style="display:none;color:red;">不存在该用户</p> </h1>
+			
+        	<ul class="login-ul">
+        		<li class="u-type">
+        			<div class="utyperadio"><input class="radio" type="radio" name="usertype" value="C" checked="checked"></div>
+	        		<div class="utypelabel">注册企业</div>
+	        		<div class="utyperadio"><input class="radio" type="radio" name="usertype" value="S"></div>
+	        		<div class="utypelabel">社会机构</div>
+	        		<div class="utyperadio"><input class="radio" type="radio" name="usertype" value="G"></div>
+	        		<div class="utypelabel">行政单位</div>
+            	</li>
+            	<li class="u-name">
+            	<input id="username" name="username" class="required txt" tabindex="1" type="text" value="" size="25" autocomplete="off">
+            	</li>
+                <li class="u-password">
+                <input id="password" name="password" class="required txt" tabindex="2" type="password" value="" size="25" autocomplete="off">
+                </li>
+				<li class="2FAVerifyCode-tr" id="2FAVerifyCode-tr" style="display:none;">
+					<input tabindex="1" onfocus="if(value==&#39;双因子验证码&#39;) {value=&#39;&#39;;this.style.color=&#39;#fff&#39;;}" onblur="if(value==&#39;&#39;) {value=&#39;双因子验证码&#39;;this.style.color=&#39;#fff&#39;;}" type="text" name="2FAVerifyCode" id="2FAVerifyCode" class="xyzhn5" value="双因子验证码">
+					<a href="" name="sendCode" onclick="send2FAVerifyCode(&#39;false&#39;);" class="x_phone">点击获取</a>
+				</li>
+                <li class="u-btn">
+                	<input class="btn-submit a-login" name="submit" accesskey="l" value="登录" tabindex="4" type="submit">
+					<a href="http://account.smeym.org/login#">忘记密码?</a>
+					<a href="http://www.smeym.org/reg.html" target="blank">注册</a>
+				</li>
+            </ul>
+            <dl class="login-other">
+            	<dt></dt>
+                <dd>
+				<a href="http://account.smeym.org/login#" onclick="javascript:void(0);" class="a4"></a>
+				<a href="http://account.smeym.org/login#" onclick="javascript:void(0);" class="a1"></a>
+				</dd>
+            </dl>
+       	</form>
+       </div>
+  </div>
+    <p class="l-foot"><a href="http://www.smeym.org/index.html">玉门市中小企业服务平台</a>&nbsp;&nbsp;&nbsp;&nbsp;      承办单位:玉门市工业和信息化局&nbsp;&nbsp;</p>
+</div>
+
+</body></html>

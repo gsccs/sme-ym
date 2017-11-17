@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.svg.dao.DeclareItemTMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.svg.model.DeclareItemT">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="topicid" property="topicid" jdbcType="BIGINT" />
+		<result column="corpid" property="corpid" jdbcType="BIGINT" />
+		
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="leader" property="leader" jdbcType="VARCHAR" />
+		<result column="linktel" property="linktel" jdbcType="VARCHAR" />
+		<result column="invest" property="invest" jdbcType="FLOAT" />
+		<result column="owncapital" property="owncapital" jdbcType="FLOAT" />
+		<result column="bankcapital" property="bankcapital" jdbcType="FLOAT" />
+		<result column="othercapital" property="othercapital" jdbcType="FLOAT" />
+		<result column="saleincome" property="saleincome" jdbcType="FLOAT" />
+		<result column="saleprofits" property="saleprofits" jdbcType="FLOAT" />
+		<result column="taxes" property="taxes" jdbcType="FLOAT" />
+		<result column="employee" property="employee" jdbcType="INTEGER" />
+		
+		<result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+		<result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="reply" property="reply" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		
+		<!--  -->
+		<result column="topictitle" property="topictitle" jdbcType="VARCHAR" />
+		<result column="svgtitle" property="svgtitle" jdbcType="VARCHAR" />
+		<result column="corptitle" property="corptitle" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, topicid, corpid, 
+		title,leader,linktel,
+		invest,owncapital,bankcapital,othercapital,
+		saleincome,saleprofits,taxes,employee,
+		addtime,endtime, content, reply,status
+	</sql>
+	
+	<sql id="JOIN_Column_List">
+		topictitle,svgtitle,corptitle
+	</sql>
+	
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.DeclareItemTExample">
+		select distinct
+		<include refid="Base_Column_List" />
+		,
+		<include refid="JOIN_Column_List" />
+		FROM	(
+			select a.*,b.title as topictitle,c.title as svgtitle,d.title as corptitle
+			from 
+				sme_declare_item a,
+				sme_declare_topic b,
+				sme_svorg c,
+				sme_corp d
+			where a.topicid = b.id
+			and b.svgid = c.id
+			and a.corpid = d.id
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by addtime desc
+		</if>
+		limit ${skip},${pageSize} 
+	</select>
+	
+	<select id="selectCorpDeclares" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.DeclareItemTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		
+		<include refid="Base_Column_List" />
+		,
+		<include refid="JOIN_Column_List" />
+		FROM	(
+			select a.*,b.title as topictitle,c.title as svgtitle,d.title as corptitle
+			from 
+				sme_declare_item a,
+				sme_declare_topic b,
+				sme_svorg c,
+				sme_corp d
+			where a.topicid = b.id
+			and b.svgid = c.id
+			and a.corpid = d.id
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize} 
+	</select>
+	
+	
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="JOIN_Column_List" />
+		FROM	(
+			select a.*,b.title as topictitle,c.title as svgtitle,d.title as corptitle
+			from 
+				sme_declare_item a,
+				sme_declare_topic b,
+				sme_svorg c,
+				sme_corp d
+			where a.topicid = b.id
+			and b.svgid = c.id
+			and a.corpid = d.id
+		) as aa
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		sme_declare_item
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.svg.model.DeclareItemTExample">
+		delete from sme_declare_item
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.gsccs.sme.plat.svg.model.DeclareItemT">
+		insert into sme_declare_item (id, topicid, corpid,
+		title,leader,linktel,
+		invest,owncapital,bankcapital,othercapital,
+		saleincome,saleprofits,taxes,employee,
+		addtime,endtime, content, reply,status
+		)
+		values (#{id,jdbcType=BIGINT},
+		#{topicid,jdbcType=BIGINT},
+		#{corpid,jdbcType=BIGINT},
+		#{title,jdbcType=VARCHAR},
+		#{leader,jdbcType=VARCHAR},
+		#{linktel,jdbcType=VARCHAR},
+		#{invest,jdbcType=FLOAT},
+		#{owncapital,jdbcType=FLOAT},
+		#{bankcapital,jdbcType=FLOAT},
+		#{othercapital,jdbcType=FLOAT},
+		#{saleincome,jdbcType=FLOAT},
+		#{saleprofits,jdbcType=FLOAT},
+		#{taxes,jdbcType=FLOAT},
+		#{employee,jdbcType=INTEGER},
+		#{addtime,jdbcType=TIMESTAMP},
+		#{endtime,jdbcType=TIMESTAMP},
+		#{content,jdbcType=VARCHAR},
+		#{reply,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.svg.model.DeclareItemTExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_declare_item
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	
+	<update id="updateByExample" parameterType="map">
+		update sme_declare_item
+		set id = #{record.id,jdbcType=BIGINT},
+		topicid =
+		#{record.topicid,jdbcType=BIGINT},
+		corpid =
+		#{record.corpid,jdbcType=BIGINT},
+		addtime =
+		#{record.addtime,jdbcType=TIMESTAMP},
+		content =
+		#{record.content,jdbcType=VARCHAR},
+		reply = #{record.reply,jdbcType=VARCHAR},
+		status =
+		#{record.status,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.svg.model.DeclareItemT">
+		update
+		sme_declare_item
+		set topicid = #{topicid,jdbcType=BIGINT},
+		corpid =#{corpid,jdbcType=BIGINT},
+		title = #{title,jdbcType=VARCHAR},
+		leader = #{leader,jdbcType=VARCHAR},
+		linktel = #{linktel,jdbcType=VARCHAR},
+		invest = #{invest,jdbcType=FLOAT},
+		owncapital = #{owncapital,jdbcType=FLOAT},
+		bankcapital = #{bankcapital,jdbcType=FLOAT},
+		othercapital = #{othercapital,jdbcType=FLOAT},
+		saleincome = #{saleincome,jdbcType=FLOAT},
+		saleprofits = #{saleprofits,jdbcType=FLOAT},
+		taxes = #{taxes,jdbcType=FLOAT},
+		employee = #{employee,jdbcType=INTEGER},
+		addtime = #{addtime,jdbcType=TIMESTAMP},
+		content = #{content,jdbcType=VARCHAR},
+		reply = #{reply,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.svg.model.DeclareItemT">
+		update sme_declare_item
+		<set>
+			<if test="topicid != null">
+				topicid = #{topicid,jdbcType=BIGINT},
+			</if>
+			<if test="corpid != null">
+				corpid = #{corpid,jdbcType=BIGINT},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>	
+			<if test="leader != null">
+				leader = #{leader,jdbcType=VARCHAR},
+			</if>
+			<if test="linktel != null">
+				linktel = #{linktel,jdbcType=VARCHAR},
+			</if>				
+			<if test="invest != null">
+				invest = #{invest,jdbcType=FLOAT},
+			</if>
+			<if test="owncapital != null">
+				owncapital = #{owncapital,jdbcType=FLOAT},
+			</if>
+			<if test="bankcapital != null">
+				bankcapital = #{bankcapital,jdbcType=FLOAT},
+			</if>
+			<if test="othercapital != null">
+				othercapital = #{othercapital,jdbcType=FLOAT},
+			</if>
+			<if test="saleincome != null">
+				saleincome = #{saleincome,jdbcType=FLOAT},
+			</if>
+			<if test="saleprofits != null">
+				saleprofits = #{saleprofits,jdbcType=FLOAT},
+			</if>
+			<if test="taxes != null">
+				taxes = #{taxes,jdbcType=FLOAT},
+			</if>
+			<if test="employee != null">
+				employee = #{employee,jdbcType=INTEGER},
+			</if>
+			<if test="addtime != null">
+				addtime = #{addtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="endtime != null">
+				endtime = #{endtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="reply != null">
+				reply = #{reply,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

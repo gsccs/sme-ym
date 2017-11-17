@@ -1,0 +1,49 @@
+*{margin:0;padding:0}
+body,button,input,select,textarea{font:12px/1.5 tahoma,arial,"\5b8b\4f53"; *line-height:1.5; outline:0;}
+h1,h2,h3,h4,h5,h6{font-size:100%}
+ul,ol{list-style:none}
+a{text-decoration:none}
+a:hover{text-decoration:underline}
+fieldset,img{border:0}
+button,input,select,textarea{font-size:100%}
+body{min-width:1120px;  _width:expression((document.documentElement.clientWidth||document.body.clientWidth)<1120?"1120px":"");behavior:url(csshover.htc);}
+.center{ margin:0 auto;}.h15{ height:15px; line-height:15px;}.h65{ height:65px; line-height:65px; }.h22{ height:22px; line-height:22px;}.h10{ height:10px; line-height:10px;}.h45{ height:45px; line-height:45px;}
+.clear{ clear:both;}.hidden{display:none;}.left{ float:left;}.right{ float:right;}
+
+
+.header{width:100%;height:164px;overflow:hidden; }
+.header_conter{height:164px;background:url(../../images/EntpAdmin/heder_center_bg.jpg) repeat-x; }
+.header_bottom{height:16px;background:url(../../images/EntpAdmin/heder_bottom_bg.jpg) repeat-x;}
+.header_main{padding-top:30px;width:1200px;margin:0 auto; }
+.log{width:454px;height:94px;float:left;}
+.nav_main{background:url(../../images/EntpAdmin/nav_bg.jpg) no-repeat;float:left;width:746px;height:42px;margin-top:31px; position:relative}
+.nav_main ul{ list-style:none; }
+.nav_main ul li{float:left;text-align:center; }
+.nav_main ul li a{ line-height:42px;color:#fff;  font-size:14px; font-family:"Microsoft YaHei";display:block; text-align:center ;}
+/*.nav_main ul li a:hover{ background:url(../../images/EntpAdmin/nav_item_hover.png) no-repeat center}*/
+.nav_mainhover{ background:url(../../images/EntpAdmin/nav_item_hover.png) no-repeat center}
+.nav_jt{ position:absolute;margin-top:42px;width:127px;height:26px;background:url(../../images/EntpAdmin/nav_jt.jpg) no-repeat}
+
+
+
+#footer{ background:url(../../images/EntpAdmin/bottom_back.png) repeat-x; height:179px; width:100%; font-family:"Microsoft YaHei";}
+.foot{ width:1100px; letter-spacing:1px; }
+.foot ul{clear:both;}
+.foot ul li{ text-align:center; color:#666666; height:27px; line-height:27px;}
+.foot ul  a{ color:#666666;}
+.foot ul a:hover{  text-decoration:underline; color:#2758ad;}
+.foot dl{  width:1080px; margin:0 auto; padding-top:10px;}
+.foot dd{ color:#010000; float:left; height:40px; line-height:40px; width:270px;  }
+.foot dd a{color:#5b5b5b;}
+.foot dd a:hover{ text-decoration:underline; color:#2758ad;}
+.foot .common_m{ text-align:right;}
+
+.img_btn{margin: 10px; width: 117px; height: 27px; line-height: 27px; background: url(../../images/EntpAdmin/user_ico.png) no-repeat left top; border: 0; cursor: pointer; color: #154a91;}
+
+.img_list { padding-left: 0px; margin-top: 0px; position: relative; }
+.img_list li { list-style: none; float: left; width: 80px; margin: 5px 10px; display: inline; }
+.img_list li p { width: 80px; overflow: hidden; height: 20px; line-height: 20px; margin: 0; }
+.img_list li img { border: 1px solid #ccc; }
+.img_list li img.hover { border: 1px solid #f09215; }
+
+.msg{color:#ff0000; position:absolute; top:0; left:0; display:none;}

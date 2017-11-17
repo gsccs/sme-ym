@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.shop.dao.ProductTMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.shop.model.ProductT">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="corpid" property="corpid" jdbcType="BIGINT" />
+		<result column="brand" property="brand" jdbcType="BIGINT" />
+		<result column="cateid" property="cateid" jdbcType="VARCHAR" />
+		<result column="cateids" property="cateids" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="img" property="img" jdbcType="VARCHAR" />
+		<result column="pcode" property="pcode" jdbcType="VARCHAR" />
+    	<result column="ccode" property="ccode" jdbcType="VARCHAR" />
+    	<result column="acode" property="acode" jdbcType="VARCHAR" />
+		<result column="ishot" property="ishot" jdbcType="VARCHAR" />
+		<result column="istop" property="istop" jdbcType="VARCHAR" />
+		<result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+		<result column="clicknum" property="clicknum" jdbcType="INTEGER" />
+		<result column="kind" property="kind" jdbcType="VARCHAR" />
+		<result column="tags" property="tags" jdbcType="VARCHAR" />
+		<result column="barcode" property="barcode" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
+		<result column="weight" property="weight" jdbcType="DECIMAL" />
+		<result column="storenum" property="storenum" jdbcType="INTEGER" />
+		<result column="locknum" property="locknum" jdbcType="INTEGER" />
+		<result column="salenum" property="salenum" jdbcType="INTEGER" />
+		<result column="evalnum" property="evalnum" jdbcType="INTEGER" />
+		<result column="postage" property="postage" jdbcType="VARCHAR" />
+		<result column="lasttime" property="lasttime" jdbcType="TIMESTAMP" />
+		<result column="typeid" property="typeid" jdbcType="BIGINT" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		
+		<!--  -->
+		<result column="corptitle" property="corptitle" jdbcType="VARCHAR" />
+		<result column="corplogo"  property="corplogo" jdbcType="VARCHAR" />
+		<result column="catetitle" property="catetitle" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.gsccs.sme.plat.shop.model.ProductT"
+		extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, corpid, brand, cateid, cateids, title, img, pcode,ccode,acode, ishot,
+		istop, addtime, clicknum,
+		kind, tags, barcode, remark, price, weight, storenum, locknum, salenum,
+		evalnum, postage,
+		lasttime, typeid, status
+	</sql>
+	<sql id="Blob_Column_List">
+		content
+	</sql>
+	<sql id="Join_Column_List">
+		corptitle,corplogo,catetitle
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="com.gsccs.sme.plat.shop.model.ProductTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from shop_product
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.shop.model.ProductTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (
+			select a.*,b.title as corptitle,b.logo as corplogo,c.title as catetitle
+			from shop_product a,sme_corp b,shop_category c
+			where a.corpid=b.id
+			and a.cateid = c.id
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from shop_product
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from shop_product
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.shop.model.ProductTExample">
+		delete from shop_product
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gsccs.sme.plat.shop.model.ProductT">
+		insert into shop_product (id, corpid, brand,
+		cateid, cateids, title,
+		img, pcode,ccode,acode, ishot,
+		istop, addtime, clicknum,
+		kind, tags, barcode,
+		remark, price, weight,
+		storenum, locknum, salenum,
+		evalnum, postage, lasttime,
+		typeid, status, content
+		)
+		values (#{id,jdbcType=BIGINT}, #{corpid,jdbcType=BIGINT},
+		#{brand,jdbcType=BIGINT},
+		#{cateid,jdbcType=VARCHAR}, #{cateids,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+		#{img,jdbcType=VARCHAR}, #{pcode,jdbcType=VARCHAR},
+		#{ccode,jdbcType=VARCHAR},#{acode,jdbcType=VARCHAR},
+		#{ishot,jdbcType=VARCHAR},
+		#{istop,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, #{clicknum,jdbcType=INTEGER},
+		#{kind,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR},
+		#{barcode,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{weight,jdbcType=DECIMAL},
+		#{storenum,jdbcType=INTEGER}, #{locknum,jdbcType=INTEGER},
+		#{salenum,jdbcType=INTEGER},
+		#{evalnum,jdbcType=INTEGER}, #{postage,jdbcType=VARCHAR}, #{lasttime,jdbcType=TIMESTAMP},
+		#{typeid,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR},
+		#{content,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+	
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.shop.model.ProductTExample"
+		resultType="java.lang.Integer">
+		select count(*) from shop_product
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	
+	<update id="updateByExample" parameterType="map">
+		update shop_product
+		set id = #{record.id,jdbcType=BIGINT},
+		corpid = #{record.corpid,jdbcType=BIGINT},
+		brand = #{record.brand,jdbcType=BIGINT},
+		cateid = #{record.cateid,jdbcType=VARCHAR},
+		cateids = #{record.cateids,jdbcType=VARCHAR},
+		title = #{record.title,jdbcType=VARCHAR},
+		img = #{record.img,jdbcType=VARCHAR},
+		pcode = #{record.pcode,jdbcType=VARCHAR},
+		ccode = #{record.ccode,jdbcType=VARCHAR},
+		acode = #{record.acode,jdbcType=VARCHAR},
+		ishot = #{record.ishot,jdbcType=VARCHAR},
+		istop = #{record.istop,jdbcType=VARCHAR},
+		addtime = #{record.addtime,jdbcType=TIMESTAMP},
+		clicknum = #{record.clicknum,jdbcType=INTEGER},
+		kind = #{record.kind,jdbcType=VARCHAR},
+		tags = #{record.tags,jdbcType=VARCHAR},
+		barcode = #{record.barcode,jdbcType=VARCHAR},
+		remark = #{record.remark,jdbcType=VARCHAR},
+		price = #{record.price,jdbcType=DECIMAL},
+		weight = #{record.weight,jdbcType=DECIMAL},
+		storenum = #{record.storenum,jdbcType=INTEGER},
+		locknum = #{record.locknum,jdbcType=INTEGER},
+		salenum = #{record.salenum,jdbcType=INTEGER},
+		evalnum = #{record.evalnum,jdbcType=INTEGER},
+		postage = #{record.postage,jdbcType=VARCHAR},
+		lasttime = #{record.lasttime,jdbcType=TIMESTAMP},
+		typeid = #{record.typeid,jdbcType=BIGINT},
+		status = #{record.status,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gsccs.sme.plat.shop.model.ProductT">
+		update shop_product
+		set corpid = #{corpid,jdbcType=BIGINT},
+		brand = #{brand,jdbcType=BIGINT},
+		cateid = #{cateid,jdbcType=VARCHAR},
+		cateids = #{cateids,jdbcType=VARCHAR},
+		title = #{title,jdbcType=VARCHAR},
+		img = #{img,jdbcType=VARCHAR},
+		pcode = #{pcode,jdbcType=VARCHAR},
+		ccode = #{ccode,jdbcType=VARCHAR},
+		acode = #{acode,jdbcType=VARCHAR},
+		ishot = #{ishot,jdbcType=VARCHAR},
+		istop = #{istop,jdbcType=VARCHAR},
+		addtime = #{addtime,jdbcType=TIMESTAMP},
+		clicknum = #{clicknum,jdbcType=INTEGER},
+		kind = #{kind,jdbcType=VARCHAR},
+		tags = #{tags,jdbcType=VARCHAR},
+		barcode = #{barcode,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		price = #{price,jdbcType=DECIMAL},
+		weight = #{weight,jdbcType=DECIMAL},
+		storenum = #{storenum,jdbcType=INTEGER},
+		locknum = #{locknum,jdbcType=INTEGER},
+		salenum = #{salenum,jdbcType=INTEGER},
+		evalnum = #{evalnum,jdbcType=INTEGER},
+		postage = #{postage,jdbcType=VARCHAR},
+		lasttime = #{lasttime,jdbcType=TIMESTAMP},
+		typeid = #{typeid,jdbcType=BIGINT},
+		status = #{status,jdbcType=VARCHAR},
+		content = #{content,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.shop.model.ProductT">
+		update shop_product
+		set corpid = #{corpid,jdbcType=BIGINT},
+		brand = #{brand,jdbcType=BIGINT},
+		cateid = #{cateid,jdbcType=VARCHAR},
+		cateids = #{cateids,jdbcType=VARCHAR},
+		title = #{title,jdbcType=VARCHAR},
+		img = #{img,jdbcType=VARCHAR},
+		pcode = #{pcode,jdbcType=VARCHAR},
+		ccode = #{ccode,jdbcType=VARCHAR},
+		acode = #{acode,jdbcType=VARCHAR},
+		ishot = #{ishot,jdbcType=VARCHAR},
+		istop = #{istop,jdbcType=VARCHAR},
+		addtime = #{addtime,jdbcType=TIMESTAMP},
+		clicknum = #{clicknum,jdbcType=INTEGER},
+		kind = #{kind,jdbcType=VARCHAR},
+		tags = #{tags,jdbcType=VARCHAR},
+		barcode = #{barcode,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		price = #{price,jdbcType=DECIMAL},
+		weight = #{weight,jdbcType=DECIMAL},
+		storenum = #{storenum,jdbcType=INTEGER},
+		locknum = #{locknum,jdbcType=INTEGER},
+		salenum = #{salenum,jdbcType=INTEGER},
+		evalnum = #{evalnum,jdbcType=INTEGER},
+		postage = #{postage,jdbcType=VARCHAR},
+		lasttime = #{lasttime,jdbcType=TIMESTAMP},
+		typeid = #{typeid,jdbcType=BIGINT},
+		status = #{status,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

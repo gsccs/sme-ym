@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.svg.dao.SorderTMapper" >
+  <resultMap id="BaseResultMap" type="com.gsccs.sme.plat.svg.model.SorderT" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="sitemid" property="sitemid" jdbcType="BIGINT" />
+    <result column="svgid" property="svgid" jdbcType="BIGINT" />
+    <result column="corpid" property="corpid" jdbcType="BIGINT" />
+    <result column="paytype" property="paytype" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="ordertype" property="ordertype" jdbcType="VARCHAR" />
+    <result column="totalfee" property="totalfee" jdbcType="DECIMAL" />
+    <result column="payfee" property="payfee" jdbcType="DECIMAL" />
+    <result column="totalnum" property="totalnum" jdbcType="INTEGER" />
+    <result column="platsource" property="platsource" jdbcType="VARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="lasttime" property="lasttime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    
+    <!-- 不保存数据库 -->
+    <result column="svgtitle" property="svgtitle" jdbcType="VARCHAR" />
+    <result column="corptitle" property="corptitle" jdbcType="VARCHAR" />
+    <result column="itemtitle" property="itemtitle" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, sitemid, svgid, corpid, paytype, phone, ordertype, totalfee, payfee, totalnum, 
+    platsource, addtime, lasttime, status
+  </sql>
+  
+  <sql id="JOIN_Column_List" >
+    id, sitemid, svgid, corpid, paytype, phone, ordertype, totalfee, payfee, totalnum, 
+    platsource, addtime, lasttime, status,corptitle,itemtitle,svgtitle
+  </sql>
+  
+  <select id="selectPageByExample" resultMap="BaseResultMap" parameterType="com.gsccs.sme.plat.svg.model.SorderTExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="JOIN_Column_List" />
+    FROM 
+    	(SELECT a.*,b.title as corptitle,c.title as svgtitle,d.title as itemtitle
+			FROM 
+			sme_sorder a,
+			sme_corp b,
+			sme_svorg c,
+			sme_sitem d
+			where a.corpid = b.id
+			and a.svgid = c.id
+			and a.sitemid = d.id
+		) as  aa
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    limit ${skip},${pageSize}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sme_sorder
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sme_sorder
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gsccs.sme.plat.svg.model.SorderTExample" >
+    delete from sme_sorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gsccs.sme.plat.svg.model.SorderT" >
+    insert into sme_sorder (id, sitemid, svgid, 
+      corpid, paytype, phone, 
+      ordertype, totalfee, payfee, 
+      totalnum, platsource, addtime, 
+      lasttime, status)
+    values (#{id,jdbcType=VARCHAR}, #{sitemid,jdbcType=BIGINT}, #{svgid,jdbcType=BIGINT}, 
+      #{corpid,jdbcType=BIGINT}, #{paytype,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{ordertype,jdbcType=VARCHAR}, #{totalfee,jdbcType=DECIMAL}, #{payfee,jdbcType=DECIMAL}, 
+      #{totalnum,jdbcType=INTEGER}, #{platsource,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, 
+      #{lasttime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="countByExample" parameterType="com.gsccs.sme.plat.svg.model.SorderTExample" resultType="java.lang.Integer" >
+    select count(*) from sme_sorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.svg.model.SorderT" >
+    update sme_sorder
+    set sitemid = #{sitemid,jdbcType=BIGINT},
+      svgid = #{svgid,jdbcType=BIGINT},
+      corpid = #{corpid,jdbcType=BIGINT},
+      paytype = #{paytype,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      ordertype = #{ordertype,jdbcType=VARCHAR},
+      totalfee = #{totalfee,jdbcType=DECIMAL},
+      payfee = #{payfee,jdbcType=DECIMAL},
+      totalnum = #{totalnum,jdbcType=INTEGER},
+      platsource = #{platsource,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      lasttime = #{lasttime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

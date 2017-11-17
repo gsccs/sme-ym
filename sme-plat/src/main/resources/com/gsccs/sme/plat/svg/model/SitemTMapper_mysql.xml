@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.svg.dao.SitemTMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.svg.model.SitemT">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="svgid" property="svgid" jdbcType="BIGINT" />
+		<result column="scode" property="scode" jdbcType="BIGINT" />
+		<result column="subscode" property="subscode" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="img" property="img" jdbcType="VARCHAR" />
+		<result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+		<result column="clicknum" property="clicknum" jdbcType="INTEGER" />
+		<result column="tags" property="tags" jdbcType="VARCHAR" />
+		<result column="areacodes" property="areacodes" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
+		<result column="salenum" property="salenum" jdbcType="INTEGER" />
+		<result column="evalnum" property="evalnum" jdbcType="INTEGER" />
+		<result column="lasttime" property="lasttime" jdbcType="TIMESTAMP" />
+		<result column="typeid" property="typeid" jdbcType="BIGINT" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+		<result column="linker" property="linker" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="sproject" property="sproject" jdbcType="VARCHAR" />
+		<result column="spattern" property="spattern" jdbcType="VARCHAR" />
+		<result column="spay" property="spay" jdbcType="VARCHAR" />
+		<result column="otherpay" property="otherpay" jdbcType="VARCHAR" />
+		<result column="scompany" property="scompany" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="VARCHAR" />
+		<result column="qq" property="qq" jdbcType="VARCHAR" />
+		<result column="spayunit" property="spayunit" jdbcType="VARCHAR" />
+		
+		<!--  -->
+		<result column="svglogo" property="svglogo" jdbcType="VARCHAR" />
+		<result column="svgtitle" property="svgtitle" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.gsccs.sme.plat.svg.model.SitemT"
+		extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, svgid, scode, subscode, title, img, addtime, clicknum,
+		tags, areacodes,
+		remark, price,
+		salenum, evalnum, lasttime, typeid, status,
+		endtime, linker, phone, email,
+		sproject,
+		spattern, spay, otherpay,
+		scompany, state, qq, spayunit
+	</sql>
+	
+	<sql id="Join_Column_List">
+		sclassstr,svglogo,svgtitle
+	</sql>
+	
+	<sql id="Blob_Column_List">
+		content
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="com.gsccs.sme.plat.svg.model.SitemTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from sme_sitem
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.SitemTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sme_sitem
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.SitemTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		FROM (
+			select a.*,c.title as sclassstr,b.logo as svglogo,b.title as svgtitle 
+			from sme_sitem a,sme_svorg b,sme_sclass c
+			where a.svgid = b.id
+			and a.scode = c.id
+			and b.status='1'
+			and c.typeid='S'
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+	
+	
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.svg.model.SitemTExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_sitem
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from sme_sitem
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		sme_sitem
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.svg.model.SitemTExample">
+		delete from sme_sitem
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.gsccs.sme.plat.svg.model.SitemT">
+		insert into sme_sitem (id, svgid, scode,
+		subscode, title,
+		img,
+		addtime, clicknum, tags,
+		areacodes, remark, price,
+		salenum, evalnum,
+		lasttime,
+		typeid, status, endtime,
+		linker, phone, email,
+		sproject,
+		spattern, spay,
+		otherpay, scompany, state,
+		qq, spayunit, content
+		)
+		values
+		(#{id,jdbcType=BIGINT}, #{svgid,jdbcType=BIGINT},
+		#{scode,jdbcType=BIGINT},
+		#{subscode,jdbcType=BIGINT},
+		#{title,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR},
+		#{addtime,jdbcType=TIMESTAMP}, #{clicknum,jdbcType=INTEGER},
+		#{tags,jdbcType=VARCHAR},
+		#{areacodes,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
+		#{salenum,jdbcType=INTEGER}, #{evalnum,jdbcType=INTEGER},
+		#{lasttime,jdbcType=TIMESTAMP},
+		#{typeid,jdbcType=BIGINT},
+		#{status,jdbcType=VARCHAR}, #{endtime,jdbcType=TIMESTAMP},
+		#{linker,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR},
+		#{sproject,jdbcType=VARCHAR},
+		#{spattern,jdbcType=VARCHAR}, #{spay,jdbcType=VARCHAR},
+		#{otherpay,jdbcType=VARCHAR}, #{scompany,jdbcType=VARCHAR},
+		#{state,jdbcType=VARCHAR},
+		#{qq,jdbcType=VARCHAR},
+		#{spayunit,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+
+
+
+	<update id="updateByExample" parameterType="map">
+		update sme_sitem
+		set id = #{record.id,jdbcType=BIGINT},
+		svgid =
+		#{record.svgid,jdbcType=BIGINT},
+		scode = #{record.scode,jdbcType=BIGINT},
+		subscode = #{record.subscode,jdbcType=BIGINT},
+		title =
+		#{record.title,jdbcType=VARCHAR},
+		img = #{record.img,jdbcType=VARCHAR},
+		addtime = #{record.addtime,jdbcType=TIMESTAMP},
+		clicknum =
+		#{record.clicknum,jdbcType=INTEGER},
+		tags =
+		#{record.tags,jdbcType=VARCHAR},
+		areacodes =
+		#{record.areacodes,jdbcType=VARCHAR},
+		remark =
+		#{record.remark,jdbcType=VARCHAR},
+		price =
+		#{record.price,jdbcType=DECIMAL},
+		salenum =
+		#{record.salenum,jdbcType=INTEGER},
+		evalnum =
+		#{record.evalnum,jdbcType=INTEGER},
+		lasttime =
+		#{record.lasttime,jdbcType=TIMESTAMP},
+		typeid =
+		#{record.typeid,jdbcType=BIGINT},
+		status =
+		#{record.status,jdbcType=VARCHAR},
+		endtime =
+		#{record.endtime,jdbcType=TIMESTAMP},
+		linker =
+		#{record.linker,jdbcType=VARCHAR},
+		phone =
+		#{record.phone,jdbcType=VARCHAR},
+		email =
+		#{record.email,jdbcType=VARCHAR},
+		sproject =
+		#{record.sproject,jdbcType=VARCHAR},
+		spattern =
+		#{record.spattern,jdbcType=VARCHAR},
+		spay =
+		#{record.spay,jdbcType=VARCHAR},
+		otherpay =
+		#{record.otherpay,jdbcType=VARCHAR},
+		scompany =
+		#{record.scompany,jdbcType=VARCHAR},
+		state =
+		#{record.state,jdbcType=VARCHAR},
+		qq = #{record.qq,jdbcType=VARCHAR},
+		spayunit = #{record.spayunit,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gsccs.sme.plat.svg.model.SitemT">
+		update
+		sme_sitem
+		set svgid = #{svgid,jdbcType=BIGINT},
+		scode =
+		#{scode,jdbcType=BIGINT},
+		subscode = #{subscode,jdbcType=BIGINT},
+		title =
+		#{title,jdbcType=VARCHAR},
+		img = #{img,jdbcType=VARCHAR},
+		addtime =
+		#{addtime,jdbcType=TIMESTAMP},
+		clicknum = #{clicknum,jdbcType=INTEGER},
+		tags = #{tags,jdbcType=VARCHAR},
+		areacodes = #{areacodes,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		price = #{price,jdbcType=DECIMAL},
+		salenum = #{salenum,jdbcType=INTEGER},
+		evalnum =
+		#{evalnum,jdbcType=INTEGER},
+		lasttime = #{lasttime,jdbcType=TIMESTAMP},
+		typeid = #{typeid,jdbcType=BIGINT},
+		status =
+		#{status,jdbcType=VARCHAR},
+		endtime = #{endtime,jdbcType=TIMESTAMP},
+		linker = #{linker,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		sproject =
+		#{sproject,jdbcType=VARCHAR},
+		spattern = #{spattern,jdbcType=VARCHAR},
+		spay = #{spay,jdbcType=VARCHAR},
+		otherpay =
+		#{otherpay,jdbcType=VARCHAR},
+		scompany = #{scompany,jdbcType=VARCHAR},
+		state = #{state,jdbcType=VARCHAR},
+		qq = #{qq,jdbcType=VARCHAR},
+		spayunit = #{spayunit,jdbcType=VARCHAR},
+		content =
+		#{content,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.svg.model.SitemT">
+		update sme_sitem
+		set svgid = #{svgid,jdbcType=BIGINT},
+		scode = #{scode,jdbcType=BIGINT},
+		subscode = #{subscode,jdbcType=BIGINT},
+		title =#{title,jdbcType=VARCHAR},
+		img = #{img,jdbcType=VARCHAR},
+		addtime =
+		#{addtime,jdbcType=TIMESTAMP},
+		clicknum = #{clicknum,jdbcType=INTEGER},
+		tags = #{tags,jdbcType=VARCHAR},
+		areacodes = #{areacodes,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		price = #{price,jdbcType=DECIMAL},
+		salenum = #{salenum,jdbcType=INTEGER},
+		evalnum =
+		#{evalnum,jdbcType=INTEGER},
+		lasttime = #{lasttime,jdbcType=TIMESTAMP},
+		typeid = #{typeid,jdbcType=BIGINT},
+		status =
+		#{status,jdbcType=VARCHAR},
+		endtime = #{endtime,jdbcType=TIMESTAMP},
+		linker = #{linker,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		sproject =
+		#{sproject,jdbcType=VARCHAR},
+		spattern = #{spattern,jdbcType=VARCHAR},
+		spay = #{spay,jdbcType=VARCHAR},
+		otherpay =
+		#{otherpay,jdbcType=VARCHAR},
+		scompany = #{scompany,jdbcType=VARCHAR},
+		state = #{state,jdbcType=VARCHAR},
+		qq = #{qq,jdbcType=VARCHAR},
+		spayunit = #{spayunit,jdbcType=VARCHAR},
+		content =
+		#{content,jdbcType=LONGVARCHAR}
+		where id =
+		#{id,jdbcType=BIGINT}
+	</update>
+</mapper>

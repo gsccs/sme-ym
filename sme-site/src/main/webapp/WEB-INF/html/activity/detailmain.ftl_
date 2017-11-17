@@ -1,0 +1,86 @@
+<div class="w1000">
+		<div class="acti_detail">
+			<div class="title">${currActivity.title}</div>
+			<div class="top">
+				
+				<dl>
+					<dt>主办单位：</dt>
+					<dd>${currActivity.svgtitle}</dd>
+				</dl>
+				<dl>
+					<dt>服务分类：</dt>
+					<dd>${currActivity.sclassstr}</dd>
+				</dl>
+				
+				<dl>
+					<dt>活动时间：</dt>
+					<dd>${currActivity.starttimestr} ~ ${currActivity.endtimestr}</dd>
+				</dl>
+				<dl>
+					<dt>
+						<span style="letter-spacing: .5em;">联</span><span style="letter-spacing: .5em;">系</span>人：
+					</dt>
+					<dd>${currActivity.linker}</dd>
+				</dl>
+				<dl>
+					<dt>联系电话：</dt>
+					<dd>${currActivity.linktel}<span>(请<a onclick="RedirectLogin()"
+							style="cursor: pointer; color: Blue;">登录</a>后查看)
+						</span>
+					</dd>
+				</dl>
+				<dl>
+					<dt>活动地址：</dt>
+					<dd title="甘肃省玉门市市辖区">甘肃省玉门市市辖区</dd>
+				</dl>
+				<!--
+				<div class="qrcode">
+					<img alt="二维码" src="${currActivity.svglogo}">
+				</div>
+				<div class="qrcodetxt">手机扫码报名↑</div>
+				-->
+				<div class="signup" id="dvSignup"></div>
+			</div>
+			
+			<div class="content">
+				<div class="title">活动内容</div>
+				${currActivity.content}
+			</div>
+			<div class="content" id="dvTidbits">
+				<div class="title" id="dvTidbitsTitle">活动图片</div>
+				<ul class="acti_img">
+					<li>
+						<img alt="4366" src="${currActivity.img}" />
+					</li>
+				</ul>
+			</div>
+			<div class="evaluation" id="dvEvaluation" style="display: none;">
+				<div class="title_x">活动评价</div>
+				<textarea id="txtEvaluation"></textarea>
+				<div class="code">
+					<input type="text" id="txtCode" maxlength="4"> <img
+						id="imgCode" alt="看不清？点击换一张" src="./服务活动详情_files/GetValidateCode"
+						onclick="ChangeCode()"> <a href="javascript:void(0)"
+							onclick="ChangeCode()" class="desc">看不清？点击换一张</a>
+				</div>
+				<div id="dvSubmit">提 交</div>
+			</div>
+		</div>
+		<div class="acti_right">
+			<a class="publish" href="http://account.smehn.cn/"></a>
+			<div class="box">
+				<div class="title">
+					<span></span>热门活动
+				</div>
+				<div class="content">
+					<ul class="main">
+						<@sme_activity_list num="10" titlelen="15";act,index>
+						<li><a href="${act.url}" target="_blank" title="${act.title}">${act.showtitle}…</a></li>
+						</@sme_activity_list>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="clear"></div>

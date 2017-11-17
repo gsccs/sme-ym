@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.shop.dao.OrderMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.shop.model.OrderT">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="ordersn" property="ordersn" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="productid" property="productid" jdbcType="BIGINT" />
+		<result column="buyerid" property="buyerid" jdbcType="BIGINT" />
+		<result column="sellerid" property="sellerid" jdbcType="BIGINT" />
+		<result column="paytype" property="paytype" jdbcType="VARCHAR" />
+		<result column="linktel" property="linktel" jdbcType="VARCHAR" />
+		<result column="linker" property="linker" jdbcType="VARCHAR" />
+		<result column="goodsfee" property="goodsfee" jdbcType="DECIMAL" />
+		<result column="totalfee" property="totalfee" jdbcType="DECIMAL" />
+		<result column="totalnum" property="totalnum" jdbcType="INTEGER" />
+		<result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+		<result column="lasttime" property="lasttime" jdbcType="TIMESTAMP" />
+		
+		<!--  -->
+		<result column="sellertitle" property="sellertitle" jdbcType="VARCHAR" />
+		<result column="buyertitle" property="buyertitle" jdbcType="VARCHAR" />
+		<result column="producttitle" property="producttitle" jdbcType="VARCHAR" />
+		
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, ordersn, status, productid,buyerid, sellerid, paytype, linktel,
+		linker,goodsfee, totalfee,
+		totalnum,addtime, lasttime
+	</sql>
+	
+	
+	<sql id="Join_Column_List">
+		sellertitle,buyertitle,producttitle
+	</sql>
+	
+	
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.shop.model.OrderExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (
+			select a.*, b.title as sellertitle , c.title as buyertitle,d.title as producttitle 
+			from shop_order a,
+			shop_product d,
+			sme_corp b, 
+			sme_corp c
+			where a.sellerid = b.id
+			and a.buyerid = c.id
+			and a.productid = d.id
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (
+			select a.*, b.title as sellertitle , c.title as buyertitle,d.title as producttitle 
+			from shop_order a,
+			shop_product d,
+			sme_corp b, 
+			sme_corp c
+			where a.sellerid = b.id
+			and a.buyerid = c.id
+			and a.productid = d.id
+		) as aa
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from shop_order
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.shop.model.OrderExample">
+		delete from shop_order
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+
+	<insert id="insert" parameterType="com.gsccs.sme.plat.shop.model.OrderT">
+		insert into shop_order (id, ordersn, status, productid,
+		buyerid, sellerid, paytype,
+		linktel,linker,goodsfee,
+		totalfee, totalnum, addtime,
+		lasttime)
+		values (#{id,jdbcType=BIGINT}, 
+		#{ordersn,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR},
+		#{productid,jdbcType=BIGINT},
+		#{buyerid,jdbcType=BIGINT}, 
+		#{sellerid,jdbcType=BIGINT}, 
+		#{paytype,jdbcType=VARCHAR},
+		#{linktel,jdbcType=VARCHAR},
+		#{linker,jdbcType=VARCHAR}, 
+		#{goodsfee,jdbcType=DECIMAL},
+		#{totalfee,jdbcType=DECIMAL},
+		#{totalnum,jdbcType=INTEGER}, 
+		#{addtime,jdbcType=TIMESTAMP},
+		#{lasttime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.shop.model.OrderExample"
+		resultType="java.lang.Integer">
+		select count(*) from shop_order
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.shop.model.OrderT">
+		update shop_order
+		<set>
+			<if test="ordersn != null">
+				ordersn = #{ordersn,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="productid != null">
+				productid = #{productid,jdbcType=BIGINT},
+			</if>
+			<if test="buyerid != null">
+				buyerid = #{buyerid,jdbcType=BIGINT},
+			</if>
+			<if test="sellerid != null">
+				sellerid = #{sellerid,jdbcType=BIGINT},
+			</if>
+			<if test="paytype != null">
+				paytype = #{paytype,jdbcType=VARCHAR},
+			</if>
+
+			<if test="linktel != null">
+				linktel = #{linktel,jdbcType=VARCHAR},
+			</if>
+			<if test="linker != null">
+				linker = #{linker,jdbcType=VARCHAR},
+			</if>
+
+			<if test="goodsfee != null">
+				goodsfee = #{goodsfee,jdbcType=DECIMAL},
+			</if>
+
+			<if test="totalfee != null">
+				totalfee = #{totalfee,jdbcType=DECIMAL},
+			</if>
+
+			<if test="totalnum != null">
+				totalnum = #{totalnum,jdbcType=INTEGER},
+			</if>
+
+			<if test="addtime != null">
+				addtime = #{addtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lasttime != null">
+				lasttime = #{lasttime,jdbcType=TIMESTAMP},
+			</if>
+
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+</mapper>

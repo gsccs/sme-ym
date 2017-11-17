@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.site.dao.ContentMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.site.model.Content">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="shorttitle" property="shorttitle" jdbcType="VARCHAR" />
+		<result column="channelid" property="channelid" jdbcType="VARCHAR" />
+		<result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+		<result column="userid" property="userid" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="source" property="source" jdbcType="VARCHAR" />
+		<result column="clicknum" property="clicknum" jdbcType="INTEGER" />
+		<result column="indexnum" property="indexnum" jdbcType="INTEGER" />
+		<result column="img" property="img" jdbcType="VARCHAR" />
+		<result column="author" property="author" jdbcType="VARCHAR" />
+		<result column="istop" property="istop" jdbcType="VARCHAR" />
+		<result column="ishot" property="ishot" jdbcType="VARCHAR" />
+		<result column="isimg" property="isimg" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="isrelease" property="isrelease" jdbcType="VARCHAR" />
+		<result column="template" property="template" jdbcType="VARCHAR" />
+		<result column="svgid" property="svgid" jdbcType="BIGINT" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.gsccs.sme.plat.site.model.Content"
+		extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, title,shorttitle, channelid, addtime, userid,remark,source, clicknum,
+		indexnum,img, author, istop, ishot, isimg,svgid,template,status,isrelease
+	</sql>
+	<sql id="Blob_Column_List">
+		content
+	</sql>
+	<sql id="Join_Column_List">
+		svglogo,svgtitle,channelstr
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="com.gsccs.sme.plat.site.model.ContentExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from site_content
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.site.model.ContentExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from site_content
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.site.model.ContentExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (
+			select a.*,b.title as channelstr,c.logo as svglogo,c.title as svgtitle
+			from site_content a
+			left join site_channel b on  a.channelid = b.id
+			left join sme_svorg c on svgid = c.id
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from site_content
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from site_content
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.site.model.ContentExample">
+		delete from site_content
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gsccs.sme.plat.site.model.Content">
+		insert into site_content (id, title,shorttitle, channelid,
+		addtime, userid,remark,source, clicknum, indexnum,
+		img, author, istop,ishot, isimg, svgid,
+		status,isrelease,template, content)
+		values (#{id,jdbcType=BIGINT},
+		#{title,jdbcType=VARCHAR},
+		#{shorttitle,jdbcType=VARCHAR},
+		#{channelid,jdbcType=VARCHAR},
+		#{addtime,jdbcType=TIMESTAMP},
+		#{userid,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{source,jdbcType=VARCHAR},
+		#{clicknum,jdbcType=INTEGER},
+		#{indexnum,jdbcType=INTEGER},
+		#{img,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{istop,jdbcType=VARCHAR},
+		#{ishot,jdbcType=VARCHAR}, #{isimg,jdbcType=VARCHAR}, #{svgid,jdbcType=BIGINT},
+		#{status,jdbcType=VARCHAR},
+		#{isrelease,jdbcType=VARCHAR},
+		#{template,jdbcType=VARCHAR},
+		#{content,jdbcType=LONGVARCHAR})
+	</insert>
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.site.model.ContentExample"
+		resultType="java.lang.Integer">
+		select count(*) from site_content
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gsccs.sme.plat.site.model.Content">
+		update site_content
+		set title = #{title,jdbcType=VARCHAR},
+		shorttitle = #{shorttitle,jdbcType=VARCHAR},
+		channelid = #{channelid,jdbcType=VARCHAR},
+		addtime = #{addtime,jdbcType=TIMESTAMP},
+		userid = #{userid,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		source = #{source,jdbcType=VARCHAR},
+		clicknum = #{clicknum,jdbcType=INTEGER},
+		indexnum = #{indexnum,jdbcType=INTEGER},
+		img = #{img,jdbcType=VARCHAR},
+		author = #{author,jdbcType=VARCHAR},
+		istop = #{istop,jdbcType=VARCHAR},
+		ishot = #{ishot,jdbcType=VARCHAR},
+		isimg = #{isimg,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		isrelease = #{isrelease,jdbcType=VARCHAR},
+		template = #{template,jdbcType=VARCHAR},
+		svgid = #{svgid,jdbcType=BIGINT},
+		content = #{content,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.site.model.Content" >
+    update site_content
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="shorttitle != null" >
+        shorttitle = #{shorttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="channelid != null" >
+        channelid = #{channelid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="clicknum != null" >
+        clicknum = #{clicknum,jdbcType=INTEGER},
+      </if>
+      <if test="indexnum != null" >
+        indexnum = #{indexnum,jdbcType=INTEGER},
+      </if>
+      <if test="img != null" >
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="istop != null" >
+        istop = #{istop,jdbcType=VARCHAR},
+      </if>
+      <if test="ishot != null" >
+        ishot = #{ishot,jdbcType=VARCHAR},
+      </if>
+      <if test="isimg != null" >
+        isimg = #{isimg,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="svgid != null" >
+        svgid = #{svgid,jdbcType=BIGINT},
+      </if>
+      <if test="template != null" >
+        template = #{template,jdbcType=VARCHAR},
+      </if>
+      <if test="isrelease != null" >
+        isrelease = #{isrelease,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.site.model.Content">
+		update site_content
+		set title = #{title,jdbcType=VARCHAR},
+		shorttitle = #{shorttitle,jdbcType=VARCHAR},
+		channelid = #{channelid,jdbcType=VARCHAR},
+		addtime = #{addtime,jdbcType=TIMESTAMP},
+		userid = #{userid,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		source = #{source,jdbcType=VARCHAR},
+		clicknum = #{clicknum,jdbcType=INTEGER},
+		indexnum = #{indexnum,jdbcType=INTEGER},
+		img = #{img,jdbcType=VARCHAR},
+		author = #{author,jdbcType=VARCHAR},
+		istop = #{istop,jdbcType=VARCHAR},
+		ishot = #{ishot,jdbcType=VARCHAR},
+		isimg = #{isimg,jdbcType=VARCHAR},
+		svgid = #{svgid,jdbcType=BIGINT},
+		template = #{template,jdbcType=VARCHAR},
+		isrelease = #{isrelease,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

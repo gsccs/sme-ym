@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gsccs.sme.plat.svg.dao.AppealTopicTMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.svg.model.AppealTopicT">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="svgid" jdbcType="BIGINT" property="svgid" />
+		<result column="scode" jdbcType="BIGINT" property="scode" />
+		<result column="subscode" jdbcType="BIGINT" property="subscode" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="starobj" jdbcType="VARCHAR" property="starobj" />
+		<result column="scondit" jdbcType="VARCHAR" property="scondit" />
+		<result column="swindow" jdbcType="VARCHAR" property="swindow" />
+		<result column="sbasis" jdbcType="VARCHAR" property="sbasis" />
+		
+		<result column="daynum" jdbcType="INTEGER" property="daynum" />
+		<result column="indexnum" jdbcType="INTEGER" property="indexnum" />
+		<result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
+		<result column="status" jdbcType="VARCHAR" property="status" />
+		
+		<!--  -->
+		<result column="svglogo" jdbcType="VARCHAR" property="svglogo" />
+		<result column="svgtitle" jdbcType="VARCHAR" property="svgtitle" />
+		<result column="sclassstr" jdbcType="VARCHAR" property="sclassstr" />
+		
+	</resultMap>
+	
+	<resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+		type="com.gsccs.sme.plat.svg.model.AppealTopicT">
+		<result column="workflow" jdbcType="LONGVARCHAR" property="workflow" />
+	</resultMap>
+	
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, title, svgid,scode,subscode, remark,starobj,scondit,swindow,sbasis, daynum,indexnum, addtime, status
+	</sql>
+	<sql id="Blob_Column_List">
+		workflow
+	</sql>
+	<sql id="Join_Column_List">
+		svglogo,svgtitle,sclassstr
+	</sql>
+	
+	<select id="selectPageByExample" parameterType="com.gsccs.sme.plat.svg.model.AppealTopicTExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (
+			select a.*,b.logo as svglogo,b.title as svgtitle,c.title as sclassstr
+			from sme_appeal_topic a,
+			sme_svorg b,
+			sme_sclass c
+			where a.svgid = b.id
+			and a.scode = c.id
+			and c.typeid='G'
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by addtime desc
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from (
+			select a.*,b.logo as svglogo,b.title as svgtitle,c.title as sclassstr
+			from sme_appeal_topic a,
+			sme_svorg b,
+			sme_sclass c
+			where a.svgid = b.id
+			and a.scode = c.id
+			and c.typeid='G'
+		) as aa
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sme_appeal_topic
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.svg.model.AppealTopicTExample">
+		delete from sme_appeal_topic
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.gsccs.sme.plat.svg.model.AppealTopicT">
+		insert into sme_appeal_topic (id, title, svgid,
+		scode,subscode,
+		remark,starobj,scondit,swindow,sbasis, daynum, addtime,
+		status, workflow)
+		values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR},
+		#{svgid,jdbcType=BIGINT},#{scode,jdbcType=BIGINT},#{subscode,jdbcType=BIGINT},
+		#{remark,jdbcType=VARCHAR}, 
+		#{starobj,jdbcType=VARCHAR}, 
+		#{scondit,jdbcType=VARCHAR}, 
+		#{swindow,jdbcType=VARCHAR}, 
+		#{sbasis,jdbcType=VARCHAR}, 
+		#{daynum,jdbcType=INTEGER}, #{addtime,jdbcType=TIMESTAMP},
+		#{status,jdbcType=VARCHAR}, #{workflow,jdbcType=LONGVARCHAR})
+	</insert>
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.svg.model.AppealTopicTExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_appeal_topic
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gsccs.sme.plat.svg.model.AppealTopicT">
+		update sme_appeal_topic
+		set title = #{title,jdbcType=VARCHAR},
+		svgid = #{svgid,jdbcType=BIGINT},
+		scode = #{scode,jdbcType=BIGINT},
+		subscode = #{subscode,jdbcType=BIGINT},
+		remark = #{remark,jdbcType=VARCHAR},
+		starobj = #{starobj,jdbcType=VARCHAR}, 
+		scondit = #{scondit,jdbcType=VARCHAR}, 
+		swindow = #{swindow,jdbcType=VARCHAR}, 
+		sbasis = #{sbasis,jdbcType=VARCHAR}, 
+		daynum = #{daynum,jdbcType=INTEGER},
+		indexnum = #{indexnum,jdbcType=INTEGER},
+		addtime = #{addtime,jdbcType=TIMESTAMP},
+		status = #{status,jdbcType=VARCHAR},
+		workflow = #{workflow,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.svg.model.AppealTopicT">
+		update sme_appeal_topic
+		set title = #{title,jdbcType=VARCHAR},
+		svgid = #{svgid,jdbcType=BIGINT},
+		scode = #{scode,jdbcType=BIGINT},
+		subscode = #{subscode,jdbcType=BIGINT},
+		remark = #{remark,jdbcType=VARCHAR},
+		starobj = #{starobj,jdbcType=VARCHAR}, 
+		scondit = #{scondit,jdbcType=VARCHAR}, 
+		swindow = #{swindow,jdbcType=VARCHAR}, 
+		sbasis = #{sbasis,jdbcType=VARCHAR}, 
+		daynum = #{daynum,jdbcType=INTEGER},
+		indexnum = #{indexnum,jdbcType=INTEGER},
+		addtime = #{addtime,jdbcType=TIMESTAMP},
+		status = #{status,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.svg.dao.RegTypeTMapper" >
+  <resultMap id="BaseResultMap" type="com.gsccs.sme.plat.svg.model.RegTypeT" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="parid" property="parid" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="indexnum" property="indexnum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, parid, title, code, state, indexnum
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gsccs.sme.plat.svg.model.RegTypeTExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sme_reg_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sme_reg_type
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sme_reg_type
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gsccs.sme.plat.svg.model.RegTypeTExample" >
+    delete from sme_reg_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gsccs.sme.plat.svg.model.RegTypeT" >
+    insert into sme_reg_type (id, parid, title, 
+      code, state, clicknum, 
+      pagemark, indexnum)
+    values (#{id,jdbcType=BIGINT}, #{parid,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR},  
+      #{indexnum,jdbcType=INTEGER})
+  </insert>
+  
+  <select id="countByExample" parameterType="com.gsccs.sme.plat.svg.model.RegTypeTExample" resultType="java.lang.Integer" >
+    select count(*) from sme_reg_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <update id="updateByExample" parameterType="map" >
+    update sme_reg_type
+    set id = #{record.id,jdbcType=BIGINT},
+      parid = #{record.parid,jdbcType=BIGINT},
+      title = #{record.title,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR},
+      clicknum = #{record.clicknum,jdbcType=INTEGER},
+      pagemark = #{record.pagemark,jdbcType=VARCHAR},
+      indexnum = #{record.indexnum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.svg.model.RegTypeT" >
+    update sme_reg_type
+    set parid = #{parid,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      indexnum = #{indexnum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

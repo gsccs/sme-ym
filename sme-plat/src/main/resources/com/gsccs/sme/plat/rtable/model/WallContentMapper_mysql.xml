@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.rtable.dao.WallContentMapper" >
+  <resultMap id="BaseResultMap" type="com.gsccs.sme.plat.rtable.model.WallContent" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="mainId" property="mainid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="a" property="a" jdbcType="VARCHAR" />
+    <result column="b" property="b" jdbcType="VARCHAR" />
+    <result column="c" property="c" jdbcType="VARCHAR" />
+    <result column="d" property="d" jdbcType="VARCHAR" />
+    <result column="e" property="e" jdbcType="VARCHAR" />
+    <result column="f" property="f" jdbcType="VARCHAR" />
+    <result column="g" property="g" jdbcType="VARCHAR" />
+    <result column="h" property="h" jdbcType="VARCHAR" />
+    <result column="i" property="i" jdbcType="VARCHAR" />
+    <result column="j" property="j" jdbcType="VARCHAR" />
+    <result column="k" property="k" jdbcType="VARCHAR" />
+    <result column="l" property="l" jdbcType="VARCHAR" />
+    <result column="m" property="m" jdbcType="VARCHAR" />
+    <result column="n" property="n" jdbcType="VARCHAR" />
+    <result column="o" property="o" jdbcType="VARCHAR" />
+    <result column="p" property="p" jdbcType="VARCHAR" />
+    <result column="q" property="q" jdbcType="VARCHAR" />
+    <result column="r" property="r" jdbcType="VARCHAR" />
+    <result column="s" property="s" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, mainId, name, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gsccs.sme.plat.rtable.model.WallContentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sme_rtable_nwall_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+    <select id="selectPageByExample" resultMap="BaseResultMap" parameterType="com.gsccs.sme.plat.rtable.model.WallContentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sme_rtable_nwall_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+      limit ${skip},${pageSize}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sme_rtable_nwall_content
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sme_rtable_nwall_content
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gsccs.sme.plat.rtable.model.WallContentExample" >
+    delete from sme_rtable_nwall_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gsccs.sme.plat.rtable.model.WallContent" >
+    insert into sme_rtable_nwall_content (id, mainId, name, 
+      a, b, c, d, 
+      e, f, g, h, 
+      i, j, k, l, 
+      m, n, o, p, 
+      q, r, s)
+    values (#{id,jdbcType=INTEGER}, #{mainid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{a,jdbcType=VARCHAR}, #{b,jdbcType=VARCHAR}, #{c,jdbcType=VARCHAR}, #{d,jdbcType=VARCHAR}, 
+      #{e,jdbcType=VARCHAR}, #{f,jdbcType=VARCHAR}, #{g,jdbcType=VARCHAR}, #{h,jdbcType=VARCHAR}, 
+      #{i,jdbcType=VARCHAR}, #{j,jdbcType=VARCHAR}, #{k,jdbcType=VARCHAR}, #{l,jdbcType=VARCHAR}, 
+      #{m,jdbcType=VARCHAR}, #{n,jdbcType=VARCHAR}, #{o,jdbcType=VARCHAR}, #{p,jdbcType=VARCHAR}, 
+      #{q,jdbcType=VARCHAR}, #{r,jdbcType=VARCHAR}, #{s,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gsccs.sme.plat.rtable.model.WallContent" >
+    insert into sme_rtable_nwall_content
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mainid != null" >
+        mainId,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="a != null" >
+        a,
+      </if>
+      <if test="b != null" >
+        b,
+      </if>
+      <if test="c != null" >
+        c,
+      </if>
+      <if test="d != null" >
+        d,
+      </if>
+      <if test="e != null" >
+        e,
+      </if>
+      <if test="f != null" >
+        f,
+      </if>
+      <if test="g != null" >
+        g,
+      </if>
+      <if test="h != null" >
+        h,
+      </if>
+      <if test="i != null" >
+        i,
+      </if>
+      <if test="j != null" >
+        j,
+      </if>
+      <if test="k != null" >
+        k,
+      </if>
+      <if test="l != null" >
+        l,
+      </if>
+      <if test="m != null" >
+        m,
+      </if>
+      <if test="n != null" >
+        n,
+      </if>
+      <if test="o != null" >
+        o,
+      </if>
+      <if test="p != null" >
+        p,
+      </if>
+      <if test="q != null" >
+        q,
+      </if>
+      <if test="r != null" >
+        r,
+      </if>
+      <if test="s != null" >
+        s,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mainid != null" >
+        #{mainid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="a != null" >
+        #{a,jdbcType=VARCHAR},
+      </if>
+      <if test="b != null" >
+        #{b,jdbcType=VARCHAR},
+      </if>
+      <if test="c != null" >
+        #{c,jdbcType=VARCHAR},
+      </if>
+      <if test="d != null" >
+        #{d,jdbcType=VARCHAR},
+      </if>
+      <if test="e != null" >
+        #{e,jdbcType=VARCHAR},
+      </if>
+      <if test="f != null" >
+        #{f,jdbcType=VARCHAR},
+      </if>
+      <if test="g != null" >
+        #{g,jdbcType=VARCHAR},
+      </if>
+      <if test="h != null" >
+        #{h,jdbcType=VARCHAR},
+      </if>
+      <if test="i != null" >
+        #{i,jdbcType=VARCHAR},
+      </if>
+      <if test="j != null" >
+        #{j,jdbcType=VARCHAR},
+      </if>
+      <if test="k != null" >
+        #{k,jdbcType=VARCHAR},
+      </if>
+      <if test="l != null" >
+        #{l,jdbcType=VARCHAR},
+      </if>
+      <if test="m != null" >
+        #{m,jdbcType=VARCHAR},
+      </if>
+      <if test="n != null" >
+        #{n,jdbcType=VARCHAR},
+      </if>
+      <if test="o != null" >
+        #{o,jdbcType=VARCHAR},
+      </if>
+      <if test="p != null" >
+        #{p,jdbcType=VARCHAR},
+      </if>
+      <if test="q != null" >
+        #{q,jdbcType=VARCHAR},
+      </if>
+      <if test="r != null" >
+        #{r,jdbcType=VARCHAR},
+      </if>
+      <if test="s != null" >
+        #{s,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gsccs.sme.plat.rtable.model.WallContentExample" resultType="java.lang.Integer" >
+    select count(*) from sme_rtable_nwall_content
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sme_rtable_nwall_content
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.mainid != null" >
+        mainId = #{record.mainid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.a != null" >
+        a = #{record.a,jdbcType=VARCHAR},
+      </if>
+      <if test="record.b != null" >
+        b = #{record.b,jdbcType=VARCHAR},
+      </if>
+      <if test="record.c != null" >
+        c = #{record.c,jdbcType=VARCHAR},
+      </if>
+      <if test="record.d != null" >
+        d = #{record.d,jdbcType=VARCHAR},
+      </if>
+      <if test="record.e != null" >
+        e = #{record.e,jdbcType=VARCHAR},
+      </if>
+      <if test="record.f != null" >
+        f = #{record.f,jdbcType=VARCHAR},
+      </if>
+      <if test="record.g != null" >
+        g = #{record.g,jdbcType=VARCHAR},
+      </if>
+      <if test="record.h != null" >
+        h = #{record.h,jdbcType=VARCHAR},
+      </if>
+      <if test="record.i != null" >
+        i = #{record.i,jdbcType=VARCHAR},
+      </if>
+      <if test="record.j != null" >
+        j = #{record.j,jdbcType=VARCHAR},
+      </if>
+      <if test="record.k != null" >
+        k = #{record.k,jdbcType=VARCHAR},
+      </if>
+      <if test="record.l != null" >
+        l = #{record.l,jdbcType=VARCHAR},
+      </if>
+      <if test="record.m != null" >
+        m = #{record.m,jdbcType=VARCHAR},
+      </if>
+      <if test="record.n != null" >
+        n = #{record.n,jdbcType=VARCHAR},
+      </if>
+      <if test="record.o != null" >
+        o = #{record.o,jdbcType=VARCHAR},
+      </if>
+      <if test="record.p != null" >
+        p = #{record.p,jdbcType=VARCHAR},
+      </if>
+      <if test="record.q != null" >
+        q = #{record.q,jdbcType=VARCHAR},
+      </if>
+      <if test="record.r != null" >
+        r = #{record.r,jdbcType=VARCHAR},
+      </if>
+      <if test="record.s != null" >
+        s = #{record.s,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sme_rtable_nwall_content
+    set id = #{record.id,jdbcType=INTEGER},
+      mainId = #{record.mainid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      a = #{record.a,jdbcType=VARCHAR},
+      b = #{record.b,jdbcType=VARCHAR},
+      c = #{record.c,jdbcType=VARCHAR},
+      d = #{record.d,jdbcType=VARCHAR},
+      e = #{record.e,jdbcType=VARCHAR},
+      f = #{record.f,jdbcType=VARCHAR},
+      g = #{record.g,jdbcType=VARCHAR},
+      h = #{record.h,jdbcType=VARCHAR},
+      i = #{record.i,jdbcType=VARCHAR},
+      j = #{record.j,jdbcType=VARCHAR},
+      k = #{record.k,jdbcType=VARCHAR},
+      l = #{record.l,jdbcType=VARCHAR},
+      m = #{record.m,jdbcType=VARCHAR},
+      n = #{record.n,jdbcType=VARCHAR},
+      o = #{record.o,jdbcType=VARCHAR},
+      p = #{record.p,jdbcType=VARCHAR},
+      q = #{record.q,jdbcType=VARCHAR},
+      r = #{record.r,jdbcType=VARCHAR},
+      s = #{record.s,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.rtable.model.WallContent" >
+    update sme_rtable_nwall_content
+    <set >
+      <if test="mainid != null" >
+        mainId = #{mainid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="a != null" >
+        a = #{a,jdbcType=VARCHAR},
+      </if>
+      <if test="b != null" >
+        b = #{b,jdbcType=VARCHAR},
+      </if>
+      <if test="c != null" >
+        c = #{c,jdbcType=VARCHAR},
+      </if>
+      <if test="d != null" >
+        d = #{d,jdbcType=VARCHAR},
+      </if>
+      <if test="e != null" >
+        e = #{e,jdbcType=VARCHAR},
+      </if>
+      <if test="f != null" >
+        f = #{f,jdbcType=VARCHAR},
+      </if>
+      <if test="g != null" >
+        g = #{g,jdbcType=VARCHAR},
+      </if>
+      <if test="h != null" >
+        h = #{h,jdbcType=VARCHAR},
+      </if>
+      <if test="i != null" >
+        i = #{i,jdbcType=VARCHAR},
+      </if>
+      <if test="j != null" >
+        j = #{j,jdbcType=VARCHAR},
+      </if>
+      <if test="k != null" >
+        k = #{k,jdbcType=VARCHAR},
+      </if>
+      <if test="l != null" >
+        l = #{l,jdbcType=VARCHAR},
+      </if>
+      <if test="m != null" >
+        m = #{m,jdbcType=VARCHAR},
+      </if>
+      <if test="n != null" >
+        n = #{n,jdbcType=VARCHAR},
+      </if>
+      <if test="o != null" >
+        o = #{o,jdbcType=VARCHAR},
+      </if>
+      <if test="p != null" >
+        p = #{p,jdbcType=VARCHAR},
+      </if>
+      <if test="q != null" >
+        q = #{q,jdbcType=VARCHAR},
+      </if>
+      <if test="r != null" >
+        r = #{r,jdbcType=VARCHAR},
+      </if>
+      <if test="s != null" >
+        s = #{s,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.rtable.model.WallContent" >
+    update sme_rtable_nwall_content
+    set mainId = #{mainid,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      a = #{a,jdbcType=VARCHAR},
+      b = #{b,jdbcType=VARCHAR},
+      c = #{c,jdbcType=VARCHAR},
+      d = #{d,jdbcType=VARCHAR},
+      e = #{e,jdbcType=VARCHAR},
+      f = #{f,jdbcType=VARCHAR},
+      g = #{g,jdbcType=VARCHAR},
+      h = #{h,jdbcType=VARCHAR},
+      i = #{i,jdbcType=VARCHAR},
+      j = #{j,jdbcType=VARCHAR},
+      k = #{k,jdbcType=VARCHAR},
+      l = #{l,jdbcType=VARCHAR},
+      m = #{m,jdbcType=VARCHAR},
+      n = #{n,jdbcType=VARCHAR},
+      o = #{o,jdbcType=VARCHAR},
+      p = #{p,jdbcType=VARCHAR},
+      q = #{q,jdbcType=VARCHAR},
+      r = #{r,jdbcType=VARCHAR},
+      s = #{s,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

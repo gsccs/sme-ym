@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.svg.dao.CorpTMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.svg.model.CorpT">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="orgcode" property="orgcode" jdbcType="VARCHAR" />
+		<result column="regcode" property="regcode" jdbcType="VARCHAR" />
+		<result column="regtype" property="regtype" jdbcType="VARCHAR" />
+		<result column="regfund" property="regfund" jdbcType="FLOAT" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="domain" property="domain" jdbcType="VARCHAR" />
+		<result column="nature" property="nature" jdbcType="VARCHAR" />
+		<result column="legaler" property="legaler" jdbcType="VARCHAR" />
+		<result column="linker" property="linker" jdbcType="VARCHAR" />
+		<result column="pcode" property="pcode" jdbcType="VARCHAR" />
+		<result column="ccode" property="ccode" jdbcType="VARCHAR" />
+		<result column="acode" property="acode" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="zipcode" property="zipcode" jdbcType="VARCHAR" />
+		<result column="qqcode" property="qqcode" jdbcType="VARCHAR" />
+		<result column="hycode" property="hycode" jdbcType="VARCHAR" />
+		<result column="subhycode" property="subhycode" jdbcType="VARCHAR" />
+		<result column="stake" property="stake" jdbcType="VARCHAR" />
+		<result column="created" property="created" jdbcType="VARCHAR" />
+		<result column="logo" property="logo" jdbcType="VARCHAR" />
+		<result column="parkid" property="parkid" jdbcType="BIGINT" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		
+		<!--  -->
+		<result column="parktitle" property="parktitle" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="ResultMapWithBLOBs" type="com.gsccs.sme.plat.svg.model.CorpT"
+		extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, title, orgcode, regcode, regtype,regfund, phone, email, domain, nature, legaler, linker,
+		pcode, ccode,
+		acode, address, zipcode, qqcode, hycode, subhycode, stake, created, logo,parkid,status
+	</sql>
+	<sql id="Blob_Column_List">
+		content
+	</sql>
+	<sql id="Park_Column_List">
+		parktitle
+	</sql>
+	
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="com.gsccs.sme.plat.svg.model.CorpTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from sme_corp
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.CorpTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sme_corp
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.CorpTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Park_Column_List" />
+		from (
+			select a.*,b.title as parktitle 
+			from sme_corp a
+			left join sme_park b on a.id = b.svgid
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+	
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from sme_corp
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sme_corp
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.svg.model.CorpTExample">
+		delete from sme_corp
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.gsccs.sme.plat.svg.model.CorpT">
+		insert into sme_corp (id, title, orgcode,regcode,
+		regtype,regfund, phone, email,
+		domain, nature, legaler,
+		linker, pcode, ccode,
+		acode, address, zipcode,
+		qqcode, hycode, subhycode,
+		stake, created, logo,parkid,status,
+		content)
+		values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR},
+		#{orgcode,jdbcType=VARCHAR},#{regcode,jdbcType=VARCHAR},
+		#{regtype,jdbcType=VARCHAR},
+		#{regfund,jdbcType=FLOAT},
+		#{phone,jdbcType=VARCHAR}, 
+		#{email,jdbcType=VARCHAR},
+		#{domain,jdbcType=VARCHAR}, 
+		#{nature,jdbcType=VARCHAR},
+		#{legaler,jdbcType=VARCHAR},
+		#{linker,jdbcType=VARCHAR}, 
+		#{pcode,jdbcType=VARCHAR}, 
+		#{ccode,jdbcType=VARCHAR},
+		#{acode,jdbcType=VARCHAR}, 
+		#{address,jdbcType=VARCHAR},
+		#{zipcode,jdbcType=VARCHAR},
+		#{qqcode,jdbcType=VARCHAR}, 
+		#{hycode,jdbcType=VARCHAR}, 
+		#{subhycode,jdbcType=VARCHAR},
+		#{stake,jdbcType=VARCHAR}, 
+		#{created,jdbcType=VARCHAR},
+		#{logo,jdbcType=VARCHAR},#{parkid,jdbcType=BIGINT},#{status,jdbcType=VARCHAR},
+		#{content,jdbcType=LONGVARCHAR})
+	</insert>
+	
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.svg.model.CorpTExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_corp
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update sme_corp
+		set id = #{record.id,jdbcType=BIGINT},
+		title = #{record.title,jdbcType=VARCHAR},
+		orgcode = #{record.orgcode,jdbcType=VARCHAR},
+		regcode = #{record.regcode,jdbcType=VARCHAR},
+		regtype = #{record.regtype,jdbcType=VARCHAR},
+		regfund = #{record.regfund,jdbcType=FLOAT},
+		phone = #{record.phone,jdbcType=VARCHAR},
+		email = #{record.email,jdbcType=VARCHAR},
+		domain = #{record.domain,jdbcType=VARCHAR},
+		nature = #{record.nature,jdbcType=VARCHAR},
+		legaler = #{record.legaler,jdbcType=VARCHAR},
+		linker = #{record.linker,jdbcType=VARCHAR},
+		pcode = #{record.pcode,jdbcType=VARCHAR},
+		ccode = #{record.ccode,jdbcType=VARCHAR},
+		acode = #{record.acode,jdbcType=VARCHAR},
+		address = #{record.address,jdbcType=VARCHAR},
+		zipcode = #{record.zipcode,jdbcType=VARCHAR},
+		qqcode = #{record.qqcode,jdbcType=VARCHAR},
+		hycode = #{record.hycode,jdbcType=VARCHAR},
+		subhycode = #{record.subhycode,jdbcType=VARCHAR},
+		stake = #{record.stake,jdbcType=VARCHAR},
+		created = #{record.created,jdbcType=VARCHAR},
+		logo = #{record.logo,jdbcType=VARCHAR},
+		parkid = #{parkid,jdbcType=BIGINT},
+		status = #{record.status,jdbcType=VARCHAR},
+		content = #{record.content,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update sme_corp
+		set id = #{record.id,jdbcType=BIGINT},
+		title = #{record.title,jdbcType=VARCHAR},
+		orgcode = #{record.orgcode,jdbcType=VARCHAR},
+		regtype = #{record.regtype,jdbcType=VARCHAR},
+		regfund = #{record.regfund,jdbcType=FLOAT},
+		phone = #{record.phone,jdbcType=VARCHAR},
+		email = #{record.email,jdbcType=VARCHAR},
+		domain = #{record.domain,jdbcType=VARCHAR},
+		nature = #{record.nature,jdbcType=VARCHAR},
+		legaler = #{record.legaler,jdbcType=VARCHAR},
+		linker = #{record.linker,jdbcType=VARCHAR},
+		pcode = #{record.pcode,jdbcType=VARCHAR},
+		ccode = #{record.ccode,jdbcType=VARCHAR},
+		acode = #{record.acode,jdbcType=VARCHAR},
+		address = #{record.address,jdbcType=VARCHAR},
+		zipcode = #{record.zipcode,jdbcType=VARCHAR},
+		qqcode = #{record.qqcode,jdbcType=VARCHAR},
+		hycode = #{record.hycode,jdbcType=VARCHAR},
+		subhycode = #{record.subhycode,jdbcType=VARCHAR},
+		stake = #{record.stake,jdbcType=VARCHAR},
+		created = #{record.created,jdbcType=VARCHAR},
+		logo = #{record.logo,jdbcType=VARCHAR},
+		parkid = #{parkid,jdbcType=BIGINT},
+		status = #{record.status,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gsccs.sme.plat.svg.model.CorpT">
+		update sme_corp
+		set title = #{title,jdbcType=VARCHAR},
+		orgcode = #{orgcode,jdbcType=VARCHAR},
+		regcode = #{regcode,jdbcType=VARCHAR},
+		regtype = #{regtype,jdbcType=VARCHAR},
+		regfund = #{regfund,jdbcType=FLOAT},
+		phone = #{phone,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		domain = #{domain,jdbcType=VARCHAR},
+		nature = #{nature,jdbcType=VARCHAR},
+		legaler = #{legaler,jdbcType=VARCHAR},
+		linker = #{linker,jdbcType=VARCHAR},
+		pcode = #{pcode,jdbcType=VARCHAR},
+		ccode = #{ccode,jdbcType=VARCHAR},
+		acode = #{acode,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		zipcode = #{zipcode,jdbcType=VARCHAR},
+		qqcode = #{qqcode,jdbcType=VARCHAR},
+		hycode = #{hycode,jdbcType=VARCHAR},
+		subhycode = #{subhycode,jdbcType=VARCHAR},
+		stake = #{stake,jdbcType=VARCHAR},
+		created = #{created,jdbcType=VARCHAR},
+		logo = #{logo,jdbcType=VARCHAR},
+		parkid = #{parkid,jdbcType=BIGINT},
+		status = #{status,jdbcType=VARCHAR},
+		content = #{content,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.svg.model.CorpT">
+		update sme_corp
+		set title = #{title,jdbcType=VARCHAR},
+		orgcode = #{orgcode,jdbcType=VARCHAR},
+		regcode = #{regcode,jdbcType=VARCHAR},
+		regtype = #{regtype,jdbcType=VARCHAR},
+		regfund = #{regfund,jdbcType=FLOAT},
+		phone = #{phone,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		domain = #{domain,jdbcType=VARCHAR},
+		nature = #{nature,jdbcType=VARCHAR},
+		legaler = #{legaler,jdbcType=VARCHAR},
+		linker = #{linker,jdbcType=VARCHAR},
+		pcode = #{pcode,jdbcType=VARCHAR},
+		ccode = #{ccode,jdbcType=VARCHAR},
+		acode = #{acode,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		zipcode = #{zipcode,jdbcType=VARCHAR},
+		qqcode = #{qqcode,jdbcType=VARCHAR},
+		hycode = #{hycode,jdbcType=VARCHAR},
+		subhycode = #{subhycode,jdbcType=VARCHAR},
+		stake = #{stake,jdbcType=VARCHAR},
+		created = #{created,jdbcType=VARCHAR},
+		logo = #{logo,jdbcType=VARCHAR},
+		parkid = #{parkid,jdbcType=BIGINT},
+		status = #{status,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

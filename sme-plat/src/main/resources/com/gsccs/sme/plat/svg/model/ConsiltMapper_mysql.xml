@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.svg.dao.ConsultMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.api.domain.corp.Consult">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="itemid" property="itemid" jdbcType="BIGINT" />
+		<result column="corpid" property="corpid" jdbcType="BIGINT" />
+		<result column="svgid" property="svgid" jdbcType="BIGINT" />
+		<result column="userid" property="userid" jdbcType="BIGINT" />
+		<result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+		<result column="parid" property="parid" jdbcType="BIGINT" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="isshow" property="isshow" jdbcType="VARCHAR" />
+		<result column="linker" property="linker" jdbcType="VARCHAR" />
+		<result column="linktel" property="linktel" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="scode" property="scode" jdbcType="VARCHAR" />
+		<!--  -->
+		<result column="corptitle" property="corptitle" jdbcType="VARCHAR" />
+		<result column="corplogo" property="corplogo" jdbcType="VARCHAR" />
+		<result column="svgtitle" property="svgtitle" jdbcType="VARCHAR" />
+		<result column="svglogo" property="svglogo" jdbcType="VARCHAR" />
+		<result column="sitemtitle" property="sitemtitle" jdbcType="VARCHAR" />
+		<result column="scodestr" property="scodestr" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, title,itemid, corpid, svgid,userid, addtime, parid, content,isshow,linker,linktel, status
+	</sql>
+	
+	<sql id="Join_Column_List">
+		corptitle,corplogo, svgtitle,svglogo,sitemtitle,scodestr
+	</sql>
+	
+	<sql id="Svg_Column_List">
+		svgtitle,svglogo
+	</sql>
+	
+	
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.ConsultExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (
+			select a.*,b.title as sitemtitle,c.title as corptitle,c.logo as corplogo,d.title as svgtitle,d.logo as svglogo,e.title as scodestr
+			from sme_consult a
+				left join sme_sitem b on a.itemid = b.id
+				left join sme_corp c on a.corpid = c.id
+				left join sme_svorg d on a.svgid = d.id
+				left join sme_sclass e on e.id = a.scode
+		) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip}, ${pageSize}
+	</select>
+	
+	
+	<select id="selectReplyByCorp" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.ConsultExample">
+		select distinct
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Svg_Column_List" />
+		from (
+			SELECT a.*,b.corpid as corpid_,c.title as svgtitle FROM sme_db.sme_consult a,sme_consult b,sme_svorg c 
+			where a.parid = b.id
+			and a.svgid=c.id
+		) as aa
+		where aa.corpid_ = ${corpid}
+		order by addtime desc
+		limit ${skip}, ${pageSize}
+	</select>
+	
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (
+			select a.*,b.title as sitemtitle,c.title as corptitle,c.logo as corplogo,d.title as svgtitle,d.logo as svglogo,e.title as scodestr
+			from sme_consult a
+				left join sme_sitem b on a.itemid = b.id
+				left join sme_corp c on a.corpid = c.id
+				left join sme_svorg d on a.svgid = d.id
+				left join sme_sclass e on e.id = a.scode
+		) as aa
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sme_consult
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.svg.model.ConsultExample">
+		delete from sme_consult
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gsccs.sme.api.domain.corp.Consult">
+		insert into sme_consult (id, title,itemid, corpid,
+		svgid, userid, addtime, parid,scode,
+		content,isshow, status,linker,linktel)
+		values (#{id,jdbcType=VARCHAR}, 
+		#{title,jdbcType=VARCHAR},
+		#{itemid,jdbcType=BIGINT},
+		#{corpid,jdbcType=BIGINT},
+		#{svgid,jdbcType=BIGINT},
+		#{userid,jdbcType=BIGINT}, 
+		#{addtime,jdbcType=TIMESTAMP}, 
+		#{parid,jdbcType=BIGINT},
+		#{scode,jdbcType=VARCHAR},
+		#{content,jdbcType=VARCHAR},
+		#{isshow,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR},
+		#{linker,jdbcType=VARCHAR},
+		#{linktel,jdbcType=VARCHAR})
+	</insert>
+
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.svg.model.ConsultExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_consult
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.api.domain.corp.Consult">
+		update sme_consult
+		<set>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="svgid != null">
+				svgid = #{svgid,jdbcType=BIGINT},
+			</if>
+			<if test="corpid != null">
+				corpid = #{corpid,jdbcType=BIGINT},
+			</if>
+			<if test="scode != null">
+				scode = #{scode,jdbcType=BIGINT},
+			</if>
+			<if test="isshow != null">
+				isshow = #{isshow,jdbcType=VARCHAR},
+			</if>
+			<if test="linker != null">
+				linker = #{linker,jdbcType=VARCHAR},
+			</if>
+			<if test="linktel != null">
+				linktel = #{linktel,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

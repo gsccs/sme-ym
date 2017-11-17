@@ -1,0 +1,42 @@
+
+.yjpt-scroll-box {
+	position:relative;
+	padding:0;
+	width:520px;
+}
+
+.yjpt-img {
+	width: 520px;
+	height: 160px;
+	overflow: hidden;
+	font-size: 0;
+    margin-top: 5px;
+}
+.yjpt-img ul li {
+	display: inline-block;
+	margin: 10px 0 10px 18px;
+}
+
+.yjpt-img ul li a {
+    width: 155px;
+    height: 160px;
+    overflow: hidden;
+    display: block;
+}
+
+.yjpt-img ul li a img {
+	width:155px;
+	height:110px;
+    float: left;
+}
+
+.yjpt-img ul li a span {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    line-height: 30px;
+}
+
+#yjpt-box.yjpt-img ul {
+	width: 1500px;
+}

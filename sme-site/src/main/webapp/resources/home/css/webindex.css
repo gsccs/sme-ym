@@ -1,0 +1,274 @@
+/* CSS Document */
+body{font:12px/18px "\5B8B\4F53",arial,sans-serif;color:#585858;background-color: #fff;}
+body,div,p,span,form,iframe,table,td,th,input,textarea,button,label,ul,ol,li,dl,dt,dd,h1,h2,h3,h4,h5,h6{margin:0;padding:0;}
+h1,h2,h3,h4,h5,h6{font-size:100%; }ul,ol,li,dl{list-style-type:none;}em,i,dfn,cite,strong,small{font-style:normal;} img{border:0;}
+fieldset,button,input,select,option{vertical-align:middle;font:12px/18px "\5B8B\4F53",arial,sans-serif;}
+table{border-collapse:collapse;border-spacing:0}
+textarea{resize:none}
+
+
+/**public**/
+.fl{ float:left;}.fr{ float:right;}.tc{ text-align:center;}
+.m20{margin-left:20px; _margin-left:17px;}
+.m12{margin-left:12px; _margin-left:11px;}
+.m15{margin-left:15px;}
+.m10{margin-left:10px;}
+.m18{margin-left:18px;}
+.t3{ margin-top:3px; _margin-top:2px;}
+.m5{margin-left:5px;}
+.t2{margin-top:2px;}
+.t10{margin-top:10px;}
+.t15{margin-top:10px;}
+.t20{margin-top:20px;}
+.t21{margin-top:21px;}
+.t30{margin-top:30px; cursor:pointer;}
+.center{ margin:0 auto; width:1024px;}
+.clear{ clear:both;}
+
+/**top1**/
+#top1{ background:url(../../images/EntpAdmin/back1_04.jpg) repeat-x; width:100%; height:36px;}
+#top1 dl dd{ height:18px; line-height:18px;}
+#top1 .fl a{color:#8c8c8c; text-decoration:none;}
+#top1 .tip  a{ color:#8c8c8c;}
+#top1 .tip a:hover{ text-decoration:underline; color:#1058d0;}
+/**top2**/
+#top2{ height:130px; width:100%;}
+#top2 ul{ width:1024px;  height:130px; background:url(../../images/EntpAdmin/top09_06.jpg) no-repeat;}
+/**top3**/
+#top3{ background:url(../../images/EntpAdmin/back2_12.jpg) repeat-x; width:100%; height:41px;}
+#top3 ul{width:1024px; height:31px;}
+#nav li{float:left;list-style:none;text-align:center;}
+#nav li a{width:88px;height:41px;line-height:41px;display:block;color:#FFF;float:left;font-family:Arial,Verdana,Tahoma,"����";font-size:16px; font-weight:bold;}
+#nav li .v a:hover,#nav li .v .sele{background:url(../../images/EntpAdmin/gaixiao_12.jpg) no-repeat bottom; text-decoration:none;color:#487ccf;height:41px;line-height:41px;padding-left:0px;}
+
+/**main1**/
+#main1{width:1024px; height:auto;}
+#main1 .changeBox_a1 {float:left;width:366px;height: 257px;position:relative;border: 1px solid #f2f2f2;}
+#main1 .changeBox_a1 img{ position:absolute;padding: 2px;}
+#main1 .back{ position: absolute; right: 3px;bottom: 2px; background:url(../../images/EntpAdmin/lunbo-1.png) no-repeat; height:19px; width:195px;
+_background:none;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../../images/EntpAdmin/lunbo-1.png" ,sizingMethod="crop");}
+
+
+#main1 .ul_change_a2 {position: absolute;right: 8px;bottom: 4px; height:15px; line-height:15px; padding-left:19px;overflow: hidden;}
+#main1 .ul_change_a2 li{ float:left;}
+#main1 .ul_change_a2 span {display: -moz-inline-stack;display: inline-block;font-size: 1.0em;padding:0px 5px;margin-right: 2px; font-weight:bold; color:#FFFFFF; cursor: pointer;}
+#main1 .ul_change_a2 span.on {background: #000000;filter:alpha(opacity=85);opacity: 0.85;}
+
+.search{ height:65px; width:366px; position:relative;}
+.search ul{height:23px; position:absolute; _position:relative;left:0px; top:0px;}
+.search ul li{width:95px;  height:23px; margin:0px; line-height:23px;color:#898989; cursor:pointer;}
+.search ul .lihover1{ background:url(../../images/EntpAdmin/mianback1_03.jpg) no-repeat;width:95px;color:#012863; height:24px; line-height:24px;}
+.txtx{ width:364px; height:38px; border:1px #dadad8 solid; background-color:#fbfbfb; float:left; margin-top:21px; _margin-top:-3px;}
+.txtx input{height: 21px;width: 260px; margin: 5px 8px; border:1px #dadad8 solid; padding-top:4px;}
+.txtx img{ margin-left:-12px; margin-top:5px; cursor:pointer;}
+
+
+.centent{ width:425px; height:336px;}
+.centent .centent1{ border-bottom:1px #d5d5d5 dotted; height:122px;}
+.centent .centent1 p{ color:#e95724; font-size:14px; font-weight:bold; text-align:center; padding-top:7px; padding-bottom:5px;}
+.centent .centent1 .miancentent{ width:100%; height:28px; line-height:28px;}
+.centent .centent1 .miancentent a{ color:#666666;}
+.centent .centent1 .miancentent span{ color:#d52530; cursor:pointer;}
+.centent .centent2{ margin-top:10px; height:200px;}
+.centent .centent2 li{ width:212px; color:#222222; font-size:14px; height:28px; padding-top:2px; line-height:28px; cursor:pointer;}
+.centent .centent2 li img{ margin-right:8px; float:left; margin-top:13px;} 
+
+.leftcentent{width:205px; height:336px;}
+.leftcentent a{ color:#636363;}
+.leftcentent a:hover{color:#2758ad;text-decoration:underline;}
+.leftcentent .adv1{height:135x;}
+.leftcentent .adv1 dl img{ float:left;}
+.leftcentent .adv1 dl dd{ float:left; width:205px; height:auto; padding:0px;}
+
+.leftcentent .adv2 { border:1px #ececec solid; margin:0px; padding:0px; }
+.adv2 dl dt{ background:url(../../images/EntpAdmin/main2back2_.jpg) repeat-x; height:28px; line-height:28px;  padding-bottom:4px;}
+.leftcentent .adv2 dl dt span{ font-size: 14px;color: #022964;font-weight: bold;padding-left: 28px;margin-top: 2px;position: absolute;overflow: hidden;}
+.adv2 dl dt .img2{ position:absolute;  margin-left:152px; margin-top:10px; cursor:pointer;}
+.adv2 dl dt .img1{ position:absolute;  margin-left:10px; margin-top:3px;}
+.leftcentent .adv2 dl dd{ width:94%; margin-left:3%;  border:0px;height:25px; line-height:25px; }
+.leftcentent .adv2 dl dd img{ float:left; padding-right:5px; padding-top:10px;}
+.leftcentent .adv2 dl dd span{color:#313131; cursor:pointer;}
+.leftcentent .adv2 dl dd img a:hover{color:#313131;text-decoration:none;}
+
+.leftcentent p{ font-size:14px; font-weight:bold; color:#002865; padding-top:10px; padding-left:12px; width:100px;}
+.leftcentent .more{ width:45px; height:20px; float:right; margin-right:10px; margin-top:-20px; cursor:pointer;}
+.leftcentent ul{ width:190px; margin-left:10px; margin-top:14px; }
+.leftcentent ul li{ height:23px; line-height:23px;}
+.leftcentent ul li img{ float:left; margin-right:4px; margin-top:2px;}
+
+/***logo2**/
+.logo2{ width:1024px; height:92px;  border:1px #ededed solid;}
+.logo2_back{ background:#f5f6fa; height:90px; margin:1px;}
+.logo2_back ul{ height:56px; margin:0 auto; width:1002px; padding-top:17px;}
+.logo2_back ul li{ float:left; padding-right:14px;}
+.logo3{ width:1024px; height:100px; padding-bottom:10px; padding-top:2px; cursor:pointer;}
+/**mian2**/
+#main2 .maincenter{width:1024px; height:195px; line-height:195px; overflow:hidden;}
+#main2 .maincenter .maintop{ width:775px; height:180px; border:1px #ececec solid;}
+#main2 .maincenter .maintop dl{height:180px;}
+#main2 .maincenter .maintop dl dt{width: 100%;font-size: 14px;color: #022964;font-weight: bold;background: url(../../images/EntpAdmin/main2back2_.jpg) repeat-x;height: 28px;line-height: 28px;}
+#main2 .maincenter .maintop dl dd ul li{ background:url(../../images/EntpAdmin/btn_17.jpg) no-repeat; width:70px; margin-left:8px; _margin-left:6px;  height:27px; text-align:center; float:left; line-height:27px; margin-top:8px; overflow:hidden;}
+#main2 .maincenter .maintop dl dd ul li a{ color:#3c3e3d;}
+#main2 .maincenter .maintop dl dd span{ color:#3671cd; font-weight:bold; padding-left:5px;}
+#main2 .maincenter .maintop dl dd ul{ width:245px; margin:0 auto;}
+#main2 .maincenter .maintop dl dd{ float:left; width:257px; height:140px; margin-top:5px; border-right:1px #abc9ef dotted;}
+#main2 .maincenter .maintop dl dt span{ float:left; margin-left:8px;}
+
+
+.main2left{ width:196px; height:auto;}
+.main2left .main2leftcontent{ width:auto; height:auto;border:1px #ececec solid;border-top:none; overflow:hidden;}
+.main2left .main2leftcontent .mian2title{ width:100%; font-size:14px; color:#022964; font-weight:bold;  background:url(../../images/EntpAdmin/main2back2_.jpg) repeat-x; height:28px; line-height:28px;}
+.main2left .main2leftcontent .mian2title span{ padding-left:10px;}
+.main2left .main2leftcontent  dl{ border-bottom:1px #accaf0 dotted; float:left; height:auto; width:95%; margin-left:4px; _margin-left:3px; overflow:hidden;}
+.main2left .main2leftcontent img{ position:absolute; margin-left:97px; margin-top:-6px cursor:pointer;}
+.main2left .main2leftcontent  dl dd{ float:left;  height:21px; line-height:21px;  padding-left:5px; _padding-left:5px; padding-right:4px; padding-bottom:6px;}
+.main2left .main2leftcontent  dl dd a{ color:#6b6b6b;}
+.main2left .main2leftcontent  dl dd a:hover{color:#2758ad;text-decoration:underline;}
+.main2left .main2leftcontent .new{ width:100%; margin:0px; border-bottom:none;}
+.main2left .main2leftcontent .new dt{ background-color:#497bd0; color:#FFFFFF;  height:22px; line-height:22px; margin-bottom:2px;}
+.main2left .main2leftcontent .new dd{ float:none; height:24px;line-height:24px; margin-left:5px; width:94%; border-bottom:1px #cbcbcb dashed;  padding:0px;}
+.main2left .main2leftcontent .new dd ul li{ float:left; width:60px;}
+.main2left .main2leftcontent .new dd ul li a{ color:#313131;}
+.main2left .main2leftcontent .new dd ul li a:hover{color:#2758ad;text-decoration:underline;}
+.main2left .main2leftcontent .top{border-bottom:none; margin:2px;}
+.main2left .main2leftcontent .top .dd1 a{ color:#303030; padding-left:5px;}
+.main2left .main2leftcontent .top .dd1 img{ position:relative; float:left; margin-left:2px; margin-top:8px;}
+.main2left .main2leftcontent .top .dd1{ height:22px; line-height:22px;}
+.main2left .main2leftcontent .top .dd1 a:hover{color:#2758ad;text-decoration:underline;}
+.main2left .main2leftcontent .top dd{ float:none; height:24px; line-height:24px; margin-left:4px; padding:0px;}
+.main2left .main2leftcontent .top dd .span1{ background-color:#497bd0; color:#ffffff;}
+.main2left .main2leftcontent .top dd .span2{ background-color:#618fda;  color:#ffffff;}
+.main2left .main2leftcontent .top dd .span3{ background-color:#9dbffe;  color:#ffffff;}
+.main2left .main2leftcontent .top dd span{ font-size:14px;  padding-left:3px; padding-right:1px;  padding-bottom:1px;overflow: hidden;}
+
+.main2center{width:573px; height:auto; font-size:12px;}
+.service{ border:1px #ececec solid;  overflow:hidden;}
+.service dl dt{ background:url(../../images/EntpAdmin/main2back2_.jpg) repeat-x; height:28px; line-height:28px; margin-bottom:5px;}
+.main2center .service dl dd{ width:96%; margin:0 auto;border:0px; height:25px; line-height:25px;}
+.main2center .service dl dd img{ float:left; margin-top:5px;}
+.main2center .service dl dd img a{ float:left; color:#313131;}
+.main2center .service dl dd img a:hover{color:#2758ad;text-decoration:underline;}
+.service dl dt .img2{ position:absolute;  margin-left:520px; margin-top:9px; cursor:pointer;}
+.service dl dt .img1{ position:absolute;  margin-left:10px; margin-top:3px;}
+.service dl dt span{ font-size:14px; color:#022964;  font-weight:bold; padding-left:28px; margin-top:2px; position:absolute;overflow: hidden;}
+dl dt ul{position:absolute; margin-left:23px; overflow:hidden;}
+dl dt ul li{ float:left; color:#032765; font-size:14px; padding:0 10px; margin-left:5px; font-weight:bold; height:24px; line-height:24px; margin-top:3px;}
+dl dt ul .lihover{float:left; width:auto;  height:24px; line-height:24px; margin-top:3px; padding:0px 10px; font-size:14px; font-weight:bold; border:1px #dde8ee solid; border-bottom:0px; background:url(../../images/EntpAdmin/liback_22.jpg) repeat-x; }
+.main2center .service dl  .servicedd{ width:98%;}
+.main2center .service dl  .servicedd { height:140px;}
+.main2center .service dl   .changeBox_a2 ul{ position:absolute;}
+.main2center .service dl   .changeBox_a2 ul li{ height:auto; width:123px;float:left; margin-left:20px;}
+.main2center .service dl   .changeBox_a2 ul li a{ color:#000000;}
+.main2center .service dl   .changeBox_a2 ul li a:hover{ color:#1058d0;}
+.main2center .service dl   .changeBox_a2 ul li p{ color:#888888; float:left; margin-top:-6px;overflow: hidden; margin-bottom:3px;}
+.main2center .service dl  .servicedd .ul_change_a2{ position:absolute; margin-top:-28px; margin-left:460px; _margin-left:458px;cursor: pointer;   height:20px; line-height:20px; padding-left:19px;overflow: hidden;}
+.main2center .service dl  .servicedd .ul_change_a2 li{ float:left; width:13px; overflow:hidden; margin-left:3px;}
+.main2center .service dl  .servicedd .ul_change_a2 span { background:url(../../images/EntpAdmin/servicedian2_17.jpg) no-repeat; padding:0px; overflow:hidden; margin-top:0px;}
+.main2center .service dl  .servicedd .ul_change_a2  span.on {background:url(../../images/EntpAdmin/servicedian1_17.jpg) no-repeat; padding:0px; overflow:hidden; margin-top:0px;}
+
+.main2center .service .tuititle{ width:162px; height:318px; border-right:1px #e7e7e7 solid;}
+.main2center .service .tuititle ul{ width:161px; height:315px; padding:0px;}
+.main2center .service .tuititle ul li{background:url(../../images/EntpAdmin/serviceback_17.jpg) repeat-x; height:34px; width:160px; float:left; cursor:pointer; line-height:34px; color:#000000; text-align:center;}
+.main2center .service .tuititle ul li img{ margin-left:10px;}
+.main2center .service .tuititle ul li span{ position:relative; margin-top:5px;}
+.main2center .service .tuititle ul .lihover{background:url(../../images/EntpAdmin/serviceback_17.jpg) repeat-x;  height:35px; width:160px;border-top:1px #e7e7e7 solid;border-bottom:1px #e7e7e7 solid; line-height:35px;color:#2758ad;}
+.main2center .service .tuimain{width:400px; margin-top:10px;}
+.main2center .service .tuimain ul li{ float:left; width:100px; margin-left:5px;}
+.main2center .service .tuimain ul li div{ border:0px;}
+.main2center .service .tuimain ul li a{ color:#464646;}
+.main2center .service .tuimain ul li a:hover{ text-decoration:underline;color:#ea5924;}
+.main2center .service .tuimain ul li span{ color:#898989;font-family:"Microsoft YaHei"; font-size:12px; float:left; margin-top:-5px;}
+
+.main2right{width:234px; height:auto; overflow:hidden;}
+.main2right .service{border:1px #ececec solid; margin-bottom:12px;}
+.main2right .service dl dd .address { margin:0px; padding:0px; width:228px; margin-top:8px;margin-left:1px;}
+.main2right .service dl dd .address li{ float:left; padding-left:11px; width:auto; height:auto; height:30px; _height:28px; line-height:30px; _line-height:28px;}
+.main2right .service dl dd .address li a{ color:#353535;}
+.main2right .service dl dd .address li a:hover{ text-decoration:underline;color:#ea5924;}
+.main2right .service dl dd .newinfo{ width:95%; margin:0 auto; margin-top:8px;}
+.main2right .service dl dd .newinfo li{ float:left; width:95px;overflow: hidden;}
+.main2right .service dl dd .newinfo li img{ border:1px #d3d3d3 solid; padding:3px; overflow: hidden;}
+.main2right .service dl dd .newinfo li span{color:#ea5924; cursor:pointer; font-size:14px; font-weight:bold; padding-right:55px; float:left; margin-bottom:5px; margin-top:2px;  }
+.main2right .service dl dd .newinfo div{ line-height:22px;}
+.main2right .service dl dd .newinfo div a{color:#636363;}
+.main2right .service dl dd .newinfo div a:hover{color:#2758ad;text-decoration:underline;}
+.main2right .service dl dd .newmessage{ width:95%; height:155px; background-color:#f5f3f4; margin:0 auto; margin-bottom:4px; margin-top:2px;}
+.main2right .service dl dd .newmessage li{ height:26px; line-height:26px; margin-left:5px; }
+.main2right .service dl dd .newmessage li a{color:#636363; margin-left:6px;}
+.main2right .service dl dd .newmessage li a:hover{color:#2758ad;text-decoration:underline;}
+.main2right .service dl dd .newmessage li .img1{ float:left; margin-top:5px;}
+
+.main2right .success { border:1px #ececec solid; margin:0px; padding:0px; font-size:12px;}
+.main2right{width:234px; height:auto; overflow:hidden;}
+.main2right .success dl dt{ background:url(../../images/EntpAdmin/main2back2_.jpg) repeat-x; height:28px; line-height:28px; margin-bottom:8px;}
+.main2right .success dl dd{ width:94%; margin-left:3%;  border:0px; margin-top:6px; margin-bottom:5px;}
+.main2right .success dl dd img{ float:left;}
+.main2right .success dl dd span{color:#313131; cursor:pointer;}
+.main2right .success dl dd img a:hover{color:#313131;text-decoration:none;}
+.success dl dt .img2{ position:absolute;  margin-left:180px; margin-top:10px; cursor:pointer;}
+.success dl dt .img1{ position:absolute;  margin-left:10px; margin-top:3px;}
+.success dl dt span{ font-size:14px; color:#022964;  font-weight:bold; padding-left:28px; margin-top:2px; position:absolute;overflow: hidden;}
+.main2right .success dl dd div{ color:#898989; width:200px; line-height:20px; display:none;margin-left:10px; }
+.main2right .success dl dd div a{color:#898989;}
+.main2right .success dl dd font{ color:#ea5723; cursor:pointer; font-size:12px;}
+
+dl dt ul{position:absolute; margin-left:23px; overflow:hidden;}
+dl dt ul li{ float:left; color:#032765; font-size:14px; padding:0 10px; margin-left:5px; font-weight:bold; height:24px; line-height:24px; margin-top:3px;}
+dl dt ul .lihover{float:left; width:auto;  height:24px; line-height:24px; margin-top:3px; padding:0px 10px; font-size:14px; font-weight:bold; border:1px #dde8ee solid; border-bottom:0px; background:url(../../images/EntpAdmin/liback_22.jpg) repeat-x; }
+#main3 .main3title2{ width:195px; height:auto;}
+#main3 .main3title2 .main3Cnetent1{ width:auto; height:auto;border:1px #ececec solid;border-top:none; font-size:12px; margin-bottom:12px;}
+#main3 .main3title2 .main3Cnetent1 .mian2title{ width:100%; height:31px; font-size:14px; color:#022964; font-weight:bold; line-height:31px; background:url(../../images/EntpAdmin/main2back2_.jpg) repeat-x; border-top:1px #ececec solid;}
+#main3 .main3title2 .main3Cnetent1 .mian2title span{ padding-left:10px; float:left;}
+#main3 .main3title2 .main3Cnetent1 .mian2title .img2{ margin-left:145px; margin-top:-24px;cursor:pointer;}
+#main3 .main3title2 .main3Cnetent1 .mian2title .img1{ float:left;  margin-top:5px; margin-left:10px;cursor:pointer;}
+#main3 .main3title2 .main3Cnetent1 dl { margin-top:8px; margin-bottom:8px;}
+#main3 .main3title2 .main3Cnetent1 dl dd{ width:96%; margin-left:6px; height:23px; line-height:23px;}
+#main3 .main3title2 .main3Cnetent1 .mian2title a{ color:#383838;}
+#main3 .main3title2 .main3Cnetent1 .mian2title a:hover{ text-decoration:underline; color:#2758ad;}
+#main3 .main3title2 .main3Cnetent1 .mian2title .zuoyou{  width:39px; cursor:hand; margin-right:5px; cursor:pointer; height:20px;margin-top:6px; line-height:20px;}
+#main3 .main3title2 .main3Cnetent1 .top ul li{ float: left; width:85px; height:auto; margin-left:4px; height:60px;}
+#main3 .main3title2 .main3Cnetent1 .top ul img{ border:1px #dedcdd solid; padding:1px; padding-top:0px;}
+#main3 .dl dd {overflow:hidden; float:none; height:78px;}
+#main3 .dl dd ul{width:100%; margin-top:10px;}
+#main3 .dl dd ul li{ overflow:hidden}
+#main3 .dl dd ul li img{ float:left; margin-top:2px;}
+
+#main3 .main3right{width:240px; height:233px;_height:239px; font-size:12px; background-color:#ececec; overflow:hidden;}
+#main3 .main3right .service{width:228px; height:220px;_height:227px; background-color:#FFFFFF;margin-top:6px; margin-left:5px;}
+#main3 .main3right .service .img2{ float:left; margin-left:180px;}
+#main3 .main3right .service dt{ background:none; width:96%;  overflow:hidden;height:30px; margin:0 auto;  line-height:25px; margin-top:3px;}
+#main3 .main3right .service dt img{ position:absolute;  margin-left:8px; overflow:hidden; }
+#main3 .main3right .service dd{ width:86%; margin:0 auto; height:22px; line-height:22px; }
+#main3 .main3right .service dd img{ margin-top:2px;}
+#main3 .main3right .service dd a{ color:#484848;}
+#main3 .main3right .service dd a:hover{ text-decoration:underline; color:#2758ad;}
+#main3 .main3right .service dl dt span{padding-left:25px;}
+
+
+
+#lianjie{ border:1px #dcdcdc solid; font-size:12px}
+#lianjie .lianjiemian dt{ background:url(../../images/EntpAdmin/lianjie_27.jpg) repeat-x; height:30px; line-height:30px;}
+#lianjie .lianjiemian dt span{font-size:14px; color:#022964;  font-weight:bold; padding-left:8px; margin-top:2px; position:absolute;}
+#lianjie .lianjiemian dd table{ width:990px; margin-left:22px; margin-top:10px; margin-bottom:5px;}
+#lianjie .lianjiemian dd table td{ height:34px; line-height:34px;}
+#lianjie .lianjiemian dd table td a{ color:#656565;}
+#lianjie .lianjiemian dd table td a:hover{ text-decoration:underline; color:#ef6f28;}
+
+
+#foot{ background:url(../../images/EntpAdmin/bottom1_27.jpg) repeat-x; height:179px;}
+#foot .footer{ width:1024px; font-size:12px;}
+#foot .footer ul li{ text-align:center; color:#656565; height:28px; line-height:28px;}
+#foot .footer ul{ border-bottom:1px #bfbfbf dashed; height:120px;}
+#foot .footer ul  a{ color:#656565;}
+#foot .footer ul a:hover{  text-decoration:underline; color:#2758ad;}
+
+#foot .footer dd{ color:#000000; float:left; height:60px; line-height:60px; width:220px; margin-left:38px;}
+#foot .footer dd a{color:#656565;}
+#foot .footer dd a:hover{ text-decoration:underline; color:#2758ad;}
+
+
+.customer{ border:1px #e7e7e7 solid; position:absolute; width:125px; height:auto;  background-color:#f6f6f6;}
+.customer .img1{ margin-left:15px;}
+.customer ul{ width:90%; margin:0 auto; height:auto;}
+.customer li{float:left; width:100%; text-align:center; color:#1d4f8a; font-size:14px;font-family:"\5B8B\4F53"; }
+

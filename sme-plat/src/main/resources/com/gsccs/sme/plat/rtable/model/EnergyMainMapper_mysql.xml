@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.rtable.dao.EnergyMainMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.rtable.model.EnergyMain">
+		<id column="main_id" property="mainId" jdbcType="VARCHAR" />
+		<result column="corpid" property="corpid" jdbcType="BIGINT" />
+		<result column="startdate" property="startdate" jdbcType="TIMESTAMP" />
+		<result column="enddate" property="enddate" jdbcType="TIMESTAMP" />
+		<result column="qy_industry" property="qyIndustry" jdbcType="VARCHAR" />
+		<result column="industry_all" property="industryAll" jdbcType="VARCHAR" />
+		<result column="industry_add" property="industryAdd" jdbcType="VARCHAR" />
+		<result column="a" property="a" jdbcType="VARCHAR" />
+		<result column="b" property="b" jdbcType="VARCHAR" />
+		<result column="c" property="c" jdbcType="VARCHAR" />
+		<result column="d" property="d" jdbcType="VARCHAR" />
+		<result column="e" property="e" jdbcType="VARCHAR" />
+		<result column="f" property="f" jdbcType="VARCHAR" />
+		<result column="g" property="g" jdbcType="VARCHAR" />
+		<result column="h" property="h" jdbcType="VARCHAR" />
+		<result column="i" property="i" jdbcType="VARCHAR" />
+		<result column="header" property="header" jdbcType="VARCHAR" />
+		<result column="writer" property="writer" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="bc_time" property="bcTime" jdbcType="TIMESTAMP" />
+
+		<result column="corptitle" property="corptitle" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		main_id, corpid, startdate, enddate, qy_industry, industry_all, industry_add,
+		a,
+		b, c, d, e, f, g, h, i, header, writer, phone, bc_time
+	</sql>
+
+	<sql id="Join_Column_List">
+		corptitle
+	</sql>
+
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.rtable.model.EnergyMainExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sme_rtable_energy_main
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.rtable.model.EnergyMainExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (SELECT a.*,b.title as corptitle
+		FROM sme_rtable_energy_main as
+		a,sme_corp as b
+		WHERE a.corpid=b.id) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Join_Column_List" />
+		from (SELECT a.*,b.title as corptitle
+		FROM sme_rtable_energy_main as
+		a,sme_corp as b
+		WHERE a.corpid=b.id) as aa
+		where main_id = #{mainId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from sme_rtable_energy_main
+		where main_id = #{mainId,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.rtable.model.EnergyMainExample">
+		delete from sme_rtable_energy_main
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gsccs.sme.plat.rtable.model.EnergyMain">
+		insert into sme_rtable_energy_main (main_id, corpid, startdate,
+		enddate, qy_industry, industry_all,
+		industry_add, a, b,
+		c, d, e, f,
+		g, h, i, header,
+		writer, phone, bc_time
+		)
+		values (#{mainId,jdbcType=VARCHAR}, #{corpid,jdbcType=BIGINT},
+		#{startdate,jdbcType=TIMESTAMP},
+		#{enddate,jdbcType=TIMESTAMP}, #{qyIndustry,jdbcType=VARCHAR}, #{industryAll,jdbcType=VARCHAR},
+		#{industryAdd,jdbcType=VARCHAR}, #{a,jdbcType=VARCHAR},
+		#{b,jdbcType=VARCHAR},
+		#{c,jdbcType=VARCHAR}, #{d,jdbcType=VARCHAR}, #{e,jdbcType=VARCHAR}, #{f,jdbcType=VARCHAR},
+		#{g,jdbcType=VARCHAR}, #{h,jdbcType=VARCHAR}, #{i,jdbcType=VARCHAR},
+		#{header,jdbcType=VARCHAR},
+		#{writer,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{bcTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.gsccs.sme.plat.rtable.model.EnergyMain">
+		insert into sme_rtable_energy_main
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="mainId != null">
+				main_id,
+			</if>
+			<if test="corpid != null">
+				corpid,
+			</if>
+			<if test="startdate != null">
+				startdate,
+			</if>
+			<if test="enddate != null">
+				enddate,
+			</if>
+			<if test="qyIndustry != null">
+				qy_industry,
+			</if>
+			<if test="industryAll != null">
+				industry_all,
+			</if>
+			<if test="industryAdd != null">
+				industry_add,
+			</if>
+			<if test="a != null">
+				a,
+			</if>
+			<if test="b != null">
+				b,
+			</if>
+			<if test="c != null">
+				c,
+			</if>
+			<if test="d != null">
+				d,
+			</if>
+			<if test="e != null">
+				e,
+			</if>
+			<if test="f != null">
+				f,
+			</if>
+			<if test="g != null">
+				g,
+			</if>
+			<if test="h != null">
+				h,
+			</if>
+			<if test="i != null">
+				i,
+			</if>
+			<if test="header != null">
+				header,
+			</if>
+			<if test="writer != null">
+				writer,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="bcTime != null">
+				bc_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="mainId != null">
+				#{mainId,jdbcType=VARCHAR},
+			</if>
+			<if test="corpid != null">
+				#{corpid,jdbcType=BIGINT},
+			</if>
+			<if test="startdate != null">
+				#{startdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="enddate != null">
+				#{enddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="qyIndustry != null">
+				#{qyIndustry,jdbcType=VARCHAR},
+			</if>
+			<if test="industryAll != null">
+				#{industryAll,jdbcType=VARCHAR},
+			</if>
+			<if test="industryAdd != null">
+				#{industryAdd,jdbcType=VARCHAR},
+			</if>
+			<if test="a != null">
+				#{a,jdbcType=VARCHAR},
+			</if>
+			<if test="b != null">
+				#{b,jdbcType=VARCHAR},
+			</if>
+			<if test="c != null">
+				#{c,jdbcType=VARCHAR},
+			</if>
+			<if test="d != null">
+				#{d,jdbcType=VARCHAR},
+			</if>
+			<if test="e != null">
+				#{e,jdbcType=VARCHAR},
+			</if>
+			<if test="f != null">
+				#{f,jdbcType=VARCHAR},
+			</if>
+			<if test="g != null">
+				#{g,jdbcType=VARCHAR},
+			</if>
+			<if test="h != null">
+				#{h,jdbcType=VARCHAR},
+			</if>
+			<if test="i != null">
+				#{i,jdbcType=VARCHAR},
+			</if>
+			<if test="header != null">
+				#{header,jdbcType=VARCHAR},
+			</if>
+			<if test="writer != null">
+				#{writer,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="bcTime != null">
+				#{bcTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.rtable.model.EnergyMainExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_rtable_energy_main
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update sme_rtable_energy_main
+		<set>
+			<if test="record.mainId != null">
+				main_id = #{record.mainId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.corpid != null">
+				corpid = #{record.corpid,jdbcType=BIGINT},
+			</if>
+			<if test="record.startdate != null">
+				startdate = #{record.startdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.enddate != null">
+				enddate = #{record.enddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.qyIndustry != null">
+				qy_industry = #{record.qyIndustry,jdbcType=VARCHAR},
+			</if>
+			<if test="record.industryAll != null">
+				industry_all = #{record.industryAll,jdbcType=VARCHAR},
+			</if>
+			<if test="record.industryAdd != null">
+				industry_add = #{record.industryAdd,jdbcType=VARCHAR},
+			</if>
+			<if test="record.a != null">
+				a = #{record.a,jdbcType=VARCHAR},
+			</if>
+			<if test="record.b != null">
+				b = #{record.b,jdbcType=VARCHAR},
+			</if>
+			<if test="record.c != null">
+				c = #{record.c,jdbcType=VARCHAR},
+			</if>
+			<if test="record.d != null">
+				d = #{record.d,jdbcType=VARCHAR},
+			</if>
+			<if test="record.e != null">
+				e = #{record.e,jdbcType=VARCHAR},
+			</if>
+			<if test="record.f != null">
+				f = #{record.f,jdbcType=VARCHAR},
+			</if>
+			<if test="record.g != null">
+				g = #{record.g,jdbcType=VARCHAR},
+			</if>
+			<if test="record.h != null">
+				h = #{record.h,jdbcType=VARCHAR},
+			</if>
+			<if test="record.i != null">
+				i = #{record.i,jdbcType=VARCHAR},
+			</if>
+			<if test="record.header != null">
+				header = #{record.header,jdbcType=VARCHAR},
+			</if>
+			<if test="record.writer != null">
+				writer = #{record.writer,jdbcType=VARCHAR},
+			</if>
+			<if test="record.phone != null">
+				phone = #{record.phone,jdbcType=VARCHAR},
+			</if>
+			<if test="record.bcTime != null">
+				bc_time = #{record.bcTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update sme_rtable_energy_main
+		set main_id = #{record.mainId,jdbcType=VARCHAR},
+		corpid = #{record.corpid,jdbcType=BIGINT},
+		startdate = #{record.startdate,jdbcType=TIMESTAMP},
+		enddate = #{record.enddate,jdbcType=TIMESTAMP},
+		qy_industry = #{record.qyIndustry,jdbcType=VARCHAR},
+		industry_all = #{record.industryAll,jdbcType=VARCHAR},
+		industry_add = #{record.industryAdd,jdbcType=VARCHAR},
+		a = #{record.a,jdbcType=VARCHAR},
+		b = #{record.b,jdbcType=VARCHAR},
+		c = #{record.c,jdbcType=VARCHAR},
+		d = #{record.d,jdbcType=VARCHAR},
+		e = #{record.e,jdbcType=VARCHAR},
+		f = #{record.f,jdbcType=VARCHAR},
+		g = #{record.g,jdbcType=VARCHAR},
+		h = #{record.h,jdbcType=VARCHAR},
+		i = #{record.i,jdbcType=VARCHAR},
+		header = #{record.header,jdbcType=VARCHAR},
+		writer = #{record.writer,jdbcType=VARCHAR},
+		phone = #{record.phone,jdbcType=VARCHAR},
+		bc_time = #{record.bcTime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.rtable.model.EnergyMain">
+		update sme_rtable_energy_main
+		<set>
+			<if test="corpid != null">
+				corpid = #{corpid,jdbcType=BIGINT},
+			</if>
+			<if test="startdate != null">
+				startdate = #{startdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="enddate != null">
+				enddate = #{enddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="qyIndustry != null">
+				qy_industry = #{qyIndustry,jdbcType=VARCHAR},
+			</if>
+			<if test="industryAll != null">
+				industry_all = #{industryAll,jdbcType=VARCHAR},
+			</if>
+			<if test="industryAdd != null">
+				industry_add = #{industryAdd,jdbcType=VARCHAR},
+			</if>
+			<if test="a != null">
+				a = #{a,jdbcType=VARCHAR},
+			</if>
+			<if test="b != null">
+				b = #{b,jdbcType=VARCHAR},
+			</if>
+			<if test="c != null">
+				c = #{c,jdbcType=VARCHAR},
+			</if>
+			<if test="d != null">
+				d = #{d,jdbcType=VARCHAR},
+			</if>
+			<if test="e != null">
+				e = #{e,jdbcType=VARCHAR},
+			</if>
+			<if test="f != null">
+				f = #{f,jdbcType=VARCHAR},
+			</if>
+			<if test="g != null">
+				g = #{g,jdbcType=VARCHAR},
+			</if>
+			<if test="h != null">
+				h = #{h,jdbcType=VARCHAR},
+			</if>
+			<if test="i != null">
+				i = #{i,jdbcType=VARCHAR},
+			</if>
+			<if test="header != null">
+				header = #{header,jdbcType=VARCHAR},
+			</if>
+			<if test="writer != null">
+				writer = #{writer,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="bcTime != null">
+				bc_time = #{bcTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where main_id = #{mainId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.rtable.model.EnergyMain">
+		update sme_rtable_energy_main
+		set corpid = #{corpid,jdbcType=BIGINT},
+		startdate = #{startdate,jdbcType=TIMESTAMP},
+		enddate = #{enddate,jdbcType=TIMESTAMP},
+		qy_industry = #{qyIndustry,jdbcType=VARCHAR},
+		industry_all = #{industryAll,jdbcType=VARCHAR},
+		industry_add = #{industryAdd,jdbcType=VARCHAR},
+		a = #{a,jdbcType=VARCHAR},
+		b = #{b,jdbcType=VARCHAR},
+		c = #{c,jdbcType=VARCHAR},
+		d = #{d,jdbcType=VARCHAR},
+		e = #{e,jdbcType=VARCHAR},
+		f = #{f,jdbcType=VARCHAR},
+		g = #{g,jdbcType=VARCHAR},
+		h = #{h,jdbcType=VARCHAR},
+		i = #{i,jdbcType=VARCHAR},
+		header = #{header,jdbcType=VARCHAR},
+		writer = #{writer,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		bc_time = #{bcTime,jdbcType=TIMESTAMP}
+		where main_id = #{mainId,jdbcType=VARCHAR}
+	</update>
+</mapper>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.svg.dao.SclassTMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.svg.model.SclassT">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="parid" property="parid" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="typeid" property="typeid" jdbcType="VARCHAR" />
+		<result column="logo" property="logo" jdbcType="VARCHAR" />
+		<result column="templet" property="templet" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="clicknum" property="clicknum" jdbcType="INTEGER" />
+		<result column="pagemark" property="pagemark" jdbcType="VARCHAR" />
+		<result column="indexnum" property="indexnum" jdbcType="INTEGER" />
+		<result column="meta_title" property="metaTitle" jdbcType="VARCHAR" />
+		<result column="meta_keywords" property="metaKeywords"
+			jdbcType="VARCHAR" />
+		<result column="meta_descr" property="metaDescr" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+	<!-- 分组统计 -->
+	<resultMap id="StatistResultMap" type="com.gsccs.sme.api.domain.StatistGroup">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="num" property="num" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, parid, typeid,title, logo, templet, url, status,
+		clicknum, pagemark,
+		indexnum, meta_title, meta_keywords, meta_descr
+	</sql>
+	
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.SclassTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sme_sclass
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	
+	<select id="selectByPageExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.svg.model.SclassTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sme_sclass
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip}, ${pageSize}
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sme_sclass
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from sme_sclass
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.svg.model.SclassTExample">
+		delete from sme_sclass
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.gsccs.sme.plat.svg.model.SclassT">
+
+		insert into sme_sclass (id, parid, typeid,
+		title, logo,
+		templet, 
+		url,
+		status, clicknum, pagemark,
+		indexnum, meta_title, meta_keywords,
+		meta_descr)
+		values (#{id,jdbcType=BIGINT}, #{parid,jdbcType=BIGINT},
+		#{title,jdbcType=VARCHAR},
+		#{logo,jdbcType=VARCHAR},
+		#{templet,jdbcType=VARCHAR}, 
+		#{url,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR},
+		#{clicknum,jdbcType=INTEGER}, #{pagemark,jdbcType=VARCHAR},
+		#{indexnum,jdbcType=INTEGER}, #{metaTitle,jdbcType=VARCHAR},
+		#{metaKeywords,jdbcType=VARCHAR},
+		#{metaDescr,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.svg.model.SclassTExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_sclass
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	
+	<update id="updateByExample" parameterType="map">
+		update sme_sclass
+		set id = #{record.id,jdbcType=BIGINT},
+		parid =
+		#{record.parid,jdbcType=BIGINT},
+		typeid =
+		#{record.typeid,jdbcType=VARCHAR},
+		title =
+		#{record.title,jdbcType=VARCHAR},
+		
+		logo =
+		#{record.logo,jdbcType=VARCHAR},
+		templet =
+		#{record.templet,jdbcType=VARCHAR},
+		
+		url = #{record.url,jdbcType=VARCHAR},
+		status = #{record.status,jdbcType=VARCHAR},
+		clicknum =
+		#{record.clicknum,jdbcType=INTEGER},
+		pagemark =
+		#{record.pagemark,jdbcType=VARCHAR},
+		indexnum =
+		#{record.indexnum,jdbcType=INTEGER},
+		meta_title =
+		#{record.metaTitle,jdbcType=VARCHAR},
+		meta_keywords =
+		#{record.metaKeywords,jdbcType=VARCHAR},
+		meta_descr =
+		#{record.metaDescr,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.svg.model.SclassT">
+		update sme_sclass
+		set parid = #{parid,jdbcType=BIGINT},
+		typeid = #{typeid,jdbcType=VARCHAR},
+		title = #{title,jdbcType=VARCHAR},
+		logo = #{logo,jdbcType=VARCHAR},
+		templet =
+		#{templet,jdbcType=VARCHAR},
+		url =
+		#{url,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		clicknum =
+		#{clicknum,jdbcType=INTEGER},
+		pagemark = #{pagemark,jdbcType=VARCHAR},
+		indexnum = #{indexnum,jdbcType=INTEGER},
+		meta_title =
+		#{metaTitle,jdbcType=VARCHAR},
+		meta_keywords =
+		#{metaKeywords,jdbcType=VARCHAR},
+		meta_descr =
+		#{metaDescr,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	
+	<select id="selectTopicNumGroup" resultMap="StatistResultMap" >
+		select a.id,a.title,b.num
+		from sme_sclass a 
+		left join (select scode,count(scode) as num from sme_appeal_topic group by scode) b on b.scode = a.id
+		where a.typeid='G'
+	</select>
+</mapper>

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.rtable.dao.WallMainMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.rtable.model.WallMain">
+		<id column="mainId" property="mainid" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="corpid" property="corpid" jdbcType="BIGINT" />
+		<result column="tbDate" property="tbdate" jdbcType="TIMESTAMP" />
+
+		<result column="corptitle" property="corptitle" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		mainId, name, corpid, tbDate
+	</sql>
+
+	<sql id="Join_Column_List">
+		corptitle
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.rtable.model.WallMainExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sme_rtable_nwall_main
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="selectPageByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.rtable.model.WallMainExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />,
+		
+		<include refid="Join_Column_List" />
+		from (SELECT a.*,b.title as corptitle
+		FROM sme_rtable_nwall_main as a,sme_corp as b
+		WHERE a.corpid=b.id) as aa
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		limit ${skip},${pageSize}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />,
+		
+		<include refid="Join_Column_List" />
+		from (SELECT a.*,b.title as corptitle
+		FROM sme_rtable_nwall_main as a,sme_corp as b
+		WHERE a.corpid=b.id) as aa
+		where mainId = #{mainid,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from sme_rtable_nwall_main
+		where mainId = #{mainid,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.rtable.model.WallMainExample">
+		delete from sme_rtable_nwall_main
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gsccs.sme.plat.rtable.model.WallMain">
+		insert into sme_rtable_nwall_main (mainId, name, corpid,
+		tbDate)
+		values (#{mainid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		#{corpid,jdbcType=BIGINT},
+		#{tbdate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.gsccs.sme.plat.rtable.model.WallMain">
+		insert into sme_rtable_nwall_main
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="mainid != null">
+				mainId,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="corpid != null">
+				corpid,
+			</if>
+			<if test="tbdate != null">
+				tbDate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="mainid != null">
+				#{mainid,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="corpid != null">
+				#{corpid,jdbcType=BIGINT},
+			</if>
+			<if test="tbdate != null">
+				#{tbdate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.rtable.model.WallMainExample"
+		resultType="java.lang.Integer">
+		select count(*) from sme_rtable_nwall_main
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update sme_rtable_nwall_main
+		<set>
+			<if test="record.mainid != null">
+				mainId = #{record.mainid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.name != null">
+				name = #{record.name,jdbcType=VARCHAR},
+			</if>
+			<if test="record.corpid != null">
+				corpid = #{record.corpid,jdbcType=BIGINT},
+			</if>
+			<if test="record.tbdate != null">
+				tbDate = #{record.tbdate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update sme_rtable_nwall_main
+		set mainId = #{record.mainid,jdbcType=VARCHAR},
+		name = #{record.name,jdbcType=VARCHAR},
+		corpid = #{record.corpid,jdbcType=BIGINT},
+		tbDate = #{record.tbdate,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.rtable.model.WallMain">
+		update sme_rtable_nwall_main
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="corpid != null">
+				corpid = #{corpid,jdbcType=BIGINT},
+			</if>
+			<if test="tbdate != null">
+				tbDate = #{tbdate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where mainId = #{mainid,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.rtable.model.WallMain">
+		update sme_rtable_nwall_main
+		set name = #{name,jdbcType=VARCHAR},
+		corpid = #{corpid,jdbcType=BIGINT},
+		tbDate = #{tbdate,jdbcType=TIMESTAMP}
+		where mainId = #{mainid,jdbcType=VARCHAR}
+	</update>
+</mapper>

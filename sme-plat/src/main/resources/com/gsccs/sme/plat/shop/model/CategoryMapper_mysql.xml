@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gsccs.sme.plat.shop.dao.CategoryTMapper">
+	<resultMap id="BaseResultMap" type="com.gsccs.sme.plat.shop.model.CategoryT">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="parid" property="parid" jdbcType="BIGINT" />
+		<result column="parids" property="parids" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="typeid" property="typeid" jdbcType="VARCHAR" />
+		<result column="logo" property="logo" jdbcType="VARCHAR" />
+		<result column="templet" property="templet" jdbcType="VARCHAR" />
+		<result column="site" property="site" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="clicknum" property="clicknum" jdbcType="INTEGER" />
+		<result column="pagemark" property="pagemark" jdbcType="VARCHAR" />
+		<result column="indexnum" property="indexnum" jdbcType="INTEGER" />
+		<result column="meta_title" property="metaTitle" jdbcType="VARCHAR" />
+		<result column="meta_keywords" property="metaKeywords"
+			jdbcType="VARCHAR" />
+		<result column="meta_descr" property="metaDescr" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, parid, parids, title, typeid, logo, templet, site, url,
+		status,
+		clicknum, pagemark,
+		indexnum, meta_title, meta_keywords,
+		meta_descr
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.gsccs.sme.plat.shop.model.CategoryTExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from shop_category
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from shop_category
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from shop_category
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gsccs.sme.plat.shop.model.CategoryTExample">
+		delete from shop_category
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gsccs.sme.plat.shop.model.CategoryT">
+		insert into shop_category (id, parid, parids,
+		title, typeid, logo,
+		templet, site, url,
+		status, clicknum, pagemark,
+		indexnum, meta_title,
+		meta_keywords,
+		meta_descr)
+		values (#{id,jdbcType=BIGINT},
+		#{parid,jdbcType=BIGINT},
+		#{parids,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR}, #{typeid,jdbcType=VARCHAR},
+		#{logo,jdbcType=VARCHAR},
+		#{templet,jdbcType=VARCHAR},
+		#{site,jdbcType=VARCHAR},
+		#{url,jdbcType=VARCHAR},
+		#{status,jdbcType=VARCHAR}, #{clicknum,jdbcType=INTEGER},
+		#{pagemark,jdbcType=VARCHAR},
+		#{indexnum,jdbcType=INTEGER},
+		#{metaTitle,jdbcType=VARCHAR},
+		#{metaKeywords,jdbcType=VARCHAR},
+		#{metaDescr,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.gsccs.sme.plat.shop.model.CategoryT">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Tue Mar 22 
+			19:28:56 CST 2016. -->
+		insert into shop_category
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="parid != null">
+				parid,
+			</if>
+			<if test="parids != null">
+				parids,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="typeid != null">
+				typeid,
+			</if>
+			<if test="logo != null">
+				logo,
+			</if>
+			<if test="templet != null">
+				templet,
+			</if>
+			<if test="site != null">
+				site,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="clicknum != null">
+				clicknum,
+			</if>
+			<if test="pagemark != null">
+				pagemark,
+			</if>
+			<if test="indexnum != null">
+				indexnum,
+			</if>
+			<if test="metaTitle != null">
+				meta_title,
+			</if>
+			<if test="metaKeywords != null">
+				meta_keywords,
+			</if>
+			<if test="metaDescr != null">
+				meta_descr,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="parid != null">
+				#{parid,jdbcType=BIGINT},
+			</if>
+			<if test="parids != null">
+				#{parids,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="typeid != null">
+				#{typeid,jdbcType=VARCHAR},
+			</if>
+			<if test="logo != null">
+				#{logo,jdbcType=VARCHAR},
+			</if>
+			<if test="templet != null">
+				#{templet,jdbcType=VARCHAR},
+			</if>
+			<if test="site != null">
+				#{site,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="clicknum != null">
+				#{clicknum,jdbcType=INTEGER},
+			</if>
+			<if test="pagemark != null">
+				#{pagemark,jdbcType=VARCHAR},
+			</if>
+			<if test="indexnum != null">
+				#{indexnum,jdbcType=INTEGER},
+			</if>
+			<if test="metaTitle != null">
+				#{metaTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="metaKeywords != null">
+				#{metaKeywords,jdbcType=VARCHAR},
+			</if>
+			<if test="metaDescr != null">
+				#{metaDescr,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.gsccs.sme.plat.shop.model.CategoryTExample"
+		resultType="java.lang.Integer">
+		<!-- WARNING - @mbggenerated This element is automatically generated by 
+			MyBatis Generator, do not modify. This element was generated on Tue Mar 22 
+			19:28:56 CST 2016. -->
+		select count(*) from shop_category
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update shop_category
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=BIGINT},
+			</if>
+			<if test="record.parid != null">
+				parid = #{record.parid,jdbcType=BIGINT},
+			</if>
+			<if test="record.parids != null">
+				parids = #{record.parids,jdbcType=VARCHAR},
+			</if>
+			<if test="record.title != null">
+				title = #{record.title,jdbcType=VARCHAR},
+			</if>
+			<if test="record.typeid != null">
+				typeid = #{record.typeid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.logo != null">
+				logo = #{record.logo,jdbcType=VARCHAR},
+			</if>
+			<if test="record.templet != null">
+				templet = #{record.templet,jdbcType=VARCHAR},
+			</if>
+			<if test="record.site != null">
+				site = #{record.site,jdbcType=VARCHAR},
+			</if>
+			<if test="record.url != null">
+				url = #{record.url,jdbcType=VARCHAR},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=VARCHAR},
+			</if>
+			<if test="record.clicknum != null">
+				clicknum = #{record.clicknum,jdbcType=INTEGER},
+			</if>
+			<if test="record.pagemark != null">
+				pagemark = #{record.pagemark,jdbcType=VARCHAR},
+			</if>
+			<if test="record.indexnum != null">
+				indexnum = #{record.indexnum,jdbcType=INTEGER},
+			</if>
+			<if test="record.metaTitle != null">
+				meta_title = #{record.metaTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="record.metaKeywords != null">
+				meta_keywords = #{record.metaKeywords,jdbcType=VARCHAR},
+			</if>
+			<if test="record.metaDescr != null">
+				meta_descr = #{record.metaDescr,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update shop_category
+		set id = #{record.id,jdbcType=BIGINT},
+		parid =
+		#{record.parid,jdbcType=BIGINT},
+		parids =
+		#{record.parids,jdbcType=VARCHAR},
+		title =
+		#{record.title,jdbcType=VARCHAR},
+		typeid =
+		#{record.typeid,jdbcType=VARCHAR},
+		logo =
+		#{record.logo,jdbcType=VARCHAR},
+		templet =
+		#{record.templet,jdbcType=VARCHAR},
+		site =
+		#{record.site,jdbcType=VARCHAR},
+		url = #{record.url,jdbcType=VARCHAR},
+		status = #{record.status,jdbcType=VARCHAR},
+		clicknum =
+		#{record.clicknum,jdbcType=INTEGER},
+		pagemark =
+		#{record.pagemark,jdbcType=VARCHAR},
+		indexnum =
+		#{record.indexnum,jdbcType=INTEGER},
+		meta_title =
+		#{record.metaTitle,jdbcType=VARCHAR},
+		meta_keywords =
+		#{record.metaKeywords,jdbcType=VARCHAR},
+		meta_descr =
+		#{record.metaDescr,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.gsccs.sme.plat.shop.model.CategoryT">
+		update shop_category
+		<set>
+			<if test="parid != null">
+				parid = #{parid,jdbcType=BIGINT},
+			</if>
+			<if test="parids != null">
+				parids = #{parids,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="typeid != null">
+				typeid = #{typeid,jdbcType=VARCHAR},
+			</if>
+			<if test="logo != null">
+				logo = #{logo,jdbcType=VARCHAR},
+			</if>
+			<if test="templet != null">
+				templet = #{templet,jdbcType=VARCHAR},
+			</if>
+			<if test="site != null">
+				site = #{site,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="clicknum != null">
+				clicknum = #{clicknum,jdbcType=INTEGER},
+			</if>
+			<if test="pagemark != null">
+				pagemark = #{pagemark,jdbcType=VARCHAR},
+			</if>
+			<if test="indexnum != null">
+				indexnum = #{indexnum,jdbcType=INTEGER},
+			</if>
+			<if test="metaTitle != null">
+				meta_title = #{metaTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="metaKeywords != null">
+				meta_keywords = #{metaKeywords,jdbcType=VARCHAR},
+			</if>
+			<if test="metaDescr != null">
+				meta_descr = #{metaDescr,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gsccs.sme.plat.shop.model.CategoryT">
+		update
+		shop_category
+		set parid = #{parid,jdbcType=BIGINT},
+		parids =
+		#{parids,jdbcType=VARCHAR},
+		title = #{title,jdbcType=VARCHAR},
+		typeid =
+		#{typeid,jdbcType=VARCHAR},
+		logo = #{logo,jdbcType=VARCHAR},
+		templet =
+		#{templet,jdbcType=VARCHAR},
+		site = #{site,jdbcType=VARCHAR},
+		url =
+		#{url,jdbcType=VARCHAR},
+		status = #{status,jdbcType=VARCHAR},
+		clicknum =
+		#{clicknum,jdbcType=INTEGER},
+		pagemark = #{pagemark,jdbcType=VARCHAR},
+		indexnum = #{indexnum,jdbcType=INTEGER},
+		meta_title =
+		#{metaTitle,jdbcType=VARCHAR},
+		meta_keywords =
+		#{metaKeywords,jdbcType=VARCHAR},
+		meta_descr =
+		#{metaDescr,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

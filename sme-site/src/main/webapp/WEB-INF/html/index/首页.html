@@ -1,0 +1,921 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>玉门市中小企业公共服务平台</title>
+<link href="css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="jquery-1.9.1.min.js"></script>
+
+
+<style type="text/css">
+*{margin:0;padding:0;border:0;list-style:none;}
+/*=========mF_liuzg ========*/
+.mychgPic{width:545px; height:385px; border:1px solid #999;}
+.mF_liuzg{ position:relative; width:545px; height:385px; overflow:hidden; font:12px/1.5 Verdana,Geneva; background:#fff;}
+.mF_liuzg .loading{position:absolute;z-index:9999;width:100%;height:100%;color:#666;text-align:center;padding-top:90px;}/*载入画面*/
+.mF_liuzg .pic li{width:545px;position:relative;overflow:hidden;*margin-top:-2px;}
+.mF_liuzg .pic li p{width:545px;position:absolute;}
+.mF_liuzg .pic li p a{display:block;}/*图片和焦点图框架一样大小*/
+.mF_liuzg .pic li p img{width:545px;height:385px;}
+.mF_liuzg .txt li{position:absolute;z-index:2;bottom:0;width:545px;height:36px;line-height:34px;overflow:hidden;display:none;}
+.mF_liuzg .txt li a{display:block;color:#fff;padding:2px 0 0 16px;font-size:14px;font-weight:bold;text-decoration:none;}/*标题样式*/
+.mF_liuzg .txt-bg{position:absolute;bottom:0;z-index:1;width:545px;height:36px;overflow:hidden;background:#000;filter:alpha(opacity=50);opacity:0.5;}/*标题背景*/
+.mF_liuzg .num{position:absolute;z-index:3;bottom:8px;right:8px;color:#333;}/*按钮样式*/
+.mF_liuzg .num li{ float:left; width:22px; height:18px; position:relative; border:1px solid #FFF; line-height:18px; text-align:center; margin-right:3px; cursor:pointer; background:#000; filter:alpha(opacity=90); opacity:0.9; color: #FFF; }
+.mF_liuzg .num li.current,.mF_liuzg .num li.hover{ background:#A61814; color:#fff; font-weight:bold;}
+</style>
+<script type="text/javascript">
+var myFocus={
+ //Design By Koen @ 2010.8.x
+ //http://hi.baidu.com/koen_li
+ $:function(id){return document.getElementById(id);},
+ $$:function(tag,obj){return (typeof obj=='object'?obj:this.$(obj)).getElementsByTagName(tag);},
+ style:function(obj,style){return (+[1,])?window.getComputedStyle(obj,null)[style]:obj.currentStyle[style];},//getStyle简化版
+ easeOut:function(t,b,c,d){return -c*((t=t/d-1)*t*t*t - 1) + b;},
+ move:function(obj,prop,val,type,spd,fn){//运动函数，spd为运动需要的时间，时间越大速度越小
+  var t=0,b=parseInt(this.style(obj,prop)),c=val-b,d=spd||50,st=type,m=c>0?'ceil':'floor';
+  if(obj[prop+'Timer']) clearInterval(obj[prop+'Timer']);
+  obj[prop+'Timer']=setInterval(function(){
+   if(t<d){obj.style[prop]=Math[m](myFocus[st](++t,b,c,d))+'px';}
+   else {clearInterval(obj[prop+'Timer']);fn&&fn.call(obj);}
+  },10);return this;
+ },
+ addList:function(obj,cla,x){//生成HMTL,cla为列表的class,其中封装有:cla='txt'(生成alt文字),cla='num'(生成按钮数字),cla='thumb'(生成小图)
+  var s=[],n=x||this.$$('li',this.$$('ul',obj)[0]).length,num=cla.length;
+  for(var j=0;j<num;j++){
+   s.push('<ul class='+cla[j]+'>');
+   for(var i=0;i<n;i++){s.push('<li>'+(cla[j]=='num'?(i+1):(cla[j]=='txt'?this.$$('li',obj)[i].innerHTML.replace(/\<img.*?\>/i,this.$$('img',obj)[i].alt):(cla[j]=='thumb'?'<img src='+(this.$$('img',obj)[i].getAttribute("thumb")||this.$$('img',obj)[i].src)+' />':'')))+'<span></span></li>')};
+   s.push('</ul>');
+  }; obj.innerHTML+=s.join('');
+ },
+ setting:function(par){
+  if(window.attachEvent){window.attachEvent('onload',function(){myFocus[par.style](par)});}
+　　  else{window.addEventListener('load',function(){myFocus[par.style](par)},false);}
+ },
+ mF_liuzg:function(par){
+  var box=this.$(par.id),boxH=box.offsetHeight,t=par.time*1000;
+  this.addList(box,['txt-bg','txt','num']);
+  var pic=this.$$('li',this.$$('ul', box)[0]),n=pic.length;
+  var c=boxH%par.chip?8:par.chip,h=boxH/c,pics=[];
+  for(var i=0;i<c;i++){
+   pics.push('<li><p>')
+   for(var j=0;j<n;j++) pics.push(pic[j].innerHTML);
+   pics.push('</p></li>')
+  }
+  this.$$('ul', box)[0].innerHTML=pics.join('');
+  var ul=this.$$('ul',box),txt=this.$$('li',ul[2]),btn=this.$$('li',ul[3]),pic=this.$$('li',ul[0]);
+  for(var i=0;i<c;i++){//初始化样式设置
+   this.$$('p',pic[i])[0].style.top=-i*h+'px';
+   pic[i].style.height=h+'px';
+   this.$$('p',pic[i])[0].style.height=boxH*c+'px';
+  }
+  var index = 0;//开始显示的序号
+  box.removeChild(this.$$('div',box)[0]);
+  var run = function(idx) {
+   var tt=par.type==4?Math.round(1+(Math.random()*(3-1))):par.type;//效果选择
+   btn[index].className = '';
+   txt[index].style.display='none';
+            if(index==n-1) index=-1;
+   var N=idx!=undefined?idx:index+1;
+   var spd=tt==2?20:(tt==1?80:Math.round(20+(Math.random()*(80-20))));
+   for(var i=0;i<c;i++){
+    if(tt==3) spd=Math.round(20+(Math.random()*(80-20)));
+    myFocus.move(myFocus.$$('p',pic[i])[0],'top',-N*c*h-i*h,'easeOut',spd);
+    spd=tt==2?spd+10:(tt==1?spd-10:spd);
+   }
+   btn[N].className = 'current';
+   txt[N].style.display='block';
+            index = N;
+        }
+  run(index);
+  var auto=setInterval(function(){run()},t);
+  for (var j=0;j<n;j++){
+   btn[j].j=j;
+   btn[j].onclick=function(){if(!this.className) run(this.j)}
+  }
+  box.onmouseover=function(){clearInterval(auto);}
+     box.onmouseout=function(){auto=setInterval(function(){run()},t);}
+  for(var i=0,lk=this.$$('a',box),ln=lk.length;i<ln;i++) lk[i].onfocus=function(){this.blur();}//去除虚线框
+ }
+};
+myFocus.setting({
+ style:'mF_liuzg',//style为风格样式，
+ id:'myFocus',//焦点图ID
+ chip:8,//图片切片数量，能被焦点图的高整除才有效，默认为8片
+ type:4,//切片效果，1为甩头，2为甩尾，3为凌乱，4为随机效果
+ time:4//每帧图片时间间隔
+});//更多样式设置留意myFocus正式版
+</script>
+
+
+
+<script type="text/javascript">
+function TagMonitor(){
+       this.tags = [];
+   }
+   
+   TagMonitor.prototype.add = function(tag){
+       this.tags[this.tags.length] = tag;
+	   tag.monitor = this;
+   }
+   
+   TagMonitor.prototype.flush = function(){
+       for(var i=0;i<this.tags.length;i++){
+	       this.tags[i].close();
+	   }
+   }
+   
+   function Tag(id, pannelId, className, hClassName){
+       this.monitor = null;
+	   this.id = id;
+	   this.pannelId = pannelId;
+	   this.className = className;
+	   this.hClassName = hClassName;
+
+       $("#" + this.id).bind('mouseover', { obj: this }, function (event) {
+			event.data.obj.m();
+	   })
+   }
+   
+   Tag.prototype.m = function(){
+       this.monitor.flush();
+	   document.getElementById(this.pannelId).style.display = '';
+	   document.getElementById(this.id).className = this.className;
+   }
+   
+   Tag.prototype.close = function(){
+       document.getElementById(this.pannelId).style.display = 'none';
+	   document.getElementById(this.id).className = this.hClassName;
+   }
+   
+   $(function(){
+	   var monitor1 = new TagMonitor();
+
+	   monitor1.add(new Tag('rdxwId','rdxwPanelId','title01_1','title01_2'));
+	   monitor1.add(new Tag('tzggId','tzggPanelId','title01_1','title01_2'));
+	   
+	   var monitor2 = new TagMonitor();
+
+	   monitor2.add(new Tag('gjjId','gjjPanelId','title02_2','title02_3'));	 
+	   monitor2.add(new Tag('gssId','gssPanelId','title02_2','title02_3'));
+	   monitor2.add(new Tag('jqsId','jqsPanelId','title02_2','title02_3'));	 
+	   monitor2.add(new Tag('ymsId','ymsPanelId','title02_2','title02_3'));
+	   
+	   var monitor3 = new TagMonitor();
+
+	   monitor3.add(new Tag('rzcpId','rzcpPanelId','title02_2','title02_3'));	 
+	   monitor3.add(new Tag('rzzcId','rzzcPanelId','title02_2','title02_3'));
+	   monitor3.add(new Tag('rzzxId','rzzxPanelId','title02_2','title02_3'));
+	   
+	   var monitor4 = new TagMonitor();
+
+	   monitor4.add(new Tag('sjdwId','sjdwPanelId','link_font2','link_font3'));	 
+	   monitor4.add(new Tag('hzwzId','hzwzPanelId','link_font2','link_font3'));
+	   monitor4.add(new Tag('hyxhId','hyxhPanelId','link_font2','link_font3'));
+	  
+	   var monitor5 = new TagMonitor();
+
+	   monitor5.add(new Tag('xxfwId','xxfwPanelId','shfw_01','shfw_02'));	 
+	   monitor5.add(new Tag('rzdbId','rzdbPanelId','shfw_01','shfw_02'));
+	   monitor5.add(new Tag('cyfwId','cyfwPanelId','shfw_01','shfw_02'));	 
+	   monitor5.add(new Tag('rcfwId','rcfwPanelId','shfw_01','shfw_02'));
+	   monitor5.add(new Tag('jscxId','jscxPanelId','shfw_01','shfw_02'));	 
+	   monitor5.add(new Tag('glzxId','glzxPanelId','shfw_01','shfw_02'));
+	   monitor5.add(new Tag('scktId','scktPanelId','shfw_01','shfw_02'));	 
+	   monitor5.add(new Tag('flfwId','flfwPanelId','shfw_01','shfw_02'));
+	   
+	  
+   
+	  
+   });
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+</script>
+
+
+
+</head>
+
+<body onload="MM_preloadImages('images/gsgl_02.jpg','images/xmba_02.jpg','images/zljd_02.jpg','images/aqsc_02.jpg','images/ghjs_02.jpg','images/jnjp_02.jpg','images/smlt_02.jpg','images/csjr_02.jpg','images/tdfc_02.jpg')">
+<!--右侧浮动 start-->           
+<div style="text-align:left; vertical-align:top; position:fixed; top:280px; right:40px; width:100px;">
+   <div style=" width:80px; padding:10px; background-color:#FFFFFF; vertical-align:top; text-align:left; border:1px solid #CCCCCC;">
+     <img src="images/pic_wx.jpg" width="80" height="150" border="0"/>
+      <a href="#" target="_blank"><img src="images/button_01.jpg" width="80" height="41" border="0"/></a>
+      <a href="#" target="_blank"><img src="images/button_03.jpg" width="80" height="37" border="0"/></a>
+      <a href="#" target="_blank"><img src="images/button_04.jpg" width="80" height="40" border="0"/></a>  
+   </div>   
+</div>
+<!--右侧浮动 end-->
+
+<div class="warp">
+   <!--页头 start-->
+   <div style="height:318px;">
+      <iframe src="top.html" frameborder="0;" scrolling="no" style="width:100%; height:318px; border:0px; font-size:0px;"></iframe>
+   </div>
+   <!--页头 end-->
+   <!--内容部分 start-->
+   <div style="background-color:#FFFFFF; text-align:left; vertical-align:top;">
+     <!--天气搜索 start-->
+     <div style="background-color:#FFFFFF; text-align:left; vertical-align:top; line-height:30px; padding:10px; height:30px; background-image:url(images/bg_tq.jpg);">
+	   <!--搜索 start-->
+       <div style="float:right; width:360px;">
+	     <div style="float:left;"><img src="images/icon_fdj.jpg" /></div>
+		 <div style="float:left; padding:5px 10px 0px 10px;"><input name="" type="text" / style="width:250px; height:20px; border:1px solid #CCCCCC;"></div>
+		 <div style="float:left;"><a href="#"><img src="images/button_ss.jpg" border="0" /></a></div>
+		 <div class="clear"></div>
+	   </div>
+	   <!--搜索 end-->
+	   <!--天气 start-->
+	   <div style="float:left; width:600px;">
+	     <div style="float:left;"><img src="images/icon_tqyb.jpg" /></div>
+		 <div style="float:left; padding-top:5px;"><iframe src="http://i.tianqi.com/index.php?c=code&id=40&icon=1&py=yumen&num=5" allowtransparency="true" frameborder="0"  width="480" height="20" name="365myt" scrolling="no"></iframe>
+</div>
+		 <div class="clear"></div>
+	   </div>
+	   <!--天气 end-->
+	   <div class="clear"></div>
+     </div>
+     <!--天气搜索 end-->  
+	 
+	 <!--内容 start--> 
+	 <div style=" padding:0px 12px; text-align:left; vertical-align:top;">
+	    <!--图片新闻 start--> 
+	    <div>
+		  <!--新闻 start--> 
+		  <div style="float:right; width:418px;">
+		    <div class="bg_title01">
+			  <a href="#"><div id="rdxwId" class="title01_1">热点新闻</div></a>
+			  <a href="#"><div id="tzggId" class="title01_2">通知公告</div></a>
+			  <div class="clear"></div>
+			</div>
+			
+			<div id="rdxwPanelId">
+			<div style="background-color:#f9f9f9; padding:10px; margin:10px 0px; text-align:left; vertical-align:top;">
+			  <div style="font-size:20px; color:#CC0000; font-weight:bold; line-height:45px; height:45px; letter-spacing:2px;"><a href="#" class="a_title">玉门市与省疏管局共话友谊共谋发展</a></div>
+			  <div style=" font-size:14px; color:#9b9b9b; line-height:20px; height:60px;">同在祁连山下，共饮疏勒河水。5月23日，玉门市领导与省疏管局领导一道前往市委综合楼、文化三馆、铁人影城、会展中心、全民健身中心等地参观考察，亲身体验玉门经济社会发展...</div>
+			</div>
+			<div style="text-align:left; vertical-align:top; line-height:38px; font-size:16px; height:200px;">
+		     <ul>
+		      
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+		     </ul>
+		    </div>
+			</div>
+			
+			<div id="tzggPanelId" style="display:none;">
+			<div style="background-color:#f9f9f9; padding:10px; margin:10px 0px; text-align:left; vertical-align:top;">
+			  <div style="font-size:20px; color:#CC0000; font-weight:bold; line-height:45px; height:45px; letter-spacing:2px;"><a href="#" class="a_title">玉门市严格把关推进工业循环化发展</a></div>
+			  <div style=" font-size:14px; color:#9b9b9b; line-height:20px; height:60px;">玉门市积极响应甘肃省建设循环经济试点省份号召，注重从工业项目开工、工业企业生产的源头上，严把工业节能降耗关口。同时，积极引导帮助现有企业实行技改，推行清洁生产...</div>
+			</div>
+			<div style="text-align:left; vertical-align:top; line-height:38px; font-size:16px; height:200px;">
+		     <ul>
+		      
+			   <li><a href="#">·&nbsp;玉门市2016年春季大型人才招聘会…</a></li>
+			   <li><a href="#">·&nbsp;玉门市2016年春季大型人才招聘会…</a></li>
+			   <li><a href="#">·&nbsp;玉门市2016年春季大型人才招聘会…</a></li>
+			   <li><a href="#">·&nbsp;玉门市春季大型人才招聘会…</a></li>
+			   <li><a href="#">·&nbsp;玉门市2016年春季大型人才招聘会…</a></li>
+		     </ul>
+		    </div>
+			</div>
+			
+		  </div>
+		  <!--新闻 end--> 
+		  <!--图片 start--> 
+		  <div style="float:left; width:545px; height:385px;">
+		  <div class="mychgPic">
+<div id="myFocus" class="mF_liuzg">
+ <div class="loading"><span>请稍候...</span></div><!--载入画面-->
+    <ul class="pic"><!--内容列表-->
+        <li><a href="#" target="_blank"><img src="images/ink_120603pic1.jpg" alt="玉门市与省疏管局共话友谊共谋发展" /></a></li>
+        <li><a href="#" target="_blank"><img src="images/ink_120603pic2.jpg" alt="“一带一路”会就新发展论坛活动" /></a></li>
+        <li><a href="#" target="_blank"><img src="images/ink_120603pic3.jpg" alt="我市代表团参加第十二届深圳文博会" /></a></li>
+        <li><a href="#" target="_blank"><img src="images/ink_120603pic4.jpg" alt="小微企业政策宣传暨活动月" /></a></li>
+    </ul>
+</div>
+</div>
+		  </div>
+		  <!--图片 end--> 
+		  <div class="clear"></div>
+		</div> 
+		<!--图片新闻 end--> 
+	    <!--banner1 start-->  
+		<div style="padding:12px 0px; height:110px;"><a href="#"><img src="images/banner_jkyqsyjs.jpg" border="0" /></a></div>
+		<!--banner1 end--> 
+		<!--新闻一 start--> 
+		<div style="padding-bottom:8px;">
+		 <!--政策法规 start--> 
+		  <div style="width:480px; float:right;">
+		    <div class="bg_title02">
+			  <a href="#"><div id="ymsId" class="title02_3">玉门市</div></a>
+			  <a href="#"><div id="jqsId" class="title02_3">酒泉市</div></a>
+			  <a href="#"><div id="gssId" class="title02_3">甘肃省</div></a>
+			  <a href="#"><div id="gjjId" class="title02_2">国家级</div></a>
+			  <div class="title02_1">政策法规</div>
+			  <div class="clear"></div>
+			</div>
+			
+			<div id="gjjPanelId" style="text-align:left; vertical-align:top; line-height:35px; font-size:16px; height:280px; background-color:#f9f9f9; margin:5px 0px; padding:10px;">
+		     <ul>
+		       <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+		     </ul>
+		    </div>
+			
+			<div id="gssPanelId" style="text-align:left; vertical-align:top; line-height:35px; font-size:16px; height:280px; background-color:#f9f9f9; margin:5px 0px; padding:10px; display:none;">
+		     <ul>
+		       <li><a href="#">·&nbsp;甘肃省人民政府办公厅关于印发2015年…</a></li>
+			   <li><a href="#">·&nbsp;甘肃省人民政府办公厅关于印发2015年…</a></li>
+			   <li><a href="#">·&nbsp;甘肃省人民政府办公厅关于印发2015年…</a></li>
+			   <li><a href="#">·&nbsp;甘肃省人民政府办公厅关于印发2015年…</a></li>
+			   <li><a href="#">·&nbsp;甘肃省人民政府办公厅关于印发2015年…</a></li>
+			   <li><a href="#">·&nbsp;甘肃省人民政府办公厅关于印发2015年…</a></li>
+			   <li><a href="#">·&nbsp;甘肃省人民政府办公厅关于印发2015年…</a></li>
+			   <li><a href="#">·&nbsp;甘肃省人民政府办公厅关于印发2015年…</a></li>
+		     </ul>
+		    </div>
+			
+			<div id="jqsPanelId" style="text-align:left; vertical-align:top; line-height:35px; font-size:16px; height:280px; background-color:#f9f9f9; margin:5px 0px; padding:10px; display:none;">
+		     <ul>
+		       <li><a href="#">·&nbsp;关于印发酒泉市战略性新兴产业发展实施方案通知…</a></li>
+			   <li><a href="#">·&nbsp;关于印发酒泉市战略性新兴产业发展实施方案通知…</a></li>
+			   <li><a href="#">·&nbsp;关于印发酒泉市战略性新兴产业发展实施方案通知…</a></li>
+			   <li><a href="#">·&nbsp;关于印发酒泉市战略性新兴产业发展实施方案通知…</a></li>
+			   <li><a href="#">·&nbsp;关于印发酒泉市战略性新兴产业发展实施方案通知…</a></li>
+			   <li><a href="#">·&nbsp;关于印发酒泉市战略性新兴产业发展实施方案通知…</a></li>
+			   <li><a href="#">·&nbsp;关于印发酒泉市战略性新兴产业发展实施方案通知…</a></li>
+			   <li><a href="#">·&nbsp;关于印发酒泉市战略性新兴产业发展实施方案通知…</a></li>
+		     </ul>
+		    </div>
+			
+			<div id="ymsPanelId" style="text-align:left; vertical-align:top; line-height:35px; font-size:16px; height:280px; background-color:#f9f9f9; margin:5px 0px; padding:10px; display:none;">
+		     <ul>
+		       <li><a href="#">·&nbsp;玉门市公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机二期项目开工建设…</a></li>
+		     </ul>
+		    </div>
+			
+		  </div>
+		  <!--政策法规 end--> 
+		  <!--平台活动 start--> 
+		  <div style="width:480px; float:left;">
+		    <div class="bg_title02">
+			  <div style="float:right;"><a href="#" class="a_more">更多>></a></div>
+			  <div class="title02_1">平台活动</div>
+			  <div class="clear"></div>
+			</div>
+			
+			<div style="text-align:left; vertical-align:top; line-height:35px; font-size:16px; height:300px; background-color:#f9f9f9; margin:5px 0px; padding:0px 15px;">
+			  <div class="pthd_tb">
+			    <div style="float:right; width:275px;">
+				  <div class="pt_font1"><a href="#">小微企业政策宣传暨活动月</a></div>
+				  <div class="pt_font2">为进一步推进小微企业政策落实，加强政策宣传，切实提高小微企业政策知晓度，提振企业发展信心，工业和信息化部会同 ...</div>
+				  <div class="pt_font3">活动时间： 2016-04-14 08:00</div>
+				</div>
+			    <div style="float:left; width:160px; height:115px;"><a href="#"><img src="images/pic_pt1.jpg" width="160" height="115" border="0" /></a></div>
+				<div class="clear"></div>
+			  </div>
+		      
+			  <div class="pthd_tb">
+			    <div style="float:right; width:275px;">
+				  <div class="pt_font1"><a href="#">“一带一路”会就新发展论坛活动</a></div>
+				  <div class="pt_font2">在“一带一路”发展战略中，甘肃的历史、地理
+位置，决定了其通过文化的力量寻求发展机遇的
+可行性 ...</div>
+				  <div class="pt_font3">活动时间： 2016-04-14 08:00</div>
+				</div>
+			    <div style="float:left; width:160px; height:115px;"><a href="#"><img src="images/pic_pt2.jpg" width="160" height="115" border="0" /></a></div>
+				<div class="clear"></div>
+			  </div>
+			  
+		    </div>
+		  </div>
+		  <!--平台活动 start--> 
+		  <div class="clear"></div>
+		</div>
+		<!--新闻一end--> 
+		
+		<!--服务 start--> 
+		<div style="border-bottom:1px solid #eeeeee; border-left:1px solid #eeeeee; border-right:1px solid #eeeeee; margin-bottom:12px;">
+		  <!--行政服务 start--> 
+		  <div style="float:right; width:330px;">
+		    <div class="fw_title">行政服务</div>
+			<div style="padding:10px 0px 0px 13px; text-align:left; vertical-align:top;">
+			  <div class="xzfw"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image21','','images/gsgl_02.jpg',1)"><img src="images/gsgl_01.jpg" alt="" width="95" height="106" id="Image21" /></a></div>
+              <div class="xzfw"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image22','','images/xmba_02.jpg',1)"><img src="images/xmba_01.jpg" alt="" width="95" height="106" id="Image22" /></a></div>
+              <div class="xzfw"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image23','','images/zljd_02.jpg',1)"><img src="images/zljd_01.jpg" alt="" width="95" height="106" id="Image23" /></a></div>
+              <div class="xzfw"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image24','','images/aqsc_02.jpg',1)"><img src="images/aqsc_01.jpg" alt="" width="95" height="106" id="Image24" /></a></div>
+              <div class="xzfw"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image25','','images/ghjs_02.jpg',1)"><img src="images/ghjs_01.jpg" alt="" width="95" height="106" id="Image25" /></a></div>
+              <div class="xzfw"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image26','','images/jnjp_02.jpg',1)"><img src="images/jnjp_01.jpg" alt="" width="95" height="106" id="Image26" /></a></div>
+              <div class="xzfw"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image27','','images/smlt_02.jpg',1)"><img src="images/smlt_01.jpg" alt="" width="95" height="106" id="Image27" /></a></div>
+              <div class="xzfw"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image28','','images/csjr_02.jpg',1)"><img src="images/csjr_01.jpg" alt="" width="95" height="106" id="Image28" /></a></div>
+              <div class="xzfw"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image29','','images/tdfc_02.jpg',1)"><img src="images/tdfc_01.jpg" alt="" width="95" height="106" id="Image29" /></a></div>
+			  
+			  <div class="clear"></div>
+			</div>
+		  </div>
+		  <!--行政服务 end--> 
+		  <!--社会服务 start--> 
+		  <div style="float:left; width:643px; border-right:1px solid #eeeeee;">
+		     <div class="fw_title">社会服务</div>
+			 <div style="height:340px; padding:10px; text-align:left; vertical-align:top;">
+			 <!--社会服务内容 start--> 
+			 <div style="padding-bottom:5px;">
+			   <div style="float:right; width:460px; height:240px; border:1px solid #eeeeee; padding:10px;">
+			   
+			     <div id="xxfwPanelId">
+			     <!--服务机构 start--> 
+			     <div style="float:right; width:220px;">
+				   <div style="background-image:url(images/shfw_fwjg.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+			           <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务机构 end--> 
+				 <!--服务项目 start--> 
+				 <div style="float:left; width:220px;">
+				   <div style="background-image:url(images/shfw_fwxm.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+			           <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务项目 end--> 
+				 <div class="clear"></div>
+				 </div>
+				 
+				 <div id="rzdbPanelId" style="display:none;">
+			     <!--服务机构 start--> 
+			     <div style="float:right; width:220px;">
+				   <div style="background-image:url(images/shfw_fwjg.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">2甘肃省通信产业服务有限公司</a></li>
+			           <li class="fwxm_tb"><a href="#">2甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">2甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">2甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">2甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">2甘肃省通信产业服务有限公司</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务机构 end--> 
+				 <!--服务项目 start--> 
+				 <div style="float:left; width:220px;">
+				   <div style="background-image:url(images/shfw_fwxm.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">2工程资质服务</a></li>
+			           <li class="fwxm_tb"><a href="#">2工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">2工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">2工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">2工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">2工程资质服务</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务项目 end--> 
+				 <div class="clear"></div>
+				 </div>
+				 
+				 <div id="cyfwPanelId" style="display:none;">
+			     <!--服务机构 start--> 
+			     <div style="float:right; width:220px;">
+				   <div style="background-image:url(images/shfw_fwjg.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">33甘肃省通信产业服务有限公司</a></li>
+			           <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务机构 end--> 
+				 <!--服务项目 start--> 
+				 <div style="float:left; width:220px;">
+				   <div style="background-image:url(images/shfw_fwxm.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">3工程资质服务</a></li>
+			           <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务项目 end--> 
+				 <div class="clear"></div>
+				 </div>
+				 
+				 <div id="rcfwPanelId" style="display:none;">
+			     <!--服务机构 start--> 
+			     <div style="float:right; width:220px;">
+				   <div style="background-image:url(images/shfw_fwjg.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">44甘肃省通信产业服务有限公司</a></li>
+			           <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务机构 end--> 
+				 <!--服务项目 start--> 
+				 <div style="float:left; width:220px;">
+				   <div style="background-image:url(images/shfw_fwxm.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">44工程资质服务</a></li>
+			           <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务项目 end--> 
+				 <div class="clear"></div>
+				 </div>
+				 
+				 <div id="jscxPanelId" style="display:none;">
+			     <!--服务机构 start--> 
+			     <div style="float:right; width:220px;">
+				   <div style="background-image:url(images/shfw_fwjg.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">55甘肃省通信产业服务有限公司</a></li>
+			           <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务机构 end--> 
+				 <!--服务项目 start--> 
+				 <div style="float:left; width:220px;">
+				   <div style="background-image:url(images/shfw_fwxm.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">55工程资质服务</a></li>
+			           <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务项目 end--> 
+				 <div class="clear"></div>
+				 </div>
+				 
+				 <div id="glzxPanelId" style="display:none;">
+			     <!--服务机构 start--> 
+			     <div style="float:right; width:220px;">
+				   <div style="background-image:url(images/shfw_fwjg.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">66甘肃省通信产业服务有限公司</a></li>
+			           <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务机构 end--> 
+				 <!--服务项目 start--> 
+				 <div style="float:left; width:220px;">
+				   <div style="background-image:url(images/shfw_fwxm.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">66工程资质服务</a></li>
+			           <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务项目 end--> 
+				 <div class="clear"></div>
+				 </div>
+				 
+				 <div id="scktPanelId" style="display:none;">
+			     <!--服务机构 start--> 
+			     <div style="float:right; width:220px;">
+				   <div style="background-image:url(images/shfw_fwjg.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">77甘肃省通信产业服务有限公司</a></li>
+			           <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务机构 end--> 
+				 <!--服务项目 start--> 
+				 <div style="float:left; width:220px;">
+				   <div style="background-image:url(images/shfw_fwxm.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">77工程资质服务</a></li>
+			           <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务项目 end--> 
+				 <div class="clear"></div>
+				 </div>
+				 
+				 <div id="flfwPanelId" style="display:none;">
+			     <!--服务机构 start--> 
+			     <div style="float:right; width:220px;">
+				   <div style="background-image:url(images/shfw_fwjg.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">88甘肃省通信产业服务有限公司</a></li>
+			           <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+					   <li class="fwxm_tb"><a href="#">甘肃省通信产业服务有限公司</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务机构 end--> 
+				 <!--服务项目 start--> 
+				 <div style="float:left; width:220px;">
+				   <div style="background-image:url(images/shfw_fwxm.jpg); height:35px;"></div>
+				   <div style="line-height:34px; text-align:left; vertical-align:top; padding:5px 0px;">
+				     <ul>
+		               <li class="fwxm_tb"><a href="#">88工程资质服务</a></li>
+			           <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+					   <li class="fwxm_tb"><a href="#">工程资质服务</a></li>
+		             </ul>
+				   </div>
+				 </div>
+				 <!--服务项目 end--> 
+				 <div class="clear"></div>
+				 </div>
+				 
+			   </div>
+			   
+			   <div style="float:left; width:135px;">
+			     <a href="#"><div id="xxfwId" class="shfw_01">信息服务</div></a>
+				 <a href="#"><div id="rzdbId" class="shfw_02">融资担保</div></a>
+				 <a href="#"><div id="cyfwId" class="shfw_02">创业服务</div></a>
+				 <a href="#"><div id="rcfwId" class="shfw_02">人才服务</div></a>
+				 <a href="#"><div id="jscxId" class="shfw_02">技术创新</div></a>
+				 <a href="#"><div id="glzxId" class="shfw_02">管理咨询</div></a>
+				 <a href="#"><div id="scktId" class="shfw_02">市场开拓</div></a>
+				 <a href="#"><div id="flfwId" class="shfw_02">法律服务</div></a>
+				 <div class="clear"></div>
+			   </div>
+			   
+			   <div class="clear"></div>
+			 </div>
+			 <!--社会服务内容 end--> 
+			 
+			 <!--数据专题 start--> 
+			 <div style="height:70px;">
+			   <div style="width:152px; height:70px; float:right;"><a href="#"><img src="images/zt_qyml.jpg" width="152" height="70" border="0" /></a></div>
+			   <div style="width:150px; height:70px; float:left; margin-right:7px;"><a href="#"><img src="images/zt_sjbs.jpg" width="150" height="70" border="0" /></a></div>
+			   <div style="width:150px; height:70px; float:left; margin-right:7px;"><a href="#"><img src="images/zt_gcxm.jpg" width="150" height="70" border="0" /></a></div>
+			   <div style="width:150px; height:70px; float:left; margin-right:7px;"><a href="#"><img src="images/zt_xmsb.jpg" width="150" height="70" border="0" /></a></div>
+			 </div>
+			 <!--数据专题 end--> 
+			 </div>
+		  </div>
+		  <!--社会服务 end--> 
+		  <div class="clear"></div>
+		</div>
+		<!--服务 end--> 
+		
+		<!--banner2 start--> 
+		<div style="height:110px; margin-bottom:12px;">
+		  <div style="float:right; width:330px; height:110px;"><a href="#"><img src="images/pic_qyxxhpt.jpg" border="0" /></a></div>
+		  <div style="float:left; width:634px; height:110px;"><a href="#"><img src="images/pic_zgzz.jpg" border="0" /></a></div>
+		  <div class="clear"></div>
+		</div>
+		<!--banner2 end--> 
+		
+		<!--新闻二 start--> 
+		<div style="padding-bottom:8px;">
+		 <!--服务动态 start--> 
+		  <div style="width:480px; float:right;">
+		    <div class="bg_title02">
+			  <div style="float:right;"><a href="#" class="a_more">更多>></a></div>
+			  <div class="title02_1">服务动态</div>
+			  <div class="clear"></div>
+			</div>
+			
+			<div style="text-align:left; vertical-align:top; line-height:35px; font-size:16px; height:280px; background-color:#f9f9f9; margin:5px 0px; padding:10px;">
+		     <ul>
+		       <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+		     </ul>
+		    </div>
+			
+		  </div>
+		  <!--服务动态 start--> 
+		 <!--融资服务 start--> 
+		  <div style="width:480px; float:left;">
+		    <div class="bg_title02">
+			  <a href="#"><div id="rzzxId" class="title02_3">融资咨询</div></a>
+			  <a href="#"><div id="rzzcId" class="title02_3">融资政策</div></a>
+			  <a href="#"><div id="rzcpId" class="title02_2">融资产品</div></a>
+			  <div class="title02_1">融资服务</div>
+			  <div class="clear"></div>
+			</div>
+			
+			<div id="rzcpPanelId" style="text-align:left; vertical-align:top; line-height:35px; font-size:16px; height:280px; background-color:#f9f9f9; margin:5px 0px; padding:10px;">
+		     <ul>
+		       <li><a href="#">·&nbsp;全市工业和信息化工作会议召开…</a></li>
+			   <li><a href="#">·&nbsp;全市工业和信息化工作会议召开…</a></li>
+			   <li><a href="#">·&nbsp;全市工业和信息化工作会议召开…</a></li>
+			   <li><a href="#">·&nbsp;全市工业和信息化工作会议召开…</a></li>
+			   <li><a href="#">·&nbsp;全市工业和信息化工作会议召开…</a></li>
+			   <li><a href="#">·&nbsp;全市工业和信息化工作会议召开…</a></li>
+			   <li><a href="#">·&nbsp;全市工业和信息化工作会议召开…</a></li>
+			   <li><a href="#">·&nbsp;全市工业和信息化工作会议召开…</a></li>
+		     </ul>
+		    </div>
+			
+			<div id="rzzcPanelId" style="text-align:left; vertical-align:top; line-height:35px; font-size:16px; height:280px; background-color:#f9f9f9; margin:5px 0px; padding:10px; display:none;">
+		     <ul>
+		       <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+		     </ul>
+		    </div>
+			
+			<div id="rzzxPanelId" style="text-align:left; vertical-align:top; line-height:35px; font-size:16px; height:280px; background-color:#f9f9f9; margin:5px 0px; padding:10px; display:none;">
+		     <ul>
+		       <li><a href="#">·&nbsp;玉门市宇丰新能源期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公司风机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰机叶片二期项目开工建设…</a></li>
+			   <li><a href="#">·&nbsp;玉门市宇丰新能源公期项目开工建设…</a></li>
+		     </ul>
+		    </div>
+			
+		  </div>
+		  <!--融资服务 end--> 
+		  
+		  <div class="clear"></div>
+		</div>
+		<!--新闻二 end--> 
+		
+		<!--友情链接 start--> 
+		<div style="padding-bottom:12px;">
+		  <div style="height:40px; line-height:40px; background-color:#f9f9f9; border-top:4px solid #1782ed; border-bottom:1px solid #cecece;">
+		      <div id="hyxhId" class="link_font3">行业协会网站</div>
+			  <div id="hzwzId" class="link_font3">合作网站</div>
+			  <div id="sjdwId" class="link_font2">市局相关单位</div>
+			  <div class="link_font1">友情链接</div>
+			  <div class="clear"></div>
+		  </div>
+		  
+		  <div id="sjdwPanelId" style=" background-color:#f9f9f9; padding:10px 10px 15px 0px; line-height:30px;">
+		    <div class="link_01"><a href="#">&#8226;&nbsp;玉门市农业开发和扶贫办公室</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;玉门市农业开发和扶贫办公室</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;玉门市农业开发和扶贫办公室</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;玉门市农业开发和扶贫办公室</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;玉门市农业开发和扶贫办公室</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;玉门市农业开发和扶贫办公室</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;玉门市农业开发和扶贫办公室</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;玉门市农业开发和扶贫办公室</a></div>
+			
+			<div class="clear"></div>
+		  </div>
+		  
+		  <div id="hzwzPanelId" style=" background-color:#f9f9f9; padding:10px 10px 15px 0px; line-height:30px; display:none;">
+		    <div class="link_01"><a href="#">&#8226;&nbsp;酒泉市中小企业服务平台</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;酒泉市中小企业服务平台</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;酒泉市中小企业服务平台</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;酒泉市中小企业服务平台</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;酒泉市中小企业服务平台</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;酒泉市中小企业服务平台</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;酒泉市中小企业服务平台</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;酒泉市中小企业服务平台</a></div>
+			
+			<div class="clear"></div>
+		  </div>
+		  
+		  <div id="hyxhPanelId" style=" background-color:#f9f9f9; padding:10px 10px 15px 0px; line-height:30px; display:none;">
+		    <div class="link_01"><a href="#">&#8226;&nbsp;中国石油和石化工程研究会</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;中国石油和石化工程研究会</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;中国石油和石化工程研究会</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;中国石油和石化工程研究会</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;中国石油和石化工程研究会</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;中国石油和石化工程研究会</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;中国石油和石化工程研究会</a></div>
+			<div class="link_01"><a href="#">&#8226;&nbsp;中国石油和石化工程研究会</a></div>
+			
+			<div class="clear"></div>
+		  </div>
+		  
+		</div>
+		<!--友情链接 end--> 
+	 </div> 
+	 <!--内容 end-->  
+   </div>
+   <!--内容部分 end-->   
+</div>
+
+<!--页脚 start-->
+   <div style="height:314px;">
+      <iframe src="footer.html" frameborder="0;" scrolling="no" style="width:100%; height:314px; border:0px; font-size:0px;"></iframe>
+   </div>
+   <!--页脚 end-->
+   
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+/*共公按扭 [ibutton:蓝色; ibutton_disable:不可用蓝色;nbutton_guide:绿色; ] start */
+.ibutton,.ibutton_disable,.nbutton_guide {display: block;width: 90px; height: 31px;	float: left;margin-top: 5px;line-height: 30px;text-align: center;font-size: 14px;color: #fff;background:url('../images/work_btn01.gif') no-repeat;}
+.ibutton:hover {background-position: 0 -32px;}
+.ibutton_disable {background-position: 0-64px;}
+.nbutton_guide { background-position: 0 -96px;}
+.nbutton_guide:hover { background-position: 0 -128px;}
+/*共公按扭 end*/
+
+/*带阴影边框盒子公共 [ 底部阴影、边框、灰色标题、UL列表 ] start*/
+.brbox {width: 100%;border: 0px;padding-bottom: 12px;margin-bottom: 4px;background: url('../images/min_botbg.gif') no-repeat center bottom;}
+.brbox .shadow_bg {border: 1px solid #DCDBDB; }
+.brbox .h2_tit { height: 31px; line-height: 30px; background: url('../images/h2_tit_rebg.gif') repeat-x;}
+.brbox .h2_tit span { display: inline-block; height: 31px; padding: 0 2px; background: #fff; border-right: 1px solid #CECECE;}
+.brbox .h2_tit span em { display: inline-block; height: 31px; padding: 0 20px; color: #000; font-size: 14px; background: url('../images/h2_tit_rebg.gif') repeat-x 0 -31px;}
+.brbox ul.list_li { padding:10px 0 20px;}
+.brbox ul.list_li li {	margin: 0 auto;height: 32px;line-height: 32px;overflow: hidden;width: 90%; border-bottom: dotted 1px #ADADAD;}
+.brbox ul.list_li li.hot_li{background:url('../images/hot_minico.gif') no-repeat right center;}
+.brbox ul.list_li li span{ padding: 0 5px;}
+.brbox ul.list_li li.hot_li span.hot_three{color: #f60;}
+.brbox ul.list_li li a { color: #444;}
+.brbox ul.list_li li a:hover {color: #f60;}
+/*带阴影边框盒子公共 end*/
+

@@ -1,0 +1,40 @@
+﻿caption{
+	font-size: 22px;
+	font-weight: bold;
+	text-align: center;
+	/* font-family: '宋体'; */
+}
+table{
+	  margin: 0 auto;
+	    width: 96%;
+}
+td{
+ 	font-size: 14px;
+	border: 1px solid #666;
+	text-align: center;
+	padding: 0 5px;
+}
+input{
+	border: none;
+	font-size: 14px;
+}
+tr{
+	height: 40px;
+}
+th{
+	border: 1px solid #666;
+	text-align: center;
+	padding: 0 5px;
+}
+.noborder{
+	border: none;
+	font-size: 14px;
+}
+input{
+	width:100%;
+	text-align: center;
+}
+.tleft{
+	text-align: left;
+}
+
